@@ -1,0 +1,162 @@
+body {
+	background-color: #fff;
+    font-family: arial, helvetica, sans-serif;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:link {
+	color: #292c64;
+}
+
+a:active {
+	color: #238;
+}
+
+a:visited {
+	color: #292c64;
+}
+
+a:hover {
+	color: #ABD;
+	background: #292c64;
+}
+
+label.error {
+	color: #900;
+}
+
+input.defaultButton {
+	color: #ABD;
+	background: #292c64;
+}
+
+#container {
+	background-color: #fff;
+	font-size: 1.1em;
+}
+
+#header {
+	height: 100px;
+	background-color: #fff;
+}
+
+#headerTitle {
+	text-align: center;
+}
+
+#header h1 {
+	line-height: 2;
+	font-family: "Times New Roman", Times, Georgia, serif;
+	text-transform: uppercase;
+	letter-spacing: 10px;
+	font-size: 1.8em;
+	background-color: #292c64;
+	color:  #fff;
+}
+
+#footer {
+	background-color: #292c64;
+	color:  #fff;
+}
+
+#footerContent {
+	color:  #fff;
+}
+
+#main {
+	background-color: #fff;
+	border-top: none;
+	border-bottom: 1px dotted #292c64;
+	margin-top: 0px;
+}
+
+#main h2 {
+	font-family: "Times New Roman", Times, Georgia, serif;
+	text-transform: uppercase;
+}
+
+#main h3 {
+	font-family: "Times New Roman", Times, Georgia, serif;
+	text-transform: uppercase;
+}
+
+#navbar {
+	border-bottom: 1px dotted #292c64;
+	text-align: center;
+}
+
+#breadcrumb {
+	height: 18px;
+	line-height: 1.5em;
+	text-align: center;
+	border-bottom: 1px dotted #292c64;
+	padding: 0;
+	font-style: italic;
+}
+
+#content {
+	border-top: 1px dotted #292c64;
+}
+
+#content h3 {
+	font-family:  "Times New Roman", Times, Georgia, serif;
+	text-transform: uppercase;
+}
+
+#content h4 {
+	font-family:  "Times New Roman", Times, Georgia, serif;
+	text-transform: uppercase;
+}
+
+#content h5 {
+	text-transform: uppercase;
+}
+
+span.highlight {
+	border-bottom: 1px dotted #292c64;
+}
+
+table.listing tr.highlight {
+	background: #fcff64;
+}
+
+table.listing tr.fastTracked {
+	background-color: #ABD;
+}
+
+table.listing td.headseparator {
+	border-top: 1px dotted #292c64;
+}
+
+table.listing td.endseparator {
+	border-top: 1px dotted #292c64;
+}
+
+span.formError {
+	color: #900;
+}
+
+ul.formErrorList {
+	color: #900;
+}
+
+div.separator {
+	border-bottom: 1px dotted #292c64;
+}
+
+#rightSidebar ul, #leftSidebar ul {
+	margin-left: 0px;
+	padding-left: 0px;
+}
+
+#rightSidebar li, #leftSidebar li {
+	list-style-type: none;
+}
+
+#rightSidebar, #leftSidebar {
+	margin-top: 5px;
+	border-bottom: 1px dotted #292c64;
+}
