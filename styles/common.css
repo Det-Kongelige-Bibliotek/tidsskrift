@@ -30,22 +30,25 @@
 /**
  * Common HTML elements
  */
-
+body {
+font-size:130%!important;
+font-family: Georgia,'Times New Roman',Times,serif;
+background-color: #FFF;
+}
 a:link {
-	color: #375;
+	color: #000;
 }
 
 a:active {
-	color: #253;
+	color: red;
 }
 
 a:visited {
-	color: #375;
+	color: #999;
 }
 
 a:hover {
-	color: #253;
-	background: #CDC;
+	color: #716b7a;
 }
 
 
@@ -54,11 +57,15 @@ a:hover {
  */
 
 #header {
-	background-color: #ABA;
+	background-color: #000;
+}
+#header h1{
+	color: #FFF;
 }
 
+
 #footer {
-	background-color: #ABA;
+	background-color: #000;
 }
 
 #main {
@@ -66,6 +73,10 @@ a:hover {
 	margin: 0 auto;
 }
 
+a.textLink{
+	text-transform: none;
+	text-decoration: none;
+}
 
 /**
  * Access icons and key
