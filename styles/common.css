@@ -507,3 +507,7 @@ ul.tagit input[type="text"] {
   background: url("http://www.kb.dk/export/system/modules/dk.kb.local/resources/global/img/icon/iconsmall.png") no-repeat scroll 100% 50% transparent;
 }
 
+a.titleLink {
+  text-transform: none;
+  text-decoration: none;
+}
