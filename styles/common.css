@@ -504,7 +504,7 @@ ul.tagit input[type="text"] {
 .cookie{
   padding-right: 5px !important;
   padding-bottom:5px;
-  background: url("http://www.kb.dk/export/system/modules/dk.kb.local/resources/global/img/icon/iconsmall.png") no-repeat scroll 100% 50% transparent;
+  background: url("https://tidsskrift.dk/styles/iconsmall.png") no-repeat scroll 100% 50% transparent;
 }
 
 a.titleLink {
