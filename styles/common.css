@@ -31,7 +31,7 @@
  * Common HTML elements
  */
 body {
-font-size:130%!important;
+font-size:130%;
 font-family: Georgia,'Times New Roman',Times,serif;
 background-color: #FFF;
 }
