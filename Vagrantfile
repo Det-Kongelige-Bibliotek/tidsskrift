@@ -13,5 +13,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # application installer
   config.vm.provision :shell, path: 'install_ojs.sh'
   config.vm.network :forwarded_port, host: 4567, guest: 80
+  config.vm.network :forwarded_port, host: 3316, guest: 3306
 
 end
