@@ -1,9 +1,10 @@
 <?php
 
 /**
- * @file SteelThemePlugin.inc.php
+ * @file plugins/themes/steel/SteelThemePlugin.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class SteelThemePlugin
@@ -11,9 +12,6 @@
  *
  * @brief "Steel" theme plugin
  */
-
-// $Id$
-
 
 import('classes.plugins.ThemePlugin');
 

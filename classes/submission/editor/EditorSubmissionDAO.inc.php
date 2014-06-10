@@ -3,7 +3,8 @@
 /**
  * @file classes/editor/EditorSubmissionDAO.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class EditorSubmissionDAO
@@ -12,9 +13,6 @@
  *
  * @brief Operations for retrieving and modifying EditorSubmission objects.
  */
-
-// $Id$
-
 
 import('classes.submission.editor.EditorSubmission');
 
@@ -136,7 +134,7 @@ class EditorSubmissionDAO extends DAO {
 				(?, ?, %s, %s, %s)',
 				$this->datetimeToDB($editorSubmission->getDateNotified()), $this->datetimeToDB($editorSubmission->getDateCompleted()), $this->datetimeToDB($editorSubmission->getDateAcknowledged())),
 			array(
-				$editorSubmission->getArticleId(),
+				$editorSubmission->getId(),
 				$editorSubmission->getEditorId()
 			)
 		);
@@ -146,7 +144,7 @@ class EditorSubmissionDAO extends DAO {
 		// Insert review assignments.
 		$reviewAssignments =& $editorSubmission->getReviewAssignments();
 		for ($i=0, $count=count($reviewAssignments); $i < $count; $i++) {
-			$reviewAssignments[$i]->setArticleId($editorSubmission->getArticleId());
+			$reviewAssignments[$i]->setArticleId($editorSubmission->getId());
 			$this->reviewAssignmentDao->insertReviewAssignment($reviewAssignments[$i]);
 		}
 
@@ -210,6 +208,10 @@ class EditorSubmissionDAO extends DAO {
 		$searchSql = '';
 
 		if (!empty($search)) switch ($searchField) {
+			case SUBMISSION_FIELD_ID:
+				$params[] = (int) $search;
+				$searchSql = ' AND a.article_id = ?';
+				break;
 			case SUBMISSION_FIELD_TITLE:
 				if ($searchMatch === 'is') {
 					$searchSql = ' AND LOWER(COALESCE(atl.setting_value, atpl.setting_value)) = LOWER(?)';
@@ -281,9 +283,9 @@ class EditorSubmissionDAO extends DAO {
 				scf.date_completed as copyedit_completed,
 				spr.date_completed as proofread_completed,
 				sle.date_completed as layout_completed,
-				COALESCE(atl.setting_value, atpl.setting_value) AS submission_title,
+				SUBSTRING(COALESCE(atl.setting_value, atpl.setting_value) FROM 1 FOR 255) AS submission_title,
 				aap.last_name AS author_name,
-				COALESCE(stl.setting_value, stpl.setting_value) AS section_title,
+				SUBSTRING(COALESCE(stl.setting_value, stpl.setting_value) FROM 1 FOR 255) AS section_title,
 				COALESCE(sal.setting_value, sapl.setting_value) AS section_abbrev
 			FROM	articles a
 				LEFT JOIN authors aa ON (aa.submission_id = a.article_id)
@@ -321,7 +323,7 @@ class EditorSubmissionDAO extends DAO {
 		}
 
 		if ($editorId) {
-			$searchSql .= ' AND ed.user_id = ?';
+			$searchSql .= ' AND e.editor_id = ?';
 			$params[] = $editorId;
 		}
 
@@ -337,10 +339,10 @@ class EditorSubmissionDAO extends DAO {
 	 * FIXME Move this into somewhere common (SubmissionDAO?) as this is used in several classes.
 	 */
 	function _generateUserNameSearchSQL($search, $searchMatch, $prefix, &$params) {
-		$first_last = $this->_dataSource->Concat($prefix.'first_name', '\' \'', $prefix.'last_name');
-		$first_middle_last = $this->_dataSource->Concat($prefix.'first_name', '\' \'', $prefix.'middle_name', '\' \'', $prefix.'last_name');
-		$last_comma_first = $this->_dataSource->Concat($prefix.'last_name', '\', \'', $prefix.'first_name');
-		$last_comma_first_middle = $this->_dataSource->Concat($prefix.'last_name', '\', \'', $prefix.'first_name', '\' \'', $prefix.'middle_name');
+		$first_last = $this->concat($prefix.'first_name', '\' \'', $prefix.'last_name');
+		$first_middle_last = $this->concat($prefix.'first_name', '\' \'', $prefix.'middle_name', '\' \'', $prefix.'last_name');
+		$last_comma_first = $this->concat($prefix.'last_name', '\', \'', $prefix.'first_name');
+		$last_comma_first_middle = $this->concat($prefix.'last_name', '\', \'', $prefix.'first_name', '\' \'', $prefix.'middle_name');
 		if ($searchMatch === 'is') {
 			$searchSql = " AND (LOWER({$prefix}last_name) = LOWER(?) OR LOWER($first_last) = LOWER(?) OR LOWER($first_middle_last) = LOWER(?) OR LOWER($last_comma_first) = LOWER(?) OR LOWER($last_comma_first_middle) = LOWER(?))";
 		} elseif ($searchMatch === 'contains') {
@@ -616,7 +618,7 @@ class EditorSubmissionDAO extends DAO {
 	function &getUsersNotAssignedToArticle($journalId, $articleId, $roleId, $searchType=null, $search=null, $searchMatch=null, $rangeInfo = null) {
 		$users = array();
 
-		$paramArray = array(ASSOC_TYPE_USER, 'interest', $articleId, $journalId, $roleId);
+		$paramArray = array('interest', $articleId, $journalId, $roleId);
 		$searchSql = '';
 
 		$searchTypeMap = array(
@@ -659,8 +661,9 @@ class EditorSubmissionDAO extends DAO {
 			'SELECT DISTINCT
 				u.*
 			FROM	users u
-				LEFT JOIN controlled_vocabs cv ON (cv.assoc_type = ? AND cv.assoc_id = u.user_id AND cv.symbolic = ?)
-				LEFT JOIN controlled_vocab_entries cve ON (cve.controlled_vocab_id = cv.controlled_vocab_id)
+				LEFT JOIN controlled_vocabs cv ON (cv.symbolic = ?)
+				LEFT JOIN user_interests ui ON (ui.user_id = u.user_id)
+				LEFT JOIN controlled_vocab_entries cve ON (cve.controlled_vocab_id = cv.controlled_vocab_id AND ui.controlled_vocab_entry_id = cve.controlled_vocab_entry_id)
 				LEFT JOIN controlled_vocab_entry_settings cves ON (cves.controlled_vocab_entry_id = cve.controlled_vocab_entry_id)
 				LEFT JOIN roles r ON (r.user_id = u.user_id)
 				LEFT JOIN edit_assignments e ON (e.editor_id = u.user_id AND e.article_id = ?)

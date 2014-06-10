@@ -1,12 +1,12 @@
 {**
- * completed.tpl
+ * templates/reviewer/completed.tpl
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Show reviewer's submission archive.
  *
- * $Id$
  *}
 <div id="submissions">
 <table class="listing" width="100%">
@@ -21,7 +21,7 @@
 	</tr>
 	<tr><td colspan="6" class="headseparator">&nbsp;</td></tr>
 {iterate from=submissions item=submission}
-	{assign var="articleId" value=$submission->getArticleId()}
+	{assign var="articleId" value=$submission->getId()}
 	{assign var="reviewId" value=$submission->getReviewId()}
 
 	<tr valign="top">

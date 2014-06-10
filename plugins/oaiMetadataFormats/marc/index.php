@@ -1,18 +1,16 @@
 <?php
 
 /**
- * @file plugins/oaiMetadata/marc/index.php
+ * @file plugins/oaiMetadataFormats/marc/index.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @ingroup plugins_oaiMetadata
  * @brief Wrapper for the OAI MARC format plugin.
  *
  */
-
-// $Id$
-
 
 require_once('OAIMetadataFormatPlugin_MARC.inc.php');
 require_once('OAIMetadataFormat_MARC.inc.php');

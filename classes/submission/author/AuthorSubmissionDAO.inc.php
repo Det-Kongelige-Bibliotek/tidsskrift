@@ -3,7 +3,8 @@
 /**
  * @file classes/submission/author/AuthorSubmissionDAO.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class AuthorSubmissionDAO
@@ -12,9 +13,6 @@
  *
  * @brief Operations for retrieving and modifying AuthorSubmission objects.
  */
-
-// $Id$
-
 
 import('classes.submission.author.AuthorSubmission');
 
@@ -143,8 +141,8 @@ class AuthorSubmissionDAO extends DAO {
 	 */
 	function updateAuthorSubmission(&$authorSubmission) {
 		// Update article
-		if ($authorSubmission->getArticleId()) {
-			$article =& $this->articleDao->getArticle($authorSubmission->getArticleId());
+		if ($authorSubmission->getId()) {
+			$article =& $this->articleDao->getArticle($authorSubmission->getId());
 
 			// Only update fields that an author can actually edit.
 			$article->setRevisedFileId($authorSubmission->getRevisedFileId());
@@ -173,7 +171,6 @@ class AuthorSubmissionDAO extends DAO {
 			'SELECT	a.*,
 				COALESCE(atl.setting_value, atpl.setting_value) AS submission_title,
 				aa.last_name AS author_name,
-				(SELECT SUM(g.views) FROM article_galleys g WHERE (g.article_id = a.article_id AND g.locale = ?)) AS galley_views,
 				COALESCE(stl.setting_value, stpl.setting_value) AS section_title,
 				COALESCE(sal.setting_value, sapl.setting_value) AS section_abbrev
 			FROM	articles a
@@ -186,10 +183,9 @@ class AuthorSubmissionDAO extends DAO {
 				LEFT JOIN section_settings sapl ON (s.section_id = sapl.section_id AND sapl.setting_name = ? AND sapl.locale = ?)
 				LEFT JOIN section_settings sal ON (s.section_id = sal.section_id AND sal.setting_name = ? AND sal.locale = ?)
 			WHERE	a.user_id = ? AND a.journal_id = ? AND ' .
-			($active?('a.status = ' . STATUS_QUEUED):('(a.status <> ' . STATUS_QUEUED . ' AND a.submission_progress = 0)')) . 
+			($active?('a.status = ' . STATUS_QUEUED):('(a.status <> ' . STATUS_QUEUED . ' AND a.submission_progress = 0)')) .
 			($sortBy?(' ORDER BY ' . $this->getSortMapping($sortBy) . ' ' . $this->getDirectionMapping($sortDirection)) : ''),
 			array(
-				$locale,
 				'cleanTitle',
 				'cleanTitle',
 				$locale,
@@ -251,14 +247,14 @@ class AuthorSubmissionDAO extends DAO {
 	}
 
 	/**
-	 * Get count of active and complete assignments
+	 * Get count of active, rejected, and complete assignments
 	 * @param authorId int
 	 * @param journalId int
 	 */
 	function getSubmissionsCount($authorId, $journalId) {
 		$submissionsCount = array();
-		$submissionsCount[0] = 0;
-		$submissionsCount[1] = 0;
+		$submissionsCount[0] = 0; //pending items
+		$submissionsCount[1] = 0; //all non-pending items
 
 		$sql = 'SELECT count(*), status FROM articles a LEFT JOIN sections s ON (s.section_id = a.section_id) WHERE a.journal_id = ? AND a.user_id = ? GROUP BY a.status';
 
@@ -278,7 +274,7 @@ class AuthorSubmissionDAO extends DAO {
 
 		return $submissionsCount;
 	}
-	
+
 	/**
 	 * Map a column heading value to a database value for sorting
 	 * @param string

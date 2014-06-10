@@ -1,27 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE email_texts SYSTEM "../../lib/pkp/dtd/emailTemplateData.dtd">
+
 <!--
-  * emailTemplateData.xml
+  * locale/pt_PT/emailTemplateData.xml
   *
-  * Copyright (c) 2003-2012 John Willinsky
+  * Copyright (c) 2013-2014 Simon Fraser University Library
+  * Copyright (c) 2003-2014 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localized email templates XML file.
   *
-  * $Id$
   -->
+
 <email_texts locale="pt_PT">
 	<email_text key="PASSWORD_RESET_CONFIRM">
 		<subject>Confirmar actualização de senha</subject>
 		<body>{$userFullName},
 
-Recebemos um pedido para actualizar a sua senha de acesso à revista {$siteTitle}.
+Recebemos um pedido para recuperar a sua senha de acesso à revista {$siteTitle}.
 
-Caso não tenha apresentado este pedido, ignore este email e a sua senha não será alterada. 
+Caso não tenha apresentado este pedido, ignore este email e a sua senha não será alterada.
 
 Se desejar actualizar a sua senha, clique no link a seguir.
 
-Actualizar senha: {$url}
+Recuperar senha: {$url}
 
 {$principalContactSignature}</body>
 		<description>Mensagem enviada a utilizador registado quando o mesmo solicita actualização da senha, quando esqueceu a senha ou encontra problemas para aceder ao sistema. O link contido permite ao utilizador concluir a actualização da senha de acesso.</description>
@@ -168,9 +170,9 @@ Agradecendo desde já a sua atenção,
 
 O sistema LOCKSS <http://lockss.org/>, uma iniciativa internacional de bibliotecas e editores, é um exemplo funcional de um repositório digital de preservação e arquivamento distribuído. O sistema, que é operado em ambiente tecnológico idêntico ao de um computador pessoal, é gratuito, permite a sua implementação e disponibilização online rápida, e sua manutenção é mínima.
 
-Para auxiliar no arquivamento de nossa revista, convidamos a sua biblioteca a se tornar membro da comunidade LOCKSS, e ajudar a colecionar e preservar títulos produzidos mundialmente. Para isso, visite o site do LOCKSS para saber como funciona o sistema e como fazer parte da comunidade. 
+Para auxiliar no arquivamento de nossa revista, convidamos a sua biblioteca a se tornar membro da comunidade LOCKSS, e ajudar a colecionar e preservar títulos produzidos mundialmente. Para isso, visite o site do LOCKSS para saber como funciona o sistema e como fazer parte da comunidade.
 
-Aguardamos resposta sobre a sua disponibilidade para arquivamento desta revista. 
+Aguardamos resposta sobre a sua disponibilidade para arquivamento desta revista.
 
 Agradecendo desde já a sua atenção,
 {$principalContactSignature}]]></body>
@@ -185,7 +187,7 @@ Agradecemos a submissão do seu manuscrito "{$articleTitle}" para a revista {$jo
 URL do Manuscrito: {$submissionUrl}
 Nome de utilizador: {$authorUsername}
 
-Em caso de dúvidas,  entre em contacto através deste email. 
+Em caso de dúvidas,  entre em contacto através deste email.
 
 Agradecemos mais uma vez considerar a nossa revista como meio de transmitir ao público o seu trabalho científico.
 
@@ -196,9 +198,9 @@ Agradecemos mais uma vez considerar a nossa revista como meio de transmitir ao p
 		<subject>Submissão inadequada</subject>
 		<body>{$authorName},
 
-Uma avaliação inicial de "{$articleTitle}" demonstrou que esta submissão não se encaixa no âmbito da revista {$journalName}. 
+Uma avaliação inicial de "{$articleTitle}" demonstrou que esta submissão não se encaixa no âmbito da revista {$journalName}.
 
-Recomendo que consulte a descrição do seu âmbito em Sobre a Revista, bem como o seu conteúdo, para saber mais sobre o tipo de trabalho que é publicado. 
+Recomendo que consulte a descrição do seu âmbito em Sobre a Revista, bem como o seu conteúdo, para saber mais sobre o tipo de trabalho que é publicado.
 
 O seu trabalho pode ser submetido a outra revista cujo âmbito e foco se encaixe melhor com a sua proposta.
 
@@ -222,7 +224,7 @@ Agradecendo desde já a atenção dispensada,
 		<body>Como revisor designado para a revisão da submissão "{$articleTitle}" a {$journalName}, encaminho aqui as revisões e a decisão editorial enviados ao autor deste trabalho.
 
 Agradecemos a sua contribuição, a qual é fundamental para garantir a qualidade deste processo.
- 
+
 {$editorialContactSignature}
 
 {$comments}</body>
@@ -232,7 +234,7 @@ Agradecemos a sua contribuição, a qual é fundamental para garantir a qualidad
 		<subject>Tarefa editorial</subject>
 		<body>{$editorialContactName},
 
-A submissão "{$articleTitle}" a {$journalName} foi-lhe designada para acompanhamento durante o processo editorial, como parte das suas funções como Editor de Secção.  
+A submissão "{$articleTitle}" a {$journalName} foi-lhe designada para acompanhamento durante o processo editorial, como parte das suas funções como Editor de Secção.
 
 URL da Submissão: {$submissionEditingUrl}
 Nome de utilizador: {$editorUsername}
@@ -281,7 +283,7 @@ Aceda ao sistema até {$weekLaterDate} para confirmar a sua disponibilidade ou n
 
 O prazo para a entrega da revisão é {$reviewDueDate}.
 
-Caso não possua o seu nome de utilizador e senha de acesso para aceder ao sistema, use o link a seguir para que o sistema crie uma nova senha que lhe será enviada via email, junto com os seus dados de acesso. 
+Caso não possua o seu nome de utilizador e senha de acesso para aceder ao sistema, use o link a seguir para que o sistema crie uma nova senha que lhe será enviada via email, junto com os seus dados de acesso.
 
 Criar nova senha: {$passwordResetUrl}
 
@@ -305,11 +307,11 @@ Resumo
 		<subject>A revista {$journalName} solicita revisão de artigo</subject>
 		<body>{$reviewerName},
 
-Acreditamos que o seu conhecimento será de grande valia para realizar a revisão do manuscrito "{$articleTitle}" submetido a {$journalName}. 
+Acreditamos que o seu conhecimento será de grande valia para realizar a revisão do manuscrito "{$articleTitle}" submetido a {$journalName}.
 
-As Directrizes para Revisão encontram-se no final desta mensagem, e o manuscrito está em anexo. 
+As Directrizes para Revisão encontram-se no final desta mensagem, e o manuscrito está em anexo.
 
-O prazo para entrega da revisão e as suas recomendações, enviadas para este email, é {$reviewDueDate}. 
+O prazo para entrega da revisão e as suas recomendações, enviadas para este email, é {$reviewDueDate}.
 
 Espero que considere assumir esta importante responsabilidade.
 
@@ -329,7 +331,7 @@ Directrizes para Revisão
 		<subject>Cancelamento de pedido de revisão</subject>
 		<body>{$reviewerName},
 
-Foi cancelado o pedido de revisão da submissão "{$articleTitle}" a {$journalName}. 
+Foi cancelado o pedido de revisão da submissão "{$articleTitle}" a {$journalName}.
 
 Lamentamos qualquer inconveniente causado e esperamos poder contar com a sua colaboração numa oportunidade futura.
 
@@ -360,9 +362,9 @@ Lamento informar que não estou disponível no momento para realizar a revisão 
 		<subject>Conclusão de revisão</subject>
 		<body>{$editorialContactName},
 
-Concluí a revisão da submissão "{$articleTitle}" à revista {$journalName}. 
+Concluí a revisão da submissão "{$articleTitle}" à revista {$journalName}.
 
-Os comentários e recomendações estão registados no sistema. 
+Os comentários e recomendações estão registados no sistema.
 
 Agradeço a oportunidade de prestar serviços à revista e estou à disposição para esclarecer quaisquer dúvidas.
 
@@ -373,7 +375,7 @@ Agradeço a oportunidade de prestar serviços à revista e estou à disposição
 		<subject>Agradecimento pela revisão</subject>
 		<body>{$reviewerName},
 
-Agradecemos ter concluído a revisão da submissão "{$articleTitle}" à revista {$journalName}. 
+Agradecemos ter concluído a revisão da submissão "{$articleTitle}" à revista {$journalName}.
 
 A sua contribuição é fundamental para a qualidade dos trabalhos publicados.
 
@@ -386,13 +388,13 @@ A sua contribuição é fundamental para a qualidade dos trabalhos publicados.
 
 Esta mensagem é apenas um lembrete relativamente ao pedido de revisão da submissão "{$articleTitle}" à revista {$journalName}. Esperamos receber a sua revisão até {$reviewDueDate} e aguardamos o recebimento assim que for possível.
 
-Caso não possua o nome de utilizador e a senha para aceder ao sistema da revista, use o link a seguir para criar uma nova senha, que lhe será enviada via email junto com os seus dados de acesso. 
+Caso não possua o nome de utilizador e a senha para aceder ao sistema da revista, use o link a seguir para criar uma nova senha, que lhe será enviada via email junto com os seus dados de acesso.
 
 Criar nova senha: {$passwordResetUrl}.
 
 URL da Submissão: {$submissionReviewUrl}
 
-Confirme a sua disponibilidade para concluir a revisão, contribuição vital para a qualidade desta publicação. 
+Confirme a sua disponibilidade para concluir a revisão, contribuição vital para a qualidade desta publicação.
 
 Aguardando o seu contacto,
 
@@ -411,7 +413,7 @@ Criar nova senha: {$passwordResetUrl}.
 
 URL da Submissão: {$submissionReviewUrl}
 
-Confirme a sua disponibilidade para concluir a revisão, contribuição vital para a qualidade desta publicação. 
+Confirme a sua disponibilidade para concluir a revisão, contribuição vital para a qualidade desta publicação.
 
 Aguardando o seu contacto,
 
@@ -422,19 +424,19 @@ Aguardando o seu contacto,
 		<subject>Lembrete automático de pedido de revisão</subject>
 		<body>{$reviewerName},
 
-Este é apenas um lembrete automático, referente ao pedido de revisão da submissão "{$articleTitle}" a {$journalName}. 
+Este é apenas um lembrete automático, referente ao pedido de revisão da submissão "{$articleTitle}" a {$journalName}.
 
 Esperávamos receber a revisão até {$reviewDueDate} e este email foi enviado automaticamente pois o prazo para entrega foi ultrapassado.
 
 Aguardamos o recebimento da revisão assim que for possível concluí-la.
 
-Caso não possua o nome de utilizador e a senha para aceder ao sistema da revista, use o link a seguir para criar uma nova senha, que lhe será enviada via email junto com os seus de acesso. 
+Caso não possua o nome de utilizador e a senha para aceder ao sistema da revista, use o link a seguir para criar uma nova senha, que lhe será enviada via email junto com os seus de acesso.
 
 Criar nova senha: {$passwordResetUrl}.
 
 URL da Submissão: {$submissionReviewUrl}
 
-Confirme a sua disponibilidade para concluir a revisão, contribuição vital para a qualidade desta publicação. 
+Confirme a sua disponibilidade para concluir a revisão, contribuição vital para a qualidade desta publicação.
 
 Aguardando o seu contacto,
 
@@ -445,7 +447,7 @@ Aguardando o seu contacto,
 		<subject>Lembrete automático de pedido de revisão</subject>
 		<body>{$reviewerName},
 
-Este é apenas um lembrete automático, referente ao pedido de revisão da submissão "{$articleTitle}" a {$journalName}. 
+Este é apenas um lembrete automático, referente ao pedido de revisão da submissão "{$articleTitle}" a {$journalName}.
 
 O prazo para entrega da revisão era {$reviewDueDate} e este email foi enviado automaticamente pois o prazo expirou.
 
@@ -457,7 +459,7 @@ Criar nova senha: {$passwordResetUrl}.
 
 URL da Submissão: {$submissionReviewUrl}
 
-Confirme a sua disponibilidade para concluir a revisão, contribuição vital para a qualidade desta publicação. 
+Confirme a sua disponibilidade para concluir a revisão, contribuição vital para a qualidade desta publicação.
 
 Aguardando o seu contacto,
 
@@ -481,7 +483,7 @@ URL da revista {$journalName}: {$journalUrl}
 URL da Submissão: {$submissionCopyeditingUrl}
 Nome de utilizador: {$copyeditorUsername}
 
-Caso não esteja disponível para assumir esta responsabilidade no momento, ou em caso de dúvidas, entre em contacto através deste email. 
+Caso não esteja disponível para assumir esta responsabilidade no momento, ou em caso de dúvidas, entre em contacto através deste email.
 
 Agradecemos desde já a sua colaboração, fundamental para a qualidade da revista.
 
@@ -496,7 +498,7 @@ A edição do texto do artigo "{$articleTitle}", submetido à revista {$journalN
 
 1. Aceda ao sistema da revista através da URL indicada nesta mensagem, com o nome de utilizador e a senha criadas no acto do registo (use a opção Esqueci a senha, caso necessário).
 2. Clique no ficheiro disponível no passo 1 "Edição de Texto inicial" e abra a versão editada.
-3. Avalie as sugestões, usando o Controlo de Alterações do Word, e responda às perguntas. 
+3. Avalie as sugestões, usando o Controlo de Alterações do Word, e responda às perguntas.
 4. Guarde o ficheiro no seu computador e envie no passo 2 "Edição de Texto do autor".
 5. Clique no ícone de email sob CONCLUÍDO e envie a mensagem ao editor.
 
@@ -515,7 +517,7 @@ Agradecendo a atenção dispensada,
 		<subject>Agradecimento pela edição de texto</subject>
 		<body>{$copyeditorName},
 
-Agradecemos a conclusão da edição do texto do manuscrito "{$articleTitle}", submetido à revista {$journalName}. 
+Agradecemos a conclusão da edição do texto do manuscrito "{$articleTitle}", submetido à revista {$journalName}.
 
 A sua contribuição é fundamental para a qualidade desta publicação.
 
@@ -544,7 +546,7 @@ Nome de utilizador: {$authorUsername}
 
 Esta é a última oportunidade para realizar alterações substanciais no documento. Em etapa posterior, lhe será solicitada a leitura de prova das composições finais, onde será possível solicitar apenas pequenas correcções de redacção e visual.
 
-Caso não esteja disponível para assumir esta responsabilidade no momento, ou em caso de dúvidas, entre em contacto através deste email. 
+Caso não esteja disponível para assumir esta responsabilidade no momento, ou em caso de dúvidas, entre em contacto através deste email.
 
 Agradecemos desde já a sua colaboração, fundamental para a qualidade da revista.
 
@@ -608,7 +610,7 @@ Concluí a edição da versão final do manuscrito "{$articleTitle}", submetido 
 		<subject>Agradecimento pela avaliação final da edição de texto</subject>
 		<body>{$copyeditorName},
 
-Agradecemos a conclusão da edição do texto do manuscrito "{$articleTitle}", submetido à revista {$journalName}. 
+Agradecemos a conclusão da edição do texto do manuscrito "{$articleTitle}", submetido à revista {$journalName}.
 
 A preparação da versão final para composição é uma etapa fundamental do processo editorial.
 
@@ -631,7 +633,7 @@ URL da revista {$journalName}: {$journalUrl}
 URL da Submissão: {$submissionLayoutUrl}
 Nome de utilizador: {$layoutEditorUsername}
 
-Caso não esteja disponível para assumir esta responsabilidade no momento, ou em caso de dúvidas, entre em contacto através deste email. 
+Caso não esteja disponível para assumir esta responsabilidade no momento, ou em caso de dúvidas, entre em contacto através deste email.
 
 Agradecemos desde já a sua colaboração, fundamental para a qualidade da revista.
 
@@ -642,7 +644,7 @@ Agradecemos desde já a sua colaboração, fundamental para a qualidade da revis
 		<subject>Composições concluídas</subject>
 		<body>{$editorialContactName},
 
-As composições do manuscrito "{$articleTitle}", submetido à revista {$journalName}, estão prontas para leitura de provas. 
+As composições do manuscrito "{$articleTitle}", submetido à revista {$journalName}, estão prontas para leitura de provas.
 
 Em caso de dúvidas, entre em contacto através deste email.
 
@@ -653,7 +655,7 @@ Em caso de dúvidas, entre em contacto através deste email.
 		<subject>Agradecimento pelas composições</subject>
 		<body>{$layoutEditorName},
 
-Agradecemos a preparação das composições do manuscrito "{$articleTitle}", submetido à revista {$journalName}. 
+Agradecemos a preparação das composições do manuscrito "{$articleTitle}", submetido à revista {$journalName}.
 
 A sua contribuição é fundamental para o processo editorial e a qualidade desta publicação.
 
@@ -676,7 +678,7 @@ Solicitamos a leitura de provas do manuscrito "{$articleTitle}", submetido à re
 URL da Submissão: {$submissionUrl}
 Nome de utilizador: {$authorUsername}
 
-Em caso de dúvidas, entre em contacto através deste email. 
+Em caso de dúvidas, entre em contacto através deste email.
 
 Agradecemos desde já a sua colaboração, fundamental para a qualidade da revista.
 
@@ -696,11 +698,11 @@ Concluí a leitura de provas do manuscrito "{$articleTitle}", submetido à revis
 		<subject>Agradecimento pela leitura de provas pelo autor</subject>
 		<body>{$authorName},
 
-Agradecemos a conclusão da leitura de provas do seu manuscrito, "{$articleTitle}" submetido à revista {$journalName}. 
+Agradecemos a conclusão da leitura de provas do seu manuscrito, "{$articleTitle}" submetido à revista {$journalName}.
 
 Em breve o seu trabalho estará pronto para publicação.
 
-Caso tenha activado o serviço de notificação, você receberá via email o Sumário assim que a revista for publicada. 
+Caso tenha activado o serviço de notificação, você receberá via email o Sumário assim que a revista for publicada.
 
 Em caso de dúvidas, entre em contacto através deste email.
 
@@ -711,7 +713,7 @@ Em caso de dúvidas, entre em contacto através deste email.
 		<subject>Pedido de leitura de provas</subject>
 		<body>{$proofreaderName},
 
-Solicito a leitura de provas do manuscrito "{$articleTitle}", submetido à revista {$journalName}, conforme instruções a seguir: 
+Solicito a leitura de provas do manuscrito "{$articleTitle}", submetido à revista {$journalName}, conforme instruções a seguir:
 
 1. Clique no URL da submissão, indicada mais adiante nesta mensagem.
 2. Aceda ao sistema da revista e leia as INSTRUÇÕES PARA LEITURA DE PROVAS.
@@ -723,7 +725,7 @@ Solicito a leitura de provas do manuscrito "{$articleTitle}", submetido à revis
 URL da Submissão: {$submissionUrl}
 Nome de utilizador: {$proofreaderUsername}
 
-Caso não esteja disponível para assumir esta responsabilidade no momento, ou em caso de dúvidas, entre em contacto através deste email. 
+Caso não esteja disponível para assumir esta responsabilidade no momento, ou em caso de dúvidas, entre em contacto através deste email.
 
 Agradecemos desde já a sua colaboração, fundamental para a qualidade da revista.
 
@@ -743,7 +745,7 @@ Concluí a leitura de provas do manuscrito "{$articleTitle}", submetido à revis
 		<subject>Agradecimento pela leitura de provas</subject>
 		<body>{$proofreaderName},
 
-Agradecemos a leitura de provas do manuscrito "{$articleTitle}", submetido à revista {$journalName}. 
+Agradecemos a leitura de provas do manuscrito "{$articleTitle}", submetido à revista {$journalName}.
 
 A sua contribuição é fundamental para a qualidade desta publicação.
 
@@ -765,7 +767,7 @@ URL da revista {$journalName}: {$journalUrl}
 URL da Submissão: {$submissionUrl}
 Nome de utilizador: {$layoutEditorUsername}
 
-Caso não esteja disponível para assumir esta responsabilidade no momento, ou em caso de dúvidas, entre em contacto através deste email. 
+Caso não esteja disponível para assumir esta responsabilidade no momento, ou em caso de dúvidas, entre em contacto através deste email.
 
 Agradecemos desde já a sua colaboração, fundamental para a qualidade da revista.
 
@@ -785,7 +787,7 @@ As composições do manuscrito "{$articleTitle}", submetido à revista  {$journa
 		<subject>Agradecimento pela leitura de provas pelo Editor de Layout</subject>
 		<body>{$layoutEditorName},
 
-Agradecemos a conclusão da leitura de provas e correcções realizadas às composições do manuscrito "{$articleTitle}", submetido à revista {$journalName}. 
+Agradecemos a conclusão da leitura de provas e correcções realizadas às composições do manuscrito "{$articleTitle}", submetido à revista {$journalName}.
 
 A sua contribuição é fundamental para a qualidade desta publicação.
 
@@ -814,9 +816,9 @@ Agradecendo desde já a sua atenção,
 		<subject>Registo como revisor na revista {$journalName}</subject>
 		<body>{$reviewrName},
 
-Devido ao conhecimento excepcional na sua área de investigação/intervenção, tomamos a liberdade de registá-lo na base de dados de revisores da nossa revista, {$journalName}. 
+Devido ao conhecimento excepcional na sua área de investigação/intervenção, tomamos a liberdade de registá-lo na base de dados de revisores da nossa revista, {$journalName}.
 
-O seu registo não significa assumir responsabilidade alguma, apenas permitindo-nos solicitar a sua revisão de submissões, de acordo com seus interesses informados no perfil. 
+O seu registo não significa assumir responsabilidade alguma, apenas permitindo-nos solicitar a sua revisão de submissões, de acordo com seus interesses informados no perfil.
 
 Ao ser convidado para rever um artigo, estarão disponíveis informações como o título e resumo da submissão, podendo aceitar ou rejeitar o convite. Caso deseje ser removido da lista, basta entrar em contacto a qualquer tempo solicitando a sua remoção.
 
@@ -869,20 +871,11 @@ A senha para desactivar os e-mails é: {$password}
 {$principalContactSignature}</body>
 		<description>Esta mensagem é enviada a utilizadores não registados que acabaram de se registar no serviço de notificações via lista de correio.</description>
 	</email_text>
-	<email_text key="NOTIFICATION_MAILLIST_PASSWORD">
-		<subject>Informações de lista de correio de notificações de {$siteTitle}</subject>
-		<body>A sua nova senha para desactivar notificações via e-mail é: {$password}
-
-Caso não deseje mais receber notificações via e-mail, aceda a {$unsubscribeLink} e forneça o seu e-mail e senha.
-
-{$principalContactSignature}</body>
-		<description>Esta mensagem é enviada a utilizadores não registados na lista de correio quando indicam que esqueceram a senha ou não conseguem aceder ao sistema. Oferece o URL para que possam criar uma nova senha.</description>
-	</email_text>
 	<email_text key="EDITOR_DECISION_ACCEPT">
 		<subject>Decisão editorial</subject>
 		<body>{$authorName},
 
-Foi tomada uma decisão sobre o artigo submetido à revista {$journalTitle}, 
+Foi tomada uma decisão sobre o artigo submetido à revista {$journalTitle},
 "{$articleTitle}".
 
 A decisão é: INSERIR DECISÃO EDITORIAL
@@ -1028,5 +1021,149 @@ Obrigado!
 {$userFirstName}
 Editor, {$journalName}</body>
 		<description></description>
+	</email_text>
+	<email_text key="REVIEW_REQUEST_SUBSEQUENT">
+		<subject>Pedido de Revisão Artigo</subject>
+		<body>{$reviewerName}:
+
+O assunto é respeitante ao manuscrito "{$articleTitle}," o qual foi submetido para {$journalName}.
+
+Na sequência da revisão da versão anterior do manuscrito, o autor já apresentou uma versão revista do seu artigo. Agradecemos a sua ajuda na revisão do artigo.
+
+Por favor aceda à pagina da revista até {$weekLaterDate} para indicar se aceita ou o pedido de revisão, assim como para aceder à submissão e registar a sua revisão e recomendação. O endereço da revista é {$journalUrl}
+
+O prazo de revisão do artigo é {$reviewDueDate}.
+
+Se não possui o seu nome de utilizador ou senha, pode usar este link para recuperar a senha (a qual será enviada por e-mail, assimo como o nome de utilizador). {$passwordResetUrl}
+
+URL submissão: {$submissionReviewUrl}
+
+Obrigado pela aceitação do convite para revisão.
+
+{$editorialContactSignature}
+
+
+"{$articleTitle}"
+
+{$abstractTermIfEnabled}
+{$articleAbstract}</body>
+		<description>Este e-mail do Editor de Secção para um Revisor solicita que o Revisor aceite ou recuse a tarefa de revisão de uma submissão para uma segunda ou nova ronda de revisão. Fornece informação sobre a submissão  tal como o título e resumo, a data de fim da revisão, e como aceder à submissão. Esta mensagem é usada quando o Processo de Revisão Padrão está seleccionado em Configuração Revista, Passo 2. (Em alternativa ver REVIEW_REQUEST_ATTACHED_SUBSEQUENT.)</description>
+	</email_text>
+	<email_text key="REVIEW_REQUEST_ONECLICK_SUBSEQUENT">
+		<subject>Pedido de Revisão Artigo</subject>
+		<body>{$reviewerName}:
+
+O assunto diz respeito ao "{$articleTitle}," o qual foi submetido para {$journalName}.
+
+Na sequência da revisão da versão anterior do manuscrito, o autor já submeteu uma versão revista do seu artigo. Nós apreciaríamos o seu contributo na sua avaliação.
+
+Por favor aceda à página da revista até {$weekLaterDate} para indicar se aceita ou não o pedido de revisão, assim como aceder à submissão e registar a sua revisão e recomendações.
+
+O prazo de revisão é {$reviewDueDate}.
+
+URL submissão: {$submissionReviewUrl}
+
+Obrigado por aceitar este pedido de revisão.
+
+{$editorialContactSignature}
+
+
+
+"{$articleTitle}"
+
+{$abstractTermIfEnabled}
+{$articleAbstract}</body>
+		<description>Este e-mail do Editor de Secção para o Revisor solicita a este a aceitação ou recusa da tarefa de revisão de artigo submetido para uma segunda ronda de revisão. Fornece informação sobre a submissão tal como título e resumo, prazo de revisão, e como aceder ao artigo. Esta mensagem é usada no Processo Padrão de Revisão seleccionado em Configuração Revista, Passo 2, e o acesso um-clique do revisor é activado.</description>
+	</email_text>
+	<email_text key="REVIEW_REQUEST_ATTACHED_SUBSEQUENT">
+		<subject>Pedido Revisão Artigo</subject>
+		<body>{$reviewerName}:
+
+This regards the manuscript "{$articleTitle}," which is under consideration by {$journalName}.
+
+Following the review of the previous version of the manuscript, the authors have now submitted a revised version of their paper. We would appreciate it if you could help evaluate it.
+
+The Review Guidelines for this journal are appended below, and the submission is attached to this email. Your review of the submission, along with your recommendation, should be emailed to me by {$reviewDueDate}.
+
+Please indicate in a return email by {$weekLaterDate} whether you are able and willing to do the review.
+
+Thank you for considering this request.
+
+{$editorialContactSignature}
+
+
+Review Guidelines
+
+{$reviewGuidelines}</body>
+		<description>This email is sent by the Section Editor to a Reviewer to request that they accept or decline the task of reviewing a submission for a second or greater round of review. It includes the submission as an attachment. This message is used when the Email-Attachment Review Process is selected in Journal Setup, Step 2. (Otherwise see REVIEW_REQUEST_SUBSEQUENT.)</description>
+	</email_text>
+	<email_text key="GIFT_AVAILABLE">
+		<subject>{$giftNoteTitle}</subject>
+		<body>Dear {$recipientFirstName},
+
+{$buyerFullName} would like to share a gift with you at {$giftJournalName}:
+
+{$giftDetails}
+
+
+{$giftNote}
+
+
+You will receive a follow-up email that includes login details and instructions for redeeming your gift.
+
+We hope that you enjoy your gift!
+
+{$giftContactSignature}</body>
+		<description>This email notifies a gift recipient that a gift has been purchased and is available for redemption.</description>
+	</email_text>
+	<email_text key="GIFT_USER_REGISTER">
+		<subject>Redeem Your Gift: Login Details</subject>
+		<body>Dear {$recipientFirstName},
+
+{$buyerFullName} would like to share a gift with you at {$giftJournalName}:
+
+{$giftDetails}
+
+
+To redeem your gift, please login to the journal website at {$giftUrl}
+
+Your username: {$username}
+Your password: {$password}
+
+Once logged in, you can change your password at any time.
+
+We hope that you enjoy your gift!
+
+{$giftContactSignature}</body>
+		<description>This email notifies a gift recipient of their login details for a new account.</description>
+	</email_text>
+	<email_text key="GIFT_USER_LOGIN">
+		<subject>Redeem Your Gift: Login Details</subject>
+		<body>Dear {$recipientFirstName},
+
+{$buyerFullName} would like to share a gift with you at {$giftJournalName}:
+
+{$giftDetails}
+
+
+To redeem your gift, please login to the journal website at {$giftUrl}
+
+Your username: {$username}
+
+We hope that you enjoy your gift!
+
+{$giftContactSignature}</body>
+		<description>This email notifies a gift recipient of their login details.</description>
+	</email_text>
+	<email_text key="REVISED_VERSION_NOTIFY">
+		<subject>Versão da Revisão Uploaded</subject>
+		<body>{$editorialContactName}:
+
+A revised version of "{$articleTitle}" has been uploaded by the author {$authorName}.
+
+Submission URL: {$submissionUrl}
+
+{$editorialContactSignature}</body>
+		<description>This email is automatically sent to the assigned editor when author uploads a revised version of an article.</description>
 	</email_text>
 </email_texts>

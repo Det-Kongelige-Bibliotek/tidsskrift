@@ -3,7 +3,8 @@
 /**
  * @file classes/user/form/ProfileForm.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ProfileForm
@@ -11,9 +12,6 @@
  *
  * @brief Form to edit user profile.
  */
-
-// $Id$
-
 
 import('lib.pkp.classes.form.Form');
 
@@ -38,6 +36,7 @@ class ProfileForm extends Form {
 		$this->addCheck(new FormValidator($this, 'lastName', 'required', 'user.profile.form.lastNameRequired'));
 		$this->addCheck(new FormValidatorUrl($this, 'userUrl', 'optional', 'user.profile.form.urlInvalid'));
 		$this->addCheck(new FormValidatorEmail($this, 'email', 'required', 'user.profile.form.emailRequired'));
+		$this->addCheck(new FormValidatorORCID($this, 'orcid', 'optional', 'user.profile.form.orcidInvalid'));
 		$this->addCheck(new FormValidatorCustom($this, 'email', 'required', 'user.register.form.emailExists', array(DAORegistry::getDAO('UserDAO'), 'userExistsByEmail'), array($user->getId(), true), true));
 		$this->addCheck(new FormValidatorPost($this));
 	}
@@ -111,7 +110,7 @@ class ProfileForm extends Form {
 		$userSettingsDao =& DAORegistry::getDAO('UserSettingsDAO');
 		$userDao =& DAORegistry::getDAO('UserDAO');
 
-		$journals =& $journalDao->getEnabledJournals();
+		$journals =& $journalDao->getJournals(true);
 		$journals =& $journals->toArray();
 
 		foreach ($journals as $thisJournal) {
@@ -124,7 +123,7 @@ class ProfileForm extends Form {
 
 		$templateMgr->assign('genderOptions', $userDao->getGenderOptions());
 
-		$journals =& $journalDao->getEnabledJournals();
+		$journals =& $journalDao->getJournals(true);
 		$journals =& $journals->toArray();
 
 		$countryDao =& DAORegistry::getDAO('CountryDAO');
@@ -176,6 +175,7 @@ class ProfileForm extends Form {
 			'affiliation' => $user->getAffiliation(null), // Localized
 			'signature' => $user->getSignature(null), // Localized
 			'email' => $user->getEmail(),
+			'orcid' => $user->getData('orcid'),
 			'userUrl' => $user->getUrl(),
 			'phone' => $user->getPhone(),
 			'fax' => $user->getFax(),
@@ -205,6 +205,7 @@ class ProfileForm extends Form {
 			'affiliation',
 			'signature',
 			'email',
+			'orcid',
 			'userUrl',
 			'phone',
 			'fax',
@@ -245,6 +246,7 @@ class ProfileForm extends Form {
 		$user->setAffiliation($this->getData('affiliation'), null); // Localized
 		$user->setSignature($this->getData('signature'), null); // Localized
 		$user->setEmail($this->getData('email'));
+		$user->setData('orcid', $this->getData('orcid'));
 		$user->setUrl($this->getData('userUrl'));
 		$user->setPhone($this->getData('phone'));
 		$user->setFax($this->getData('fax'));
@@ -307,7 +309,7 @@ class ProfileForm extends Form {
 		$openAccessNotify = Request::getUserVar('openAccessNotify');
 
 		$userSettingsDao =& DAORegistry::getDAO('UserSettingsDAO');
-		$journals =& $journalDao->getEnabledJournals();
+		$journals =& $journalDao->getJournals(true);
 		$journals =& $journals->toArray();
 
 		foreach ($journals as $thisJournal) {

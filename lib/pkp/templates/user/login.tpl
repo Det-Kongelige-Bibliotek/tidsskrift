@@ -1,12 +1,12 @@
 {**
- * login.tpl
+ * templates/user/login.tpl
  *
- * Copyright (c) 2000-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2000-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * User login form.
  *
- * $Id$
  *}
 {strip}
 {assign var="pageTitle" value="user.login"}
@@ -26,16 +26,16 @@
 	<br />
 {/if}
 
-{if $error}
-	<span class="formError">{translate key="$error" reason=$reason}</span>
-	<br />
-	<br />
-{/if}
-
 {if $implicitAuth}
 	<a id="implicitAuthLogin" href="{url page="login" op="implicitAuthLogin"}">Login</a>
 {else}
-	<form id="signinForm" name="login" method="post" action="{$loginUrl}">
+	<form id="signinForm" method="post" action="{$loginUrl}">
+{/if}
+
+{if $error}
+	<span class="pkp_form_error">{translate key="$error" reason=$reason}</span>
+	<br />
+	<br />
 {/if}
 
 <input type="hidden" name="source" value="{$source|strip_unsafe_html|escape}" />
@@ -71,10 +71,9 @@
 
 <script type="text/javascript">
 <!--
-	document.login.{if $username}loginPassword{else}loginUsername{/if}.focus();
+	document.getElementById('{if $username}loginPassword{else}loginUsername{/if}').focus();
 // -->
 </script>
 </form>
 
 {include file="common/footer.tpl"}
-

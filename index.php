@@ -45,7 +45,8 @@
  *
  * @file index.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @ingroup index
@@ -54,8 +55,6 @@
  * dispatcher to delegate to the appropriate request handler.
  */
 
-// $Id$
-
 // Initialize global environment
 define('INDEX_FILE_LOCATION', __FILE__);
 require('./lib/pkp/includes/bootstrap.inc.php');
@@ -63,4 +62,5 @@ require('./lib/pkp/includes/bootstrap.inc.php');
 // Serve the request
 $application =& PKPApplication::getApplication();
 $application->execute();
+
 ?>

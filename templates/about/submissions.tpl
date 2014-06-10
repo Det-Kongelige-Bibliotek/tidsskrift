@@ -1,12 +1,12 @@
 {**
- * submissions.tpl
+ * templates/about/submissions.tpl
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * About the Journal / Submissions.
  *
- * $Id$
  *}
 {strip}
 {assign var="pageTitle" value="about.submissions"}
@@ -92,7 +92,7 @@
 		{$currentJournal->getLocalizedSetting('publicationFeeDescription')|nl2br}<p>	
 	{/if}
 	{if $currentJournal->getLocalizedSetting('waiverPolicy') != ''}
-		<p>{$currentJournal->getLocalizedSetting('waiverPolicy')|escape}</p>
+		<p>{$currentJournal->getLocalizedSetting('waiverPolicy')|nl2br}</p>
 	{/if}
 </div>
 {/if}

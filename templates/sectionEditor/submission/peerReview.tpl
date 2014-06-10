@@ -1,12 +1,12 @@
 {**
- * peerReview.tpl
+ * templates/sectionEditor/submission/peerReview.tpl
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Subtemplate defining the peer review table.
  *
- * $Id$
  *}
 <div id="submission">
 <h3>{translate key="article.submission"}</h3>
@@ -135,7 +135,7 @@
 	</table>
 
 	<table width="100%" class="data">
- 	<tr valign="top">
+	<tr valign="top">
 		<td class="label">{translate key="submission.reviewForm"}</td>
 		<td>
 		{if $reviewAssignment->getReviewFormId()}
@@ -253,7 +253,7 @@
 					{foreach from=$reviewAssignment->getReviewerFileRevisions() item=reviewerFile key=key}
 					<tr valign="top">
 						<td valign="middle">
-							<form name="authorView{$reviewAssignment->getId()}" method="post" action="{url op="makeReviewerFileViewable"}">
+							<form id="authorView{$reviewAssignment->getId()}" method="post" action="{url op="makeReviewerFileViewable"}">
 								<a href="{url op="downloadFile" path=$submission->getId()|to_array:$reviewerFile->getFileId():$reviewerFile->getRevision()}" class="file">{$reviewerFile->getFileName()|escape}</a>&nbsp;&nbsp;{$reviewerFile->getDateModified()|date_format:$dateFormatShort}
 								<input type="hidden" name="reviewId" value="{$reviewAssignment->getId()}" />
 								<input type="hidden" name="articleId" value="{$submission->getId()}" />

@@ -4,12 +4,12 @@
 <!--
   * 000012.xml
   *
-  * Copyright (c) 2003-2012 John Willinsky
+  * Copyright (c) 2013-2014 Simon Fraser University Library
+  * Copyright (c) 2003-2014 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Användare - Skapa ny användare 
   *
-  * $Id$
   -->
 
 <topic id="journal/topic/000012" locale="en_US" title="Skapa ny användare" toc="journal/toc/000002" key="journal.users.createNewUser">

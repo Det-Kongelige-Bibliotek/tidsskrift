@@ -1,12 +1,12 @@
 {**
- * comment.tpl
+ * templates/submission/comment/comment.tpl
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Form to enter comments.
  *
- * $Id$
  *}
 {strip}
 {include file="submission/comment/header.tpl"}

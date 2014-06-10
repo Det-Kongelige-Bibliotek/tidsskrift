@@ -3,7 +3,8 @@
 /**
  * @file classes/user/PKPUserSettingsDAO.inc.php
  *
- * Copyright (c) 2000-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2000-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PKPUserSettingsDAO
@@ -13,10 +14,15 @@
  * @brief Operations for retrieving and modifying user settings.
  */
 
-// $Id$
-
 
 class PKPUserSettingsDAO extends DAO {
+	/**
+	 * Constructor
+	 */
+	function PKPUserSettingsDAO() {
+		parent::DAO();
+	}
+
 	/**
 	 * Retrieve a user setting value.
 	 * @param $userId int

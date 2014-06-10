@@ -2,14 +2,14 @@
 <!DOCTYPE locale SYSTEM "../../lib/pkp/dtd/locale.dtd">
 
 <!--
-  * /locale/nl_NL/admin.xml
+  * locale/nl_NL/admin.xml
   *
-  * Copyright (c) 2003-2012 John Willinsky
+  * Copyright (c) 2013-2014 Simon Fraser University Library
+  * Copyright (c) 2003-2014 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings for the nl_NL (Nederlands) locale.
   *
-  * $Id$
   -->
 
 <locale name="nl_NL" full_name = "Nederlands">
@@ -57,7 +57,42 @@
 	<message key="admin.mergeUsers.into.description">Kies de gebruiker aan wie de auteursgegevens, redactietaken enz. van de vorige gebruiker toegekend moeten worden.</message>
 	<message key="admin.mergeUsers.from.description">Kies de gebruiker wiens gevens overgeheveld moeten worden naar een ander gebruikersaccount (bijvoorbeeld wanneer iemand twee gebruikersaccounts heeft). Het geselceteerde account zal verwijderd worden en alle inzendingen, taken enzovoorts worden overgedragen naar het tweede account.</message>
 	<message key="admin.mergeUsers.allUsers">Alle ingeschreven gebruikers</message>
-	<message key="admin.mergeUsers.confirm">Weet u zeker dat u het account met gebruikersnaam "{$oldUsername}" wilt samenvoegen met gebruikersnaam "{$newUsername}"? Het account met gebruikersnaam "{$oldUsername}" bestaat dan niet meer. Deze actie kan niet ongedaan gemaakt worden.</message>
+	<message key="admin.mergeUsers.confirm">Weet u zeker dat u de geselecteerde {$oldAccountCount} account(s) wilt samenvoegen met gebruikersnaam "{$newUsername}"? de geselecteerde {$oldAccountCount} account(s) bestaan dan niet meer. Deze actie kan niet ongedaan gemaakt worden.</message>
 	<message key="admin.mergerUsers.noneEnrolled">Geen gebruikers.</message>
 	<message key="admin.locale.maybeIncomplete">De gemarkeerde talen kunnen incompleet zijn.</message>
+	<message key="admin.categories.editTitle">Categorie bewerken</message>
+	<message key="admin.categories.name">Naam</message>
+	<message key="admin.categories.disableCategories">Organiseer de tijdschriften niet in categorieën.</message>
+	<message key="admin.categories.enableCategories">Geef tijdschriftbeheerders de mogelijkheid tijdschriften in categorieën te organiseren.</message>
+	<message key="admin.categories.createTitle">Categorie maken</message>
+	<message key="admin.categories.create">Maak een nieuwe categorie</message>
+	<message key="admin.categories.noneCreated">Er zijn nog geen categorieën.</message>
+	<message key="admin.categories.confirmDelete">Weet u zeker dat u deze categorie wilt verwijderen?</message>
+	<message key="admin.categories.nameRequired">Een categorienaam is verplicht</message>
+	<message key="admin.settings.journalsList.showTitle">Titel van het tijdschrift</message>
+	<message key="admin.settings.journalsList.showDescription">Beschrijving van het tijdschrift.</message>
+	<message key="admin.categories">Categorieën</message>
+	<message key="admin.categories.enable.description">De sitebeheerder kan hier een set categorieën definiëren om te helpen de tijdschriften te organiseren. Tijdschriftbeheerders kunnen deze categorieën aan hun tijdschrift toekennen. Gebruikers kunnen de tijdschriften op categorie bekijken.</message>
+	<message key="admin.settings.options">Opties</message>
+	<message key="admin.settings.usePaging">Verdeel de lijst in pagina's als er veel tijdschriften zijn</message>
+	<message key="admin.settings.journalsList">Tijdschriftelementen</message>
+	<message key="admin.settings.journalsList.description">Kies de tijdschriftelementen die voor ieder tijdschrift getoond worden op de pagina van de site</message>
+	<message key="admin.settings.journalsList.showThumbnail">Miniatuur van het tijdschrift</message>
+	<message key="admin.settings.useAlphalist">Toon een alfabetische lijst op de homepagina, om bij sites met veel tijdschriften snel op alfabet te kunnen navigeren.</message>
+	<message key="admin.copyAccessLogFileTool.error.creatingFolder">Fout: kan tijdelijke map niet aanmaken {$tmpDir}</message>
+	<message key="admin.copyAccessLogFileTool.error.acessingFile">Fout: bestand {$filePath} bestaat niet of is niet toegankelijk.</message>
+	<message key="admin.copyAccessLogFileTool.error.copyingFile">Fout: can bestand niet kopiëren van {$filePath} naar {$tmpFilePath}</message>
+	<message key="admin.copyAccessLogFileTool.error.deletingFile">Fout: kan bestand niet weggooien {$tmpFilePath}</message>
+	<message key="admin.copyAccessLogFileTool.warning.fileAlreadyExists">Waarschuwing: bestand {$filePath} bestaat al in de map met gebruiksstatistieken</message>
+	<message key="admin.copyAccessLogFileTool.success">Success: {$filePath} naar {$destinationPath}</message>
+	<message key="admin.settings.defaultMetricDescription">Uw OJS installatie geconfigureerd voor meer dan een gebruiksmeting. Gebruiksstatistieken worden in verschillende contexten getoond.
+		Soms wordt een enkele statistiek getoond, bv, om een lijst van meestgebruikte artikelen te tonen of om 
+		zoekresultaten te wegen. Kies een van de methodes als standaard.</message>
+	<message key="admin.copyAccessLogFileTool.usage">Kopieer de doorgegeven apace logbestanden, met een filter op de regelt voor deze installatie,
+naar de map met huidige bestanden in de  UsageStatsPlugin stage map. Moet draaien onder een gebruiker met genoeg rechten om de apache acces log bestanden te lezen.
+
+Dit gereedschap kopieert alleen bestanden die niet al in de usageStats mappen zitten  (stage, processing, archive, reject).
+
+Gebruik: {$scriptName} path/to/apache/log/file.log
+Gebruik (verwerk alle bestanden in een map): {$scriptName} path/to/apache/directory</message>
 </locale>

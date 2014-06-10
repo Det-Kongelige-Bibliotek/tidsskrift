@@ -3,7 +3,8 @@
 /**
  * @file classes/submission/form/ReviewFormResponseForm.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ReviewFormResponseForm
@@ -57,12 +58,6 @@ class ReviewFormResponseForm extends Form {
 		$reviewAssignmentDao =& DAORegistry::getDAO('ReviewAssignmentDAO');
 		$reviewAssignment = $reviewAssignmentDao->getById($this->reviewId);
 
-		$editorPreview = Request::getRequestedPage() != 'reviewer';
-
-		if (!$editorPreview) {
-			ReviewerHandler::setupTemplate(true, $reviewAssignment->getSubmissionId(), $this->reviewId);
-		}
-
 		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->assign('pageTitle', 'submission.reviewFormResponse');
 		$templateMgr->assign_by_ref('reviewForm', $reviewForm);
@@ -71,7 +66,7 @@ class ReviewFormResponseForm extends Form {
 		$templateMgr->assign('reviewId', $this->reviewId);
 		$templateMgr->assign('articleId', $reviewAssignment->getSubmissionId());
 		$templateMgr->assign('isLocked', isset($reviewAssignment) && $reviewAssignment->getDateCompleted() != null);
-		$templateMgr->assign('editorPreview', $editorPreview);
+		$templateMgr->assign('editorPreview', Request::getRequestedPage() != 'reviewer');
 
 		parent::display();
 	}

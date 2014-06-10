@@ -3,7 +3,8 @@
 /**
  * @file classes/core/PKPProfiler.inc.php
  *
- * Copyright (c) 2000-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2000-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PKPProfiler
@@ -12,7 +13,6 @@
  * @brief Basic shell class used to wrap the PHP Quick Profiler Class
  */
 
-// $Id$
 
 require_once('./lib/pkp/lib/pqp/classes/PhpQuickProfiler.php');
 
@@ -61,3 +61,5 @@ class PKPDBProfiler {
 		$this->queries =& Registry::get('queries', true, array());
 	}
 }
+
+?>

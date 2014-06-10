@@ -1,9 +1,10 @@
 <?php
 
 /**
- * @file LanguageToggleBlockPlugin.inc.php
+ * @file plugins/blocks/languageToggle/LanguageToggleBlockPlugin.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class LanguageToggleBlockPlugin
@@ -11,9 +12,6 @@
  *
  * @brief Class for language selector block plugin
  */
-
-// $Id$
-
 
 import('lib.pkp.classes.plugins.BlockPlugin');
 
@@ -100,6 +98,8 @@ class LanguageToggleBlockPlugin extends BlockPlugin {
 			$templateMgr->assign('enableLanguageToggle', true);
 			$templateMgr->assign('languageToggleLocales', $locales);
 		}
+
+		$templateMgr->addStyleSheet(Request::getBaseUrl() . '/' . $this->getPluginPath() . '/styles/languageToggle.css', STYLE_SEQUENCE_CORE);
 
 		return parent::getContents($templateMgr);
 	}

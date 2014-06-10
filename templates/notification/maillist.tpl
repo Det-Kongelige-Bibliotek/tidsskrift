@@ -1,7 +1,8 @@
 {**
- * index.tpl
+ * templates/notification/maillist.tpl
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Displays the notification settings page and unchecks  
@@ -72,7 +73,7 @@
 		<li>&#187; {translate key="notification.mailList.protectedContent" subscribeUrl=$url}
 	{/if}
 <li>&#187; <a href="{url page="about" op="submissions" anchor="privacyStatement"}">{translate key="about.privacyStatement"}</a></li>
-<ul>
+</ul>
 
 </form>
 

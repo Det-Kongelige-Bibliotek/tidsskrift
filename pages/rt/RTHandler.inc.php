@@ -1,9 +1,10 @@
 <?php
 
 /**
- * @file RTHandler.inc.php
+ * @file pages/rt/RTHandler.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class RTHandler
@@ -11,9 +12,6 @@
  *
  * @brief Handle Reading Tools requests.
  */
-
-// $Id$
-
 
 import('lib.pkp.classes.rt.RT');
 
@@ -30,34 +28,6 @@ class RTHandler extends ArticleHandler {
 	function RTHandler(&$request) {
 		parent::ArticleHandler($request);
 	}
-	/**
-	 * Display an author biography
-	 * @param $args array
-	 * @param $request Request
-	 */
-	function bio($args, &$request) {
-		$router =& $request->getRouter();
-		$this->setupTemplate();
-		$articleId = isset($args[0]) ? $args[0] : 0;
-		$galleyId = isset($args[1]) ? (int) $args[1] : 0;
-		$this->validate($request, $articleId, $galleyId);
-
-		$journal =& $router->getContext($request);
-		$article =& $this->article;
-
-		$rtDao =& DAORegistry::getDAO('RTDAO');
-		$journalRt =& $rtDao->getJournalRTByJournal($journal);
-
-		if (!$journalRt || !$journalRt->getAuthorBio()) {
-			$request->redirect(null, $router->getRequestedPage($request));
-		}
-
-		$templateMgr =& TemplateManager::getManager();
-		$templateMgr->assign('articleId', $articleId);
-		$templateMgr->assign_by_ref('article', $article);
-		$templateMgr->assign('galleyId', $galleyId);
-		$templateMgr->display('rt/bio.tpl');
-	}
 
 	/**
 	 * Display the article metadata
@@ -66,7 +36,7 @@ class RTHandler extends ArticleHandler {
 	 */
 	function metadata($args, &$request) {
 		$router =& $request->getRouter();
-		$this->setupTemplate();
+		$this->setupTemplate($request);
 		$articleId = isset($args[0]) ? $args[0] : 0;
 		$galleyId = isset($args[1]) ? (int) $args[1] : 0;
 		$this->validate($request, $articleId, $galleyId);
@@ -83,7 +53,7 @@ class RTHandler extends ArticleHandler {
 		}
 
 		$sectionDao =& DAORegistry::getDAO('SectionDAO');
-		$section =& $sectionDao->getSection($article->getSectionId(), $journal->getJournalId(), true);
+		$section =& $sectionDao->getSection($article->getSectionId(), $journal->getId(), true);
 
 		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->assign('articleId', $articleId);
@@ -93,6 +63,10 @@ class RTHandler extends ArticleHandler {
 		$templateMgr->assign_by_ref('issue', $issue);
 		$templateMgr->assign_by_ref('section', $section);
 		$templateMgr->assign_by_ref('journalSettings', $journal->getSettings());
+		// consider public identifiers
+		$pubIdPlugins =& PluginRegistry::loadCategory('pubIds', true);
+		$templateMgr->assign('pubIdPlugins', $pubIdPlugins);
+		$templateMgr->assign('ccLicenseBadge', Application::getCCLicenseBadge($article->getLicenseURL()));
 		$templateMgr->display('rt/metadata.tpl');
 	}
 
@@ -103,7 +77,7 @@ class RTHandler extends ArticleHandler {
 	 */
 	function context($args, &$request) {
 		$router =& $request->getRouter();
-		$this->setupTemplate();
+		$this->setupTemplate($request);
 		$articleId = isset($args[0]) ? $args[0] : 0;
 		$galleyId = isset($args[1]) ? (int) $args[1] : 0;
 		$contextId = Isset($args[2]) ? (int) $args[2] : 0;
@@ -133,9 +107,9 @@ class RTHandler extends ArticleHandler {
 		$searchParams = array();
 		foreach ($context->getSearches() as $search) {
 			$params = array();
-			$searchParams += RTHandler::getParameterNames($search->getSearchUrl());
+			$searchParams += $this->_getParameterNames($search->getSearchUrl());
 			if ($search->getSearchPost()) {
-				$searchParams += RTHandler::getParameterNames($search->getSearchPost());
+				$searchParams += $this->_getParameterNames($search->getSearchPost());
 				$postParams = explode('&', $search->getSearchPost());
 				foreach ($postParams as $param) {
 					// Split name and value from each parameter
@@ -195,7 +169,7 @@ class RTHandler extends ArticleHandler {
 	 */
 	function captureCite($args, &$request) {
 		$router =& $request->getRouter();
-		$this->setupTemplate();
+		$this->setupTemplate($request);
 		$articleId = isset($args[0]) ? $args[0] : 0;
 		$galleyId = isset($args[1]) ? (int) $args[1] : 0;
 		$citeType = isset($args[2]) ? $args[2] : null;
@@ -244,7 +218,7 @@ class RTHandler extends ArticleHandler {
 		$issue =& $this->issue;
 		$article =& $this->article;
 
-		$this->setupTemplate();
+		$this->setupTemplate($request);
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
 		$journalRt =& $rtDao->getJournalRTByJournal($journal);
@@ -291,7 +265,7 @@ class RTHandler extends ArticleHandler {
 	 */
 	function emailColleague($args, &$request) {
 		$router =& $request->getRouter();
-		$this->setupTemplate();
+		$this->setupTemplate($request);
 		$articleId = isset($args[0]) ? $args[0] : 0;
 		$galleyId = isset($args[1]) ? (int) $args[1] : 0;
 
@@ -342,7 +316,7 @@ class RTHandler extends ArticleHandler {
 	 */
 	function emailAuthor($args, &$request) {
 		$router =& $request->getRouter();
-		$this->setupTemplate();
+		$this->setupTemplate($request);
 		$articleId = isset($args[0]) ? $args[0] : 0;
 		$galleyId = isset($args[1]) ? (int) $args[1] : 0;
 
@@ -386,7 +360,7 @@ class RTHandler extends ArticleHandler {
 	 */
 	function suppFiles($args, &$request) {
 		$router =& $request->getRouter();
-		$this->setupTemplate();
+		$this->setupTemplate($request);
 		$articleId = isset($args[0]) ? $args[0] : 0;
 		$galleyId = isset($args[1]) ? (int) $args[1] : 0;
 
@@ -417,8 +391,8 @@ class RTHandler extends ArticleHandler {
 	 */
 	function suppFileMetadata($args, &$request) {
 		$router =& $request->getRouter();
-		$this->setupTemplate();
-		AppLocale::requireComponents(array(LOCALE_COMPONENT_OJS_AUTHOR));
+		$this->setupTemplate($request);
+		AppLocale::requireComponents(LOCALE_COMPONENT_OJS_AUTHOR);
 		$articleId = isset($args[0]) ? $args[0] : 0;
 		$galleyId = isset($args[1]) ? (int) $args[1] : 0;
 		$suppFileId = isset($args[2]) ? (int) $args[2] : 0;
@@ -442,8 +416,12 @@ class RTHandler extends ArticleHandler {
 		$templateMgr->assign('galleyId', $galleyId);
 		$templateMgr->assign_by_ref('suppFile', $suppFile);
 		$templateMgr->assign_by_ref('journalRt', $journalRt);
+		$templateMgr->assign_by_ref('issue', $this->issue);
 		$templateMgr->assign_by_ref('article', $article);
 		$templateMgr->assign_by_ref('journalSettings', $journal->getSettings());
+		// consider public identifiers
+		$pubIdPlugins =& PluginRegistry::loadCategory('pubIds', true);
+		$templateMgr->assign('pubIdPlugins', $pubIdPlugins);
 		$templateMgr->display('rt/suppFileView.tpl');
 	}
 
@@ -454,7 +432,7 @@ class RTHandler extends ArticleHandler {
 	 */
 	function findingReferences($args, &$request) {
 		$router =& $request->getRouter();
-		$this->setupTemplate();
+		$this->setupTemplate($request);
 		$articleId = isset($args[0]) ? $args[0] : 0;
 		$galleyId = isset($args[1]) ? (int) $args[1] : 0;
 
@@ -480,7 +458,7 @@ class RTHandler extends ArticleHandler {
 	/**
 	 * Get parameter values: Used internally for RT searches
 	 */
-	function getParameterNames($value) {
+	function _getParameterNames($value) {
 		$matches = null;
 		String::regexp_match_all('/\{\$([a-zA-Z0-9]+)\}/', $value, $matches);
 		// Remove the entire string from the matches list

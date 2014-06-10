@@ -3,7 +3,8 @@
 /**
  * @file pages/admin/AdminFunctionsHandler.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class AdminFunctionsHandler
@@ -11,9 +12,6 @@
  *
  * @brief Handle requests for site administrative/maintenance functions. 
  */
-
-// $Id$
-
 
 import('lib.pkp.classes.site.Version');
 import('lib.pkp.classes.site.VersionDAO');

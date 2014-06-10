@@ -3,7 +3,8 @@
 /**
  * @file classes/submission/reviewAssignment/ReviewAssignmentDAO.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ReviewAssignmentDAO
@@ -12,9 +13,6 @@
  *
  * @brief Class for DAO relating reviewers to articles.
  */
-
-// $Id$
-
 
 import('classes.submission.reviewAssignment.ReviewAssignment');
 import('lib.pkp.classes.submission.reviewAssignment.PKPReviewAssignmentDAO');
@@ -240,7 +238,9 @@ class ReviewAssignmentDAO extends PKPReviewAssignmentDAO {
 	 * @return ReviewAssignment
 	 */
 	function newDataObject() {
-		return new ReviewAssignment();
+		$reviewAssignment = new ReviewAssignment();
+		$reviewAssignment->setStageId(1); // Ensure correct default is used
+		return $reviewAssignment;
 	}
 
 	/**
@@ -264,6 +264,13 @@ class ReviewAssignmentDAO extends PKPReviewAssignmentDAO {
 
 		HookRegistry::call('ReviewAssignmentDAO::_fromRow', array(&$reviewAssignment, &$row));
 		return $reviewAssignment;
+	}
+
+	/**
+	* @see PKPReviewAssignmentDAO::getReviewRoundJoin()
+	*/
+	function getReviewRoundJoin() {
+		return 'r.submission_id = r2.submission_id AND r.round = r2.round';
 	}
 }
 

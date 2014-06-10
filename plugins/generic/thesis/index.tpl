@@ -1,12 +1,12 @@
 {**
- * index.tpl
+ * plugins/generic/thesis/index.tpl
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
- * Display list of thesis abstract titles. 
+ * Display list of thesis abstract titles.
  *
- * $Id$
  *}
 {strip}
 {assign var="pageTitle" value="plugins.generic.thesis.theses"}

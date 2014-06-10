@@ -3,7 +3,8 @@
 /**
  * @file classes/articleArticleFileDAO.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ArticleFileDAO
@@ -13,18 +14,11 @@
  * @brief Operations for retrieving and modifying ArticleFile objects.
  */
 
-// $Id$
-
-
+import('lib.pkp.classes.file.PKPFileDAO');
 import('classes.article.ArticleFile');
 
-define('INLINEABLE_TYPES_FILE', Config::getVar('general', 'registry_dir') . DIRECTORY_SEPARATOR . 'inlineTypes.txt');
 
-class ArticleFileDAO extends DAO {
-	/**
-	 * Array of MIME types that can be displayed inline in a browser
-	 */
-	var $inlineableTypes;
+class ArticleFileDAO extends PKPFileDAO {
 
 	/**
 	 * Retrieve an article by ID.
@@ -202,18 +196,18 @@ class ArticleFileDAO extends DAO {
 	}
 
 	/**
-	 * Retrieve all article files for a type and assoc ID.
+	 * Retrieve all article files for a file stage and assoc ID.
 	 * @param $assocId int
-	 * @param $type int
+	 * @param $fileStage int
 	 * @return array ArticleFiles
 	 */
-	function &getArticleFilesByAssocId($assocId, $type) {
+	function &getArticleFilesByAssocId($assocId, $fileStage) {
 		import('classes.file.ArticleFileManager');
 		$articleFiles = array();
 
 		$result =& $this->retrieve(
-			'SELECT * FROM article_files WHERE assoc_id = ? AND type = ?',
-			array($assocId, ArticleFileManager::typeToPath($type))
+			'SELECT * FROM article_files WHERE assoc_id = ? AND file_stage = ?',
+			array($assocId, $fileStage)
 		);
 
 		while (!$result->EOF) {
@@ -243,7 +237,7 @@ class ArticleFileDAO extends DAO {
 		$articleFile->setFileType($row['file_type']);
 		$articleFile->setFileSize($row['file_size']);
 		$articleFile->setOriginalFileName($row['original_file_name']);
-		$articleFile->setType($row['type']);
+		$articleFile->setFileStage($row['file_stage']);
 		$articleFile->setAssocId($row['assoc_id']);
 		$articleFile->setDateUploaded($this->datetimeFromDB($row['date_uploaded']));
 		$articleFile->setDateModified($this->datetimeFromDB($row['date_modified']));
@@ -269,7 +263,7 @@ class ArticleFileDAO extends DAO {
 			$articleFile->getFileType(),
 			$articleFile->getFileSize(),
 			$articleFile->getOriginalFileName(),
-			$articleFile->getType(),
+			$articleFile->getFileStage(),
 			(int) $articleFile->getRound(),
 			$articleFile->getViewable(),
 			$articleFile->getAssocId()
@@ -281,7 +275,7 @@ class ArticleFileDAO extends DAO {
 
 		$this->update(
 			sprintf('INSERT INTO article_files
-				(' . ($fileId ? 'file_id, ' : '') . 'revision, article_id, source_file_id, source_revision, file_name, file_type, file_size, original_file_name, type, date_uploaded, date_modified, round, viewable, assoc_id)
+				(' . ($fileId ? 'file_id, ' : '') . 'revision, article_id, source_file_id, source_revision, file_name, file_type, file_size, original_file_name, file_stage, date_uploaded, date_modified, round, viewable, assoc_id)
 				VALUES
 				(' . ($fileId ? '?, ' : '') . '?, ?, ?, ?, ?, ?, ?, ?, ?, %s, %s, ?, ?, ?)',
 				$this->datetimeToDB($articleFile->getDateUploaded()), $this->datetimeToDB($articleFile->getDateModified())),
@@ -310,7 +304,7 @@ class ArticleFileDAO extends DAO {
 					file_type = ?,
 					file_size = ?,
 					original_file_name = ?,
-					type = ?,
+					file_stage = ?,
 					date_uploaded = %s,
 					date_modified = %s,
 					round = ?,
@@ -326,7 +320,7 @@ class ArticleFileDAO extends DAO {
 				$articleFile->getFileType(),
 				$articleFile->getFileSize(),
 				$articleFile->getOriginalFileName(),
-				$articleFile->getType(),
+				$articleFile->getFileStage(),
 				(int) $articleFile->getRound(),
 				$articleFile->getViewable(),
 				$articleFile->getAssocId(),
@@ -380,18 +374,6 @@ class ArticleFileDAO extends DAO {
 	 */
 	function getInsertArticleFileId() {
 		return $this->getInsertId('article_files', 'file_id');
-	}
-
-	/**
-	 * Check whether a file may be displayed inline.
-	 * @param $articleFile object
-	 * @return boolean
-	 */
-	function isInlineable(&$articleFile) {
-		if (!isset($this->inlineableTypes)) {
-			$this->inlineableTypes = array_filter(file(INLINEABLE_TYPES_FILE), create_function('&$a', 'return ($a = trim($a)) && !empty($a) && $a[0] != \'#\';'));
-		}
-		return in_array($articleFile->getFileType(), $this->inlineableTypes);
 	}
 }
 

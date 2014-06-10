@@ -7,7 +7,8 @@
 /**
  * @file classes/file/FileManager.inc.php
  *
- * Copyright (c) 2000-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2000-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class FileManager
@@ -15,8 +16,6 @@
  *
  * @brief Class defining basic operations for file management.
  */
-
-// $Id$
 
 
 define('FILE_MODE_MASK', 0666);
@@ -43,7 +42,8 @@ class FileManager {
 	 * @return boolean
 	 */
 	function uploadedFileExists($fileName) {
-		if (isset($_FILES[$fileName]['tmp_name']) && is_uploaded_file($_FILES[$fileName]['tmp_name'])) {
+		if (isset($_FILES[$fileName]) && isset($_FILES[$fileName]['tmp_name'])
+				&& is_uploaded_file($_FILES[$fileName]['tmp_name'])) {
 			return true;
 		}
 		return false;
@@ -104,13 +104,13 @@ class FileManager {
 	 */
 	function uploadFile($fileName, $destFileName) {
 		$destDir = dirname($destFileName);
-		if (!FileManager::fileExists($destDir, 'dir')) {
+		if (!$this->fileExists($destDir, 'dir')) {
 			// Try to create the destination directory
-			FileManager::mkdirtree($destDir);
+			$this->mkdirtree($destDir);
 		}
 		if (!isset($_FILES[$fileName])) return false;
 		if (move_uploaded_file($_FILES[$fileName]['tmp_name'], $destFileName))
-			return FileManager::setMode($destFileName, FILE_MODE_MASK);
+			return $this->setMode($destFileName, FILE_MODE_MASK);
 		return false;
 	}
 
@@ -123,16 +123,16 @@ class FileManager {
 	function writeFile($dest, &$contents) {
 		$success = true;
 		$destDir = dirname($dest);
-		if (!FileManager::fileExists($destDir, 'dir')) {
+		if (!$this->fileExists($destDir, 'dir')) {
 			// Try to create the destination directory
-			FileManager::mkdirtree($destDir);
+			$this->mkdirtree($destDir);
 		}
 		if (($f = fopen($dest, 'wb'))===false) $success = false;
 		if ($success && fwrite($f, $contents)===false) $success = false;
 		@fclose($f);
 
 		if ($success)
-			return FileManager::setMode($dest, FILE_MODE_MASK);
+			return $this->setMode($dest, FILE_MODE_MASK);
 		return false;
 	}
 
@@ -145,12 +145,12 @@ class FileManager {
 	function copyFile($source, $dest) {
 		$success = true;
 		$destDir = dirname($dest);
-		if (!FileManager::fileExists($destDir, 'dir')) {
+		if (!$this->fileExists($destDir, 'dir')) {
 			// Try to create the destination directory
-			FileManager::mkdirtree($destDir);
+			$this->mkdirtree($destDir);
 		}
 		if (copy($source, $dest))
-			return FileManager::setMode($dest, FILE_MODE_MASK);
+			return $this->setMode($dest, FILE_MODE_MASK);
 		return false;
 	}
 
@@ -163,7 +163,7 @@ class FileManager {
 	 */
 	function copyDir($source, $dest) {
 		if (is_dir($source)) {
-			FileManager::mkdir($dest);
+			$this->mkdir($dest);
 			$destDir = dir($source);
 
 			while (($entry = $destDir->read()) !== false) {
@@ -173,18 +173,18 @@ class FileManager {
 
 				$Entry = $source . DIRECTORY_SEPARATOR . $entry;
 				if (is_dir($Entry) ) {
-					FileManager::copyDir($Entry, $dest . DIRECTORY_SEPARATOR . $entry );
+					$this->copyDir($Entry, $dest . DIRECTORY_SEPARATOR . $entry );
 					continue;
 				}
-				FileManager::copyFile($Entry, $dest . DIRECTORY_SEPARATOR . $entry );
+				$this->copyFile($Entry, $dest . DIRECTORY_SEPARATOR . $entry );
 			}
 
 			$destDir->close();
 		} else {
-			FileManager::copyFile($source, $target);
+			$this->copyFile($source, $dest);
 		}
 
-		if (FileManager::fileExists($dest, 'dir')) {
+		if ($this->fileExists($dest, 'dir')) {
 			return true;
 		} else return false;
 	}
@@ -226,43 +226,58 @@ class FileManager {
 	 * Download a file.
 	 * Outputs HTTP headers and file content for download
 	 * @param $filePath string the location of the file to be sent
-	 * @param $type string the MIME type of the file, optional
+	 * @param $mediaType string the MIME type of the file, optional
 	 * @param $inline print file as inline instead of attachment, optional
 	 * @return boolean
 	 */
-	function downloadFile($filePath, $type = null, $inline = false) {
+	function downloadFile($filePath, $mediaType = null, $inline = false, $fileName = null) {
 		$result = null;
-		if (HookRegistry::call('FileManager::downloadFile', array(&$filePath, &$type, &$inline, &$result))) return $result;
+		if (HookRegistry::call('FileManager::downloadFile', array(&$filePath, &$mediaType, &$inline, &$result, &$fileName))) return $result;
+		$postDownloadHookList = array('FileManager::downloadFileFinished', 'UsageEventPlugin::getUsageEvent');
 		if (is_readable($filePath)) {
-			if ($type == null) {
-				$type = String::mime_content_type($filePath);
-				if (empty($type)) $type = 'application/octet-stream';
+			if ($mediaType === null) {
+				// If the media type wasn't specified, try to detect.
+				$mediaType = String::mime_content_type($filePath);
+				if (empty($mediaType)) $mediaType = 'application/octet-stream';
+			}
+			if ($fileName === null) {
+				// If the filename wasn't specified, use the server-side.
+				$fileName = basename($filePath);
 			}
 
-			Registry::clear(); // Free some memory
+			$postDownloadHooks = null;
+			$hooks = HookRegistry::getHooks();
+			foreach ($postDownloadHookList as $hookName) {
+				if (isset($hooks[$hookName])) {
+					$postDownloadHooks[$hookName] = $hooks[$hookName];
+				}
+			}
+			unset($hooks);
+			Registry::clear();
 
-			header("Content-Type: $type");
-			header("Content-Length: ".filesize($filePath));
-			header("Content-Disposition: " . ($inline ? 'inline' : 'attachment') . "; filename=\"" .basename($filePath)."\"");
-			header("Cache-Control: private"); // Workarounds for IE weirdness
-			header("Pragma: public");
+			// Stream the file to the end user.
+			header("Content-Type: $mediaType");
+			header('Content-Length: ' . filesize($filePath));
+			header('Content-Disposition: ' . ($inline ? 'inline' : 'attachment') . "; filename=\"$fileName\"");
+			header('Cache-Control: private'); // Workarounds for IE weirdness
+			header('Pragma: public');
 
-			import('lib.pkp.classes.file.FileManager');
+			// Beware of converting to instance call
+			// https://github.com/pkp/pkp-lib/commit/82f4a36db406ecac3eb88875541a74123e455713#commitcomment-1459396
 			FileManager::readFile($filePath, true);
 
-			return true;
-
+			if ($postDownloadHooks) {
+				foreach ($postDownloadHooks as $hookName => $hooks) {
+					HookRegistry::setHooks($hookName, $hooks);
+				}
+			}
+			$returner = true;
 		} else {
-			return false;
+			$returner = false;
 		}
-	}
+		HookRegistry::call('FileManager::downloadFileFinished', array(&$returner));
 
-	/**
-	 * View a file inline (variant of downloadFile).
-	 * @see FileManager::downloadFile
-	 */
-	function viewFile($filePath, $type = null) {
-		FileManager::downloadFile($filePath, $type, true);
+		return $returner;
 	}
 
 	/**
@@ -271,7 +286,7 @@ class FileManager {
 	 * @return boolean returns true if successful
 	 */
 	function deleteFile($filePath) {
-		if (FileManager::fileExists($filePath)) {
+		if ($this->fileExists($filePath)) {
 			return unlink($filePath);
 		} else {
 			return false;
@@ -289,7 +304,7 @@ class FileManager {
 			return mkdir($dirPath, $perms);
 		} else {
 			if (mkdir($dirPath))
-				return FileManager::setMode($dirPath, DIRECTORY_MODE_MASK);
+				return $this->setMode($dirPath, DIRECTORY_MODE_MASK);
 			return false;
 		}
 	}
@@ -311,10 +326,9 @@ class FileManager {
 		if (file_exists($file)) {
 			if (is_dir($file)) {
 				$handle = opendir($file);
-				import('lib.pkp.classes.file.FileManager');
 				while (($filename = readdir($handle)) !== false) {
 					if ($filename != '.' && $filename != '..') {
-						FileManager::rmtree($file . '/' . $filename);
+						$this->rmtree($file . '/' . $filename);
 					}
 				}
 				closedir($handle);
@@ -334,8 +348,8 @@ class FileManager {
 	 */
 	function mkdirtree($dirPath, $perms = null) {
 		if (!file_exists($dirPath)) {
-			if (FileManager::mkdirtree(dirname($dirPath), $perms)) {
-				return FileManager::mkdir($dirPath, $perms);
+			if ($this->mkdirtree(dirname($dirPath), $perms)) {
+				return $this->mkdir($dirPath, $perms);
 			} else {
 				return false;
 			}
@@ -365,14 +379,16 @@ class FileManager {
 	 * @return string (Enuemrated DOCUMENT_TYPEs)
 	 */
 	function getDocumentType($type) {
-		if ( $this->getImageExtension($type) )
+		if ($this->getImageExtension($type))
 			return DOCUMENT_TYPE_IMAGE;
+
 		switch ($type) {
 			case 'application/pdf':
 			case 'application/x-pdf':
 			case 'text/pdf':
 			case 'text/x-pdf':
 				return DOCUMENT_TYPE_PDF;
+			case 'application/msword':
 			case 'application/word':
 				return DOCUMENT_TYPE_WORD;
 			case 'application/excel':
@@ -473,7 +489,7 @@ class FileManager {
 	 */
 	function truncateFileName($fileName, $length = 127) {
 		if (String::strlen($fileName) <= $length) return $fileName;
-		$ext = FileManager::getExtension($fileName);
+		$ext = $this->getExtension($fileName);
 		$truncated = String::substr($fileName, 0, $length - 1 - String::strlen($ext)) . '.' . $ext;
 		return String::substr($truncated, 0, $length);
 	}

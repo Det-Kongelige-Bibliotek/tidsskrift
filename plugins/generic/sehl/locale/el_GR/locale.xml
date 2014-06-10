@@ -2,9 +2,10 @@
 <!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
 
 <!--
-  * locale.xml
+  * plugins/generic/sehl/locale/el_GR/locale.xml
   *
-  * Copyright (c) 2003-2012 John Willinsky
+  * Copyright (c) 2013-2014 Simon Fraser University Library
+  * Copyright (c) 2003-2014 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings for the Greek locale.
@@ -16,10 +17,9 @@
   * Kiriazis Vasilis (vaskir@lis.upatras.gr),
   * Papaxristopoulos Leonidas (leonidasp@lis.upatras.gr)
   *
-  * $Id$
   -->
  
 <locale name="el_GR" full_name="Greek">	
-	<message key="plugins.generic.sehl.name">SEHL Plugin</message>
-	<message key="plugins.generic.sehl.description">Το plugin αυτό υλοποιεί το εφέ Search Engine HighLighting (SEHL) όπου όταν μια μηχανή αναζήτηση εντοπίζει ένα HTML άρθρο, οι όροι αναζήτηση τονίζονται.</message>
+	<message key="plugins.generic.sehl.name">Πρόσθετο SEHL</message>
+	<message key="plugins.generic.sehl.description">Το πρόσθετο αυτό υλοποιεί το εφέ Search Engine HighLighting (SEHL) έτσι ώστε όταν μια μηχανή αναζήτησης εντοπίζει ένα HTML άρθρο, οι όροι αναζήτησης που εντοπίστηκαν στο άρθρο να τονίζονται.</message>
 </locale>

@@ -3,7 +3,8 @@
 /**
  * @file classes/article/ArticleGalley.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ArticleGalley
@@ -12,9 +13,6 @@
  *
  * @brief A galley is a final presentation version of the full-text of an article.
  */
-
-// $Id$
-
 
 import('classes.article.ArticleFile');
 
@@ -86,16 +84,8 @@ class ArticleGalley extends ArticleFile {
 	 * @return int
 	 */
 	function getViews() {
-		return $this->getData('views');
-	}
-
-	/**
-	 * Set views count.
-	 * NOTE that the views count is NOT stored by the DAO update or insert functions.
-	 * @param $views int
-	 */
-	function setViews($views) {
-		return $this->setData('views', $views);
+		$application =& PKPApplication::getApplication();
+		return $application->getPrimaryMetricByAssoc(ASSOC_TYPE_GALLEY, $this->getId());
 	}
 
 	/**
@@ -104,13 +94,10 @@ class ArticleGalley extends ArticleFile {
 	 */
 	function getGalleyLabel() {
 		$label = $this->getLabel();
-		/* KB - comment out to prevent incorrect locale 
-labelling - romc 
 		if ($this->getLocale() != AppLocale::getLocale()) {
 			$locales = AppLocale::getAllLocales();
 			$label .= ' (' . $locales[$this->getLocale()] . ')';
 		}
-		*/
 		return $label;
 	}
 
@@ -163,37 +150,41 @@ labelling - romc
 	}
 
 	/**
-	 * Get public galley id
-	 * @return string
-	 */
-	function getPublicGalleyId() {
-		// Ensure that blanks are treated as nulls.
-		$returner = $this->getData('publicGalleyId');
-		if ($returner === '') return null;
-		return $returner;
-	}
-
-	/**
-	 * Set public galley id
-	 * @param $publicGalleyId string
-	 */
-	function setPublicGalleyId($publicGalleyId) {
-		return $this->setData('publicGalleyId', $publicGalleyId);
-	}
-
-	/**
 	 * Return the "best" article ID -- If a public article ID is set,
 	 * use it; otherwise use the internal article Id. (Checks the journal
 	 * settings to ensure that the public ID feature is enabled.)
 	 * @param $journal Object the journal this galley is in
 	 * @return string
 	 */
-	function getBestGalleyId(&$journal) {
+	function getBestGalleyId(&$journal = null) {
+		if (is_null($journal)) {
+			$articleDao =& DAORegistry::getDAO('ArticleDAO');  /* @var $articleDao ArticleDAO */
+			$journalDao =& DAORegistry::getDAO('JournalDAO');  /* @var $journalDao JournalDAO */
+			$journalId = $articleDao->getArticleJournalId($this->getArticleId());
+			$journal =& $journalDao->getById($journalId);
+		}
+
 		if ($journal->getSetting('enablePublicGalleyId')) {
-			$publicGalleyId = $this->getPublicGalleyId();
+			$publicGalleyId = $this->getPubId('publisher-id');
 			if (!empty($publicGalleyId)) return $publicGalleyId;
 		}
 		return $this->getId();
+	}
+
+	/**
+	 * Set remote URL of the galley.
+	 * @param $remoteURL string
+	 */
+	function setRemoteURL($remoteURL) {
+		return $this->setData('remoteURL', $remoteURL);
+	}
+
+	/**
+	 * Get remote URL of the galley.
+	 * @return string
+	 */
+	function getRemoteURL() {
+		return $this->getData('remoteURL');
 	}
 }
 

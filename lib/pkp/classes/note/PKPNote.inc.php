@@ -3,7 +3,8 @@
 /**
  * @file classes/note/PKPNote.inc.php
  *
- * Copyright (c) 2000-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2000-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class Note
@@ -11,8 +12,6 @@
  * @see PKPNoteDAO
  * @brief Class for Note.
  */
-
-// $Id$
 
 
 class PKPNote extends DataObject {
@@ -45,7 +44,7 @@ class PKPNote extends DataObject {
 	 */
 	function getUser() {
 		$userDao =& DAORegistry::getDAO('UserDAO');
-		return $userDao->getUser($this->getUserId(), true);
+		return $userDao->getById($this->getUserId(), true);
 	}
 
 	/**
@@ -142,21 +141,6 @@ class PKPNote extends DataObject {
 	 */
 	function setAssocId($assocId) {
 		return $this->setData('assocId', $assocId);
-	}
-	/**
-	 * get context id
-	 * @return int
-	 */
-	function getContextId() {
-		return $this->getData('contextId');
-	}
-
-	/**
-	 * set context id
-	 * @param $contextId int
-	 */
-	function setContextId($contextId) {
-		return $this->setData('contextId', $contextId);
 	}
 
 	/**

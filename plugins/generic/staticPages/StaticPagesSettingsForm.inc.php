@@ -1,9 +1,10 @@
 <?php
 
 /**
- * @file StaticPagesSettingsForm.inc.php
+ * @file plugins/generic/staticPages/StaticPagesSettingsForm.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @package plugins.generic.staticPages
@@ -47,10 +48,10 @@ class StaticPagesSettingsForm extends Form {
 		$journalId = $this->journalId;
 		$plugin =& $this->plugin;
 
-		$staticPagesDAO =& DAORegistry::getDAO('StaticPagesDAO');
+		$staticPagesDao =& DAORegistry::getDAO('StaticPagesDAO');
 
 		$rangeInfo =& Handler::getRangeInfo('staticPages');
-		$staticPages = $staticPagesDAO->getStaticPagesByJournalId($journalId);
+		$staticPages = $staticPagesDao->getStaticPagesByJournalId($journalId);
 		$this->setData('staticPages', $staticPages);
 	}
 

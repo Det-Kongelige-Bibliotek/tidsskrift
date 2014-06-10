@@ -1,9 +1,10 @@
 <?php
 
 /**
- * @file ExternalFeedForm.inc.php
+ * @file plugins/generic/externalFeed/ExternalFeedForm.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ExternalFeedForm
@@ -11,9 +12,6 @@
  *
  * @brief Form for journal managers to mody external feed plugin settings
  */
-
-// $Id$
-
 
 import('lib.pkp.classes.form.Form');
 
@@ -49,11 +47,11 @@ class ExternalFeedForm extends Form {
 	/** 
 	* Get the names of fields for which localized data is allowed.
 	* @return array
-	*/         
+	*/
 	function getLocaleFieldNames() {
 		$feedDao =& DAORegistry::getDAO('ExternalFeedDAO');
 		return $feedDao->getLocaleFieldNames();
-	}               
+	}
 
 	/**
 	 * Display the form.
@@ -132,7 +130,7 @@ class ExternalFeedForm extends Form {
 		}
 
 		if (!isset($feed)) {
-			$feed =& new ExternalFeed();
+			$feed = new ExternalFeed();
 		}
 
 		$feed->setJournalId($journalId);

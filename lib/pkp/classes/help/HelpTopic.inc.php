@@ -3,7 +3,8 @@
 /**
  * @file classes/help/HelpTopic.inc.php
  *
- * Copyright (c) 2000-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2000-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class HelpTopic
@@ -12,9 +13,6 @@
  *
  * @brief A HelpTopic object is associated with a single HelpToc object and zero or more HelpTopicSection objects.
  */
-
-// $Id$
-
 
 class HelpTopic extends DataObject {
 

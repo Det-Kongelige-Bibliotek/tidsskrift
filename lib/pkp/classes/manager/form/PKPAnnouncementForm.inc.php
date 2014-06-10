@@ -1,9 +1,10 @@
 <?php
 
 /**
- * @file AnnouncementForm.inc.php
+ * @file classes/manager/form/AnnouncementForm.inc.php
  *
- * Copyright (c) 2000-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2000-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class AnnouncementForm
@@ -12,7 +13,6 @@
  * @brief Form for managers to create/edit announcements.
  */
 
-// $Id$
 
 import('lib.pkp.classes.form.Form');
 
@@ -20,12 +20,17 @@ class PKPAnnouncementForm extends Form {
 	/** @var announcementId int the ID of the announcement being edited */
 	var $announcementId;
 
+	/** @var int */
+	var $_contextId;
+
 	/**
 	 * Constructor
+	 * @param $contextId int
 	 * @param announcementId int leave as default for new announcement
 	 */
-	function PKPAnnouncementForm($announcementId = null) {
+	function PKPAnnouncementForm($contextId, $announcementId = null) {
 
+		$this->_contextId = $contextId;
 		$this->announcementId = isset($announcementId) ? (int) $announcementId : null;
 		parent::Form('manager/announcement/announcementForm.tpl');
 
@@ -54,6 +59,22 @@ class PKPAnnouncementForm extends Form {
 		$this->addCheck(new FormValidatorPost($this));
 	}
 
+
+	//
+	// Getters and setters.
+	//
+	/**
+	 * Get the current context id.
+	 * @return int
+	 */
+	function getContextId() {
+		return $this->_contextId;
+	}
+
+
+	//
+	// Extended methods from Form.
+	//
 	/**
 	 * Get the list of localized field names for this object
 	 * @return array
@@ -74,7 +95,7 @@ class PKPAnnouncementForm extends Form {
 
 		$announcementTypeDao =& DAORegistry::getDAO('AnnouncementTypeDAO');
 		list($assocType, $assocId) = $this->_getAnnouncementTypesAssocId();
-		$announcementTypes =& $announcementTypeDao->getAnnouncementTypesByAssocId($assocType, $assocId);
+		$announcementTypes =& $announcementTypeDao->getByAssoc($assocType, $assocId);
 		$templateMgr->assign('announcementTypes', $announcementTypes);
 
 		parent::display();
@@ -86,7 +107,7 @@ class PKPAnnouncementForm extends Form {
 	function initData() {
 		if (isset($this->announcementId)) {
 			$announcementDao =& DAORegistry::getDAO('AnnouncementDAO');
-			$announcement =& $announcementDao->getAnnouncement($this->announcementId);
+			$announcement =& $announcementDao->getById($this->announcementId);
 
 			if ($announcement != null) {
 				$this->_data = array(
@@ -96,10 +117,14 @@ class PKPAnnouncementForm extends Form {
 					'title' => $announcement->getTitle(null), // Localized
 					'descriptionShort' => $announcement->getDescriptionShort(null), // Localized
 					'description' => $announcement->getDescription(null), // Localized
+					'datePosted' => $announcement->getDatePosted(),
 					'dateExpire' => $announcement->getDateExpire()
 				);
 			} else {
 				$this->announcementId = null;
+				$this->_data = array(
+					'datePosted' => Core::getCurrentDate(),
+				);
 			}
 		}
 	}
@@ -108,8 +133,8 @@ class PKPAnnouncementForm extends Form {
 	 * Assign form data to user-submitted data.
 	 */
 	function readInputData() {
-		$this->readUserVars(array('typeId', 'title', 'descriptionShort', 'description', 'dateExpireYear', 'dateExpireMonth', 'dateExpireDay'));
-		$this->_data['dateExpire'] = Request::getUserDateVar('dateExpire');
+		$this->readUserVars(array('typeId', 'title', 'descriptionShort', 'description'));
+		$this->readUserDateVars(array('dateExpire', 'datePosted'));
 	}
 
 	/**
@@ -119,14 +144,14 @@ class PKPAnnouncementForm extends Form {
 		$announcementDao =& DAORegistry::getDAO('AnnouncementDAO');
 
 		if (isset($this->announcementId)) {
-			$announcement =& $announcementDao->getAnnouncement($this->announcementId);
+			$announcement =& $announcementDao->getById($this->announcementId);
 		}
 
 		if (!isset($announcement)) {
-			$announcement = new Announcement();
+			$announcement = $announcementDao->newDataObject();
 		}
 
-		// give the parent class a chance to set the assocType/assocId
+		// Give the parent class a chance to set the assocType/assocId.
 		$this->_setAnnouncementAssocId($announcement);
 
 		$announcement->setTitle($this->getData('title'), null); // Localized
@@ -139,11 +164,12 @@ class PKPAnnouncementForm extends Form {
 			$announcement->setTypeId(null);
 		}
 
-		if ($this->getData('dateExpireYear') != null) {
+		// Give the parent class a chance to set the dateExpire.
+		$dateExpireSet = $this->setDateExpire($announcement);
+		if (!$dateExpireSet) {
 			$announcement->setDateExpire($this->getData('dateExpire'));
-		} else {
-			$announcement->setDateExpire(null);
 		}
+		$announcement->setDatetimePosted($this->getData('datePosted'));
 
 		// Update or insert announcement
 		if ($announcement->getId() != null) {
@@ -156,6 +182,24 @@ class PKPAnnouncementForm extends Form {
 		return $announcement;
 	}
 
+
+	//
+	// Protected methods.
+	//
+	/**
+	 * Helper function to assign the date expire.
+	 * Must be implemented by subclasses.
+	 * @param $annoucement Announcement the announcement to be modified
+	 * @return boolean
+	 */
+	function setDateExpire(&$announcement) {
+		return false;
+	}
+
+
+	//
+	// Private methods.
+	//
 	function _getAnnouncementTypesAssocId() {
 		// must be implemented by sub-classes
 		assert(false);

@@ -2,7 +2,8 @@
 /**
  * @file classes/filter/ClassTypeDescription.inc.php
  *
- * Copyright (c) 2000-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2000-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ClassTypeDescription
@@ -97,19 +98,6 @@ class ClassTypeDescription extends TypeDescription {
 		$className = array_pop($typeNameParts);
 		$packageName = implode('.', $typeNameParts);
 		return array($packageName, $className);
-	}
-
-	/**
-	 * Instantiates the given class from the given
-	 * package
-	 * @param $packageName string
-	 * @param $className string
-	 * @return object
-	 */
-	function &instantiateClass($packageName, $className) {
-		assert(!empty($packageName) && !empty($className));
-		$object =& instantiate($packageName.'.'.$className, $className);
-		return $object;
 	}
 }
 ?>

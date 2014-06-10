@@ -3,7 +3,8 @@
 /**
  * @file classes/core/PageRouter.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PageRouter
@@ -11,9 +12,6 @@
  *
  * @brief Class providing OJS-specific page routing.
  */
-
-// $Id$
-
 
 import('lib.pkp.classes.core.PKPPageRouter');
 
@@ -54,7 +52,7 @@ class PageRouter extends PKPPageRouter {
 
 			if(count($roles) == 1) {
 				$role = array_shift($roles);
-				$journal = $journalDao->getJournal($role->getJournalId());
+				$journal = $journalDao->getById($role->getJournalId());
 				if (!isset($journal)) $request->redirect('index', 'user');;
 				if ($role->getRoleId() == ROLE_ID_READER) $request->redirect(null, 'index');
 				$request->redirect($journal->getPath(), $role->getRolePath());

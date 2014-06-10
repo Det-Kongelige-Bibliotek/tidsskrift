@@ -1,12 +1,12 @@
 {**
- * copyeditor.tpl
+ * plugins/blocks/role/copyeditor.tpl
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Copyeditor navigation sidebar.
  *
- * $Id$
  *}
 <div class="block" id="sidebarCopyeditor">
 	<span class="blockTitle">{translate key="user.role.copyeditor"}</span>

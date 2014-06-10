@@ -7,7 +7,8 @@
 /**
  * @file classes/submission/layoutEditor/LayoutEditorSubmission.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class LayoutEditorSubmission
@@ -16,9 +17,6 @@
  *
  * @brief Describes a layout editor's view of a submission
  */
-
-// $Id$
-
 
 import('classes.article.Article');
 

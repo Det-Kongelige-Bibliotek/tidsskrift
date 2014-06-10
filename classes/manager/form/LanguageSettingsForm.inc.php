@@ -3,7 +3,8 @@
 /**
  * @file classes/manager/form/LanguageSettingsForm.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class LanguageSettingsForm
@@ -11,9 +12,6 @@
  *
  * @brief Form for modifying journal language settings.
  */
-
-// $Id$
-
 
 import('lib.pkp.classes.form.Form');
 

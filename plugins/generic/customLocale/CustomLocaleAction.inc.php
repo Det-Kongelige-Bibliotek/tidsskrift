@@ -1,9 +1,10 @@
 <?php
 
 /**
- * @file CustomLocaleAction.inc.php
+ * @file plugins/generic/customLocale/CustomLocaleAction.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class CustomLocaleAction
@@ -11,8 +12,6 @@
  *
  * @brief Perform various tasks related to customization of locale strings.
  */
-
-// $Id$
 
 
 class CustomLocaleAction {
@@ -25,7 +24,10 @@ class CustomLocaleAction {
 		foreach (array_keys($plugins) as $key) {
 			$plugin =& $plugins[$key];
 			$localeFile = $plugin->getLocaleFilename($locale);
-			if (!empty($localeFile)) $localeFiles[] = $localeFile;
+			if (!empty($localeFile)) {
+				if (is_scalar($localeFile)) $localeFiles[] = $localeFile;
+				if (is_array($localeFile)) $localeFiles = array_merge($localeFiles, $localeFile);
+			}
 			unset($plugin);
 		}
 		return $localeFiles;

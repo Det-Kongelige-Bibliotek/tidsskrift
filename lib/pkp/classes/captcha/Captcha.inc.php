@@ -7,7 +7,8 @@
 /**
  * @file classes/captcha/Captcha.inc.php
  *
- * Copyright (c) 2000-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2000-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class Captcha
@@ -17,8 +18,6 @@
  * @brief Class for Captcha verifiers.
  *
  */
-
-// $Id$
 
 
 class Captcha extends DataObject {
@@ -91,7 +90,7 @@ class Captcha extends DataObject {
 		return $this->setData('dateCreated', $dateCreated);
 	}
 
- 	/**
+	/**
 	 * get date created
 	 * @return date
 	 */

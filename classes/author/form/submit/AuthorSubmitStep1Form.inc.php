@@ -3,7 +3,8 @@
 /**
  * @file classes/author/form/submit/AuthorSubmitStep1Form.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class AuthorSubmitStep1Form
@@ -20,8 +21,8 @@ class AuthorSubmitStep1Form extends AuthorSubmitForm {
 	/**
 	 * Constructor.
 	 */
-	function AuthorSubmitStep1Form(&$article, &$journal) {
-		parent::AuthorSubmitForm($article, 1, $journal);
+	function AuthorSubmitStep1Form(&$article, &$journal, $request) {
+		parent::AuthorSubmitForm($article, 1, $journal, $request);
 
 		// Validation checks for this form
 		$this->addCheck(new FormValidator($this, 'sectionId', 'required', 'author.submit.form.sectionRequired'));
@@ -36,8 +37,8 @@ class AuthorSubmitStep1Form extends AuthorSubmitForm {
 	 * Display the form.
 	 */
 	function display() {
-		$journal =& Request::getJournal();
-		$user =& Request::getUser();
+		$journal =& $this->request->getJournal();
+		$user =& $this->request->getUser();
 
 		$templateMgr =& TemplateManager::getManager();
 
@@ -49,23 +50,23 @@ class AuthorSubmitStep1Form extends AuthorSubmitForm {
 		// submissions. Otherwise, display only sections they are
 		// allowed to submit to.
 		$roleDao =& DAORegistry::getDAO('RoleDAO');
-		$isEditor = $roleDao->roleExists($journal->getId(), $user->getId(), ROLE_ID_EDITOR) || $roleDao->roleExists($journal->getId(), $user->getId(), ROLE_ID_SECTION_EDITOR);
+		$isEditor = $roleDao->userHasRole($journal->getId(), $user->getId(), ROLE_ID_EDITOR) || $roleDao->userHasRole($journal->getId(), $user->getId(), ROLE_ID_SECTION_EDITOR);
 		$templateMgr->assign('sectionOptions', array('0' => __('author.submit.selectSection')) + $sectionDao->getSectionTitles($journal->getId(), !$isEditor));
 
 		// Set up required Payment Related Information
 		import('classes.payment.ojs.OJSPaymentManager');
-		$paymentManager =& OJSPaymentManager::getManager();
+		$paymentManager = new OJSPaymentManager($this->request);
 		if ( $paymentManager->submissionEnabled() || $paymentManager->fastTrackEnabled() || $paymentManager->publicationEnabled()) {
 			$templateMgr->assign('authorFees', true);
-			$completedPaymentDAO =& DAORegistry::getDAO('OJSCompletedPaymentDAO');
+			$completedPaymentDao =& DAORegistry::getDAO('OJSCompletedPaymentDAO');
 			$articleId = $this->articleId;
 
 			if ($paymentManager->submissionEnabled()) {
-				$templateMgr->assign_by_ref('submissionPayment', $completedPaymentDAO->getSubmissionCompletedPayment ($journal->getId(), $articleId));
+				$templateMgr->assign_by_ref('submissionPayment', $completedPaymentDao->getSubmissionCompletedPayment ($journal->getId(), $articleId));
 			}
 
 			if ($paymentManager->fastTrackEnabled()) {
-				$templateMgr->assign_by_ref('fastTrackPayment', $completedPaymentDAO->getFastTrackCompletedPayment ($journal->getId(), $articleId));
+				$templateMgr->assign_by_ref('fastTrackPayment', $completedPaymentDao->getFastTrackCompletedPayment ($journal->getId(), $articleId));
 			}
 		}
 
@@ -96,7 +97,7 @@ class AuthorSubmitStep1Form extends AuthorSubmitForm {
 				'commentsToEditor' => $this->article->getCommentsToEditor()
 			);
 		} else {
-			$journal =& Request::getJournal();
+			$journal =& $this->request->getJournal();
 			$supportedSubmissionLocales = $journal->getSetting('supportedSubmissionLocales');
 			// Try these locales in order until we find one that's
 			// supported to use as a default.
@@ -145,8 +146,8 @@ class AuthorSubmitStep1Form extends AuthorSubmitForm {
 
 		} else {
 			// Insert new article
-			$journal =& Request::getJournal();
-			$user =& Request::getUser();
+			$journal =& $this->request->getJournal();
+			$user =& $this->request->getUser();
 
 			$this->article = new Article();
 			$this->article->setLocale($this->getData('locale'));
@@ -157,23 +158,25 @@ class AuthorSubmitStep1Form extends AuthorSubmitForm {
 			$this->article->setSubmissionProgress($this->step + 1);
 			$this->article->setLanguage(String::substr($this->article->getLocale(), 0, 2));
 			$this->article->setCommentsToEditor($this->getData('commentsToEditor'));
+			$articleDao->insertArticle($this->article);
+			$this->articleId = $this->article->getId();
 
 			// Set user to initial author
-			$user =& Request::getUser();
+			$authorDao =& DAORegistry::getDAO('AuthorDAO'); /* @var $authorDao AuthorDAO */
+			$user =& $this->request->getUser();
 			$author = new Author();
+			$author->setSubmissionId($this->articleId);
 			$author->setFirstName($user->getFirstName());
 			$author->setMiddleName($user->getMiddleName());
 			$author->setLastName($user->getLastName());
 			$author->setAffiliation($user->getAffiliation(null), null);
 			$author->setCountry($user->getCountry());
 			$author->setEmail($user->getEmail());
+			$author->setData('orcid', $user->getData('orcid'));
 			$author->setUrl($user->getUrl());
 			$author->setBiography($user->getBiography(null), null);
 			$author->setPrimaryContact(1);
-			$this->article->addAuthor($author);
-
-			$articleDao->insertArticle($this->article);
-			$this->articleId = $this->article->getId();
+			$authorDao->insertAuthor($author);
 		}
 
 		return $this->articleId;

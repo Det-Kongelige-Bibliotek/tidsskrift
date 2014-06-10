@@ -4,17 +4,17 @@
 <!--
   * locale.xml
   *
-  * Copyright (c) 2003-2012 John Willinsky
+  * Copyright (c) 2013-2014 Simon Fraser University Library
+  * Copyright (c) 2003-2014 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings for the fr_CA (Français (Canada)) locale.
   *
-  * $Id$
   -->
 
 <locale name="fr_CA" full_name="Français (Canada)">
 	<message key="plugins.importexport.doaj.displayName">Plugiciel d'exportation DOAJ</message>
-	<message key="plugins.importexport.doaj.description">Exporte la revue vers DOAJ et envoie par courriel l'information de la revue concernant les représentants DOAJ</message>
+	<message key="plugins.importexport.doaj.description">Exporte la revue vers DOAJ et envoie par courriel l'information de la revue pour l'intégration</message>
 
 	
 	<message key="plugins.importexport.doaj.export">Exporter les données de la revue vers DOAJ</message>

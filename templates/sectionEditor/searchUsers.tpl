@@ -1,12 +1,12 @@
 {**
- * searchUsers.tpl
+ * templates/sectionEditor/searchUsers.tpl
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Search form for enrolled users.
  *
- * $Id$
  *
  *}
 {strip}
@@ -14,7 +14,7 @@
 {include file="common/header.tpl"}
 {/strip}
 
-<form name="submit" method="post" action="{url op="enrollSearch" path=$articleId}">
+<form id="submit" method="post" action="{url op="enrollSearch" path=$articleId}">
 	<select name="searchField" size="1" class="selectMenu">
 		{html_options_translate options=$fieldOptions selected=$searchField}
 	</select>

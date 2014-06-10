@@ -3,7 +3,8 @@
 /**
  * @file classes/article/ArticleComment.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ArticleComment
@@ -11,9 +12,6 @@
  * @see ArticleCommentDAO
  * @brief Class for ArticleComment.
  */
-
-// $Id$
-
 
 /** Comment associative types. All types must be defined here. */
 define('COMMENT_TYPE_PEER_REVIEW', 0x01);
@@ -202,7 +200,7 @@ class ArticleComment extends DataObject {
 		return $this->setData('comments', $comments);
 	}
 
- 	/**
+	/**
 	 * get date posted
 	 * @return date
 	 */
@@ -218,7 +216,7 @@ class ArticleComment extends DataObject {
 		return $this->setData('datePosted', $datePosted);
 	}
 
- 	/**
+	/**
 	 * get date modified
 	 * @return date
 	 */
@@ -234,7 +232,7 @@ class ArticleComment extends DataObject {
 		return $this->setData('dateModified', $dateModified);
 	}
 
- 	/**
+	/**
 	 * get viewable
 	 * @return boolean
 	 */

@@ -3,7 +3,8 @@
 /**
  * @file plugins/generic/booksForReview/classes/BookForReviewDAO.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class BookForReviewDAO
@@ -16,12 +17,12 @@
 import('lib.pkp.classes.db.DAO');
 
 /* These constants are used for user-selectable search fields. */
-define('BFR_FIELD_PUBLISHER', 	'publisher');
-define('BFR_FIELD_YEAR', 		'year');
-define('BFR_FIELD_ISBN', 		'isbn');
-define('BFR_FIELD_TITLE', 		'title');
+define('BFR_FIELD_PUBLISHER',	'publisher');
+define('BFR_FIELD_YEAR',		'year');
+define('BFR_FIELD_ISBN',		'isbn');
+define('BFR_FIELD_TITLE',		'title');
 define('BFR_FIELD_DESCRIPTION', 'description');
-define('BFR_FIELD_NONE', 		null);
+define('BFR_FIELD_NONE',		null);
 
 
 class BookForReviewDAO extends DAO {
@@ -309,7 +310,7 @@ class BookForReviewDAO extends DAO {
 			$this->bookForReviewAuthorDao->deleteAuthorsByBookForReview($bookId);
 
 			// Delete cover image files (for all locales) from the filesystem
-			import('file.PublicFileManager');
+			import('classes.file.PublicFileManager');
 			$publicFileManager = new PublicFileManager();
 			$locales = AppLocale::getSupportedLocales();
 			foreach ($locales as $locale) {	
@@ -615,7 +616,7 @@ class BookForReviewDAO extends DAO {
 
 		if ($book) {
 			// Delete cover image file from the filesystem and settings
-			import('file.PublicFileManager');
+			import('classes.file.PublicFileManager');
 			$publicFileManager = new PublicFileManager();
 			$publicFileManager->removeJournalFile($book->getJournalId(), $book->getFileName($locale));
 

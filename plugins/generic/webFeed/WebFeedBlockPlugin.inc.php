@@ -1,9 +1,10 @@
 <?php
 
 /**
- * @file WebFeedBlockPlugin.inc.php
+ * @file plugins/generic/webFeed/WebFeedBlockPlugin.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class WebFeedBlockPlugin
@@ -11,9 +12,6 @@
  *
  * @brief Class for block component of web feed plugin
  */
-
-// $Id$
-
 
 import('lib.pkp.classes.plugins.BlockPlugin');
 

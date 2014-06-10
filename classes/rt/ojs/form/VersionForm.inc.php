@@ -3,7 +3,8 @@
 /**
  * @file classes/rt/ojs/form/VersionForm.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class VersionForm
@@ -12,9 +13,6 @@
  *
  * @brief Form to change metadata information for an RT version.
  */
-
-// $Id$
-
 
 import('lib.pkp.classes.form.Form');
 

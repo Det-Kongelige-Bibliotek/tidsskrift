@@ -1,12 +1,12 @@
 {**
- * layoutEditor.tpl
+ * plugins/blocks/role/layoutEditor.tpl
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * LayoutEditor navigation sidebar.
  *
- * $Id$
  *}
 <div class="block" id="sidebarLayoutEditor">
 	<span class="blockTitle">{translate key="user.role.layoutEditor"}</span>

@@ -3,7 +3,8 @@
 /**
  * @file classes/subscription/SubscriptionType.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class Subscriptiontyoe
@@ -12,9 +13,6 @@
  *
  * @brief Basic class describing a subscription type.
  */
-
-// $Id$
-
 
 /**
  * Subscription type formats
@@ -209,11 +207,12 @@ class SubscriptionType extends DataObject {
 
 	/**
 	 * Get subscription type duration in years and months.
+	 * @param $locale string
 	 * @return string
 	 */
-	function getDurationYearsMonths() {
+	function getDurationYearsMonths($locale = null) {
 		if ($this->getData('nonExpiring')) {
-			return __('subscriptionTypes.nonExpiring');
+			return __('subscriptionTypes.nonExpiring', null, $locale);
 		}
 
 		$years = (int)floor($this->getData('duration')/12);
@@ -221,17 +220,17 @@ class SubscriptionType extends DataObject {
 		$yearsMonths = '';
 
 		if ($years == 1) {
-			$yearsMonths = '1 ' . __('subscriptionTypes.year');
+			$yearsMonths = '1 ' . __('subscriptionTypes.year', null, $locale);
 		} elseif ($years > 1) {
-			$yearsMonths = $years . ' ' . __('subscriptionTypes.years');
+			$yearsMonths = $years . ' ' . __('subscriptionTypes.years', null, $locale);
 		}
 
 		if ($months == 1) {
 			$yearsMonths .= $yearsMonths == ''  ? '1 ' : ' 1 ';
-			$yearsMonths .= __('subscriptionTypes.month'); 
+			$yearsMonths .= __('subscriptionTypes.month', null, $locale);
 		} elseif ($months > 1){
 			$yearsMonths .= $yearsMonths == ''  ? $months . ' ' : ' ' . $months . ' ';
-			$yearsMonths .= __('subscriptionTypes.months');
+			$yearsMonths .= __('subscriptionTypes.months', null, $locale);
 		}
 
 		return $yearsMonths;

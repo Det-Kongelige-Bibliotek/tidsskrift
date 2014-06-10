@@ -1,12 +1,12 @@
 {**
- * announcementTypeForm.tpl
+ * templates/manager/announcement/announcementTypeForm.tpl
  *
- * Copyright (c) 2000-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2000-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Announcement type form under management.
  *
- * $Id$
  *}
 {strip}
 {assign var="pageCrumbTitle" value="$announcementTypeTitle"}
@@ -21,7 +21,7 @@
 
 <br/>
 <div id="announcementType">
-<form name="announcementType" method="post" action="{url op="updateAnnouncementType"}">
+<form id="announcementTypeForm" method="post" action="{url op="updateAnnouncementType"}">
 {if $typeId}
 <input type="hidden" name="typeId" value="{$typeId|escape}" />
 {/if}
@@ -36,7 +36,7 @@
 			{if $typeId}{url|assign:"announcementTypeUrl" op="editAnnouncementType" path=$typeId escape=false}
 			{else}{url|assign:"announcementTypeUrl" op="createAnnouncementType" escape=false}
 			{/if}
-			{form_language_chooser form="announcementType" url=$announcementTypeUrl}
+			{form_language_chooser form="announcementTypeForm" url=$announcementTypeUrl}
 			<span class="instruct">{translate key="form.formLanguage.description"}</span>
 		</td>
 	</tr>

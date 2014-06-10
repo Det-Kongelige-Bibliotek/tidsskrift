@@ -3,13 +3,14 @@
 /**
  * @file plugins/generic/booksForReview/pages/BooksForReviewAuthorHandler.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class BooksForReviewAuthorHandler
  * @ingroup plugins_generic_booksForReview
  *
- * @brief Handle requests for author book for review functions. 
+ * @brief Handle requests for author book for review functions.
  */
 
 import('classes.handler.Handler');
@@ -52,7 +53,7 @@ class BooksForReviewAuthorHandler extends Handler {
 				$path = 'requested';
 				$status = BFR_STATUS_REQUESTED;
 				$template = 'booksForReviewRequested.tpl';
-		}	
+		}
 
 		$rangeInfo =& Handler::getRangeInfo('booksForReview');
 		$bfrDao =& DAORegistry::getDAO('BookForReviewDAO');
@@ -73,11 +74,11 @@ class BooksForReviewAuthorHandler extends Handler {
 		if (empty($args)) {
 			$request->redirect(null, 'user');
 		}
-	
+
 		$bfrPlugin =& PluginRegistry::getPlugin('generic', BOOKS_FOR_REVIEW_PLUGIN_NAME);
 		$journal =& $request->getJournal();
 		$journalId = $journal->getId();
-		$bookId = (int) $args[0];	
+		$bookId = (int) $args[0];
 		$bfrDao =& DAORegistry::getDAO('BookForReviewDAO');
 
 		// Ensure book for review is for this journal
@@ -89,13 +90,13 @@ class BooksForReviewAuthorHandler extends Handler {
 			// Author has filled out mail form or decided to skip email
 			if ($send && !$email->hasErrors()) {
 
-				// Update book for review as requested 
+				// Update book for review as requested
 				$book =& $bfrDao->getBookForReview($bookId);
 				$status = $book->getStatus();
 				$bfrPlugin->import('classes.BookForReview');
 
 				// Ensure book for review is avaliable
-				if ($status == BFR_STATUS_AVAILABLE) {				
+				if ($status == BFR_STATUS_AVAILABLE) {
 					$user =& $request->getUser();
 					$userId = $user->getId();
 
@@ -106,13 +107,13 @@ class BooksForReviewAuthorHandler extends Handler {
 
 					$email->send();
 
-					import('lib.pkp.classes.notification.NotificationManager');
+					import('classes.notification.NotificationManager');
 					$notificationManager = new NotificationManager();
-					$notificationManager->createTrivialNotification('notification.notification', 'plugins.generic.booksForReview.notification.bookRequested');
+					$notificationManager->createTrivialNotification($userId, NOTIFICATION_TYPE_BOOK_REQUESTED);
 				}
 				$request->redirect(null, 'author', 'booksForReview');
 
-			// Display mail form for author 
+			// Display mail form for author
 			} else {
 				if (!$request->getUserVar('continued')) {
 					$book =& $bfrDao->getBookForReview($bookId);
@@ -120,7 +121,7 @@ class BooksForReviewAuthorHandler extends Handler {
 					$bfrPlugin->import('classes.BookForReview');
 
 					// Ensure book for review is avaliable
-					if ($status == BFR_STATUS_AVAILABLE) {				
+					if ($status == BFR_STATUS_AVAILABLE) {
 						$user =& $request->getUser();
 						$userId = $user->getId();
 
@@ -141,7 +142,7 @@ class BooksForReviewAuthorHandler extends Handler {
 						$email->assignParams($paramArray);
 					}
 					$returnUrl = $request->url(null, 'author', 'requestBookForReview', $bookId);
-					$email->displayEditForm($returnUrl);	
+					$email->displayEditForm($returnUrl);
 				}
 			}
 		}
@@ -158,10 +159,10 @@ class BooksForReviewAuthorHandler extends Handler {
 		$bfrPlugin =& PluginRegistry::getPlugin('generic', BOOKS_FOR_REVIEW_PLUGIN_NAME);
 
 		if (!isset($bfrPlugin)) return false;
- 
+
 		if (!$bfrPlugin->getEnabled()) return false;
 
-		if (!Validation::isAuthor($journal->getId())) Validation::redirectLogin(); 
+		if (!Validation::isAuthor($journal->getId())) Validation::redirectLogin();
 
 		return parent::authorize($request, $args, $roleAssignments);
 	}

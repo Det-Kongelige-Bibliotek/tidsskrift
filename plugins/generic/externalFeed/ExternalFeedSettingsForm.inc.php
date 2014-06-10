@@ -1,9 +1,10 @@
 <?php
 
 /**
- * @file ExternalFeedSettingsForm.inc.php
+ * @file plugins/generic/externalFeed/ExternalFeedSettingsForm.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ExternalFeedSettingsForm
@@ -11,8 +12,6 @@
  *
  * @brief Form for journal managers to modify External Feed plugin settings
  */
-
-// $Id$
 
 import('lib.pkp.classes.form.Form');
 
@@ -81,7 +80,7 @@ class ExternalFeedSettingsForm extends Form {
 		$settingName = 'externalFeedStyleSheet';
 
 		import('classes.file.PublicFileManager');
-		$fileManager =& new PublicFileManager();
+		$fileManager = new PublicFileManager();
 
 		if ($fileManager->uploadedFileExists($settingName)) {
 			$type = $fileManager->getUploadedFileType($settingName);
@@ -94,7 +93,7 @@ class ExternalFeedSettingsForm extends Form {
 				$value = array(
 					'name' => $fileManager->getUploadedFileName($settingName),
 					'uploadName' => $uploadName,
-					'dateUploaded' => date("Y-m-d g:i:s")
+					'dateUploaded' => Core::getCurrentDate()
 				);
 
 				$plugin->updateSetting($journalId, $settingName, $value, 'object');
@@ -116,7 +115,7 @@ class ExternalFeedSettingsForm extends Form {
 		$setting = $plugin->getSetting($journalId, $settingName);
 
 		import('classes.file.PublicFileManager');
-		$fileManager =& new PublicFileManager();
+		$fileManager = new PublicFileManager();
 
 		if ($fileManager->removeJournalFile($journalId, $setting['uploadName'])) {
 			$plugin->updateSetting($journalId, $settingName, null);

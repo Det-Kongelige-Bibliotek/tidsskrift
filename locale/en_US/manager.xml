@@ -2,15 +2,16 @@
 <!DOCTYPE locale SYSTEM "../../lib/pkp/dtd/locale.dtd">
 
 <!--
-  * ojs2-devel/locale/en_US/manager.xml
+  * locale/en_US/manager.xml
   *
-  * Copyright (c) 2003-2012 John Willinsky
+  * Copyright (c) 2013-2014 Simon Fraser University Library
+  * Copyright (c) 2003-2014 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
-  * Localization strings for the en_US (English) locale.
+  * Localization strings.
   -->
 
-<locale name="en_US" full_name = "English">
+<locale name="en_US" full_name="U.S. English">
 	<message key="manager.emails.confirmResetAll">Are you sure you want to reset all email templates in this journal? You will lose any customizations you have made.</message>
 	<message key="manager.files.note">Note: The Files Browser is an advanced feature that allows the files and directories associated with a journal to be viewed and manipulated directly.</message>
 	<message key="manager.groups">Masthead</message>
@@ -46,6 +47,8 @@
 	<message key="manager.payment.enable">Enable</message>
 	<message key="manager.payment.feePaymentOptions">Fee Payment Options</message>
 	<message key="manager.payment.form.numeric">All costs must be positive numeric values (decimal points are allowed)</message>
+	<message key="manager.payment.giftFees">Gift Fees</message>
+	<message key="manager.payment.giftFeesDescription">A gift subscriptions link will appear on the Subscriptions page in About the Journal and as part of the subscriptions sidebar block.</message>
 	<message key="manager.payment.generalFees">General Fees</message>
 	<message key="manager.payment.generalFeesDescription">The Association Membership will appear in About the Journal under Policies, and the donations link will appear above the search function in the right-hand frame.</message>
 	<message key="manager.payment.generalOptions">General Options</message>
@@ -53,6 +56,7 @@
 	<message key="manager.payment.notFound">Not Found</message>
 	<message key="manager.payment.options">Options</message>
 	<message key="manager.payment.options.acceptSubscriptionPayments">This will activate payments for Subscriptions, where types, cost, duration and subscriptions are managed by the Journal (Subscription) Manager.</message>
+	<message key="manager.payment.options.acceptGiftSubscriptionPayments">This will activate payments for gift subscriptions, allowing journal readers to buy gift subscriptions for other readers.</message>
 	<message key="manager.payment.options.donationFee">Donations to journal</message>
 	<message key="manager.payment.options.enablePayments">Click here to enable the Payments module.  You must configure payment settings by filling in the form below.  Note Users will be required to log in to make payments.</message>
 	<message key="manager.payment.options.fastTrackFee">Fast-Track Review</message>
@@ -60,9 +64,10 @@
 	<message key="manager.payment.options.feeDescription">Fee Description</message>
 	<message key="manager.payment.options.feeName">Fee Name</message>
 	<message key="manager.payment.options.membershipFee">Association Membership</message>
-	<message key="manager.payment.options.onlypdf">Only Restrict Access to PDF version of articles</message>
+	<message key="manager.payment.options.onlypdf">Only Restrict Access to PDF version of issues and articles</message>
 	<message key="manager.payment.options.publicationFee">Article Publication</message>
 	<message key="manager.payment.options.purchaseArticleFee">Purchase Article</message>
+	<message key="manager.payment.options.purchaseIssueFee">Purchase Issue</message>
 	<message key="manager.payment.options.submissionFee">Article Submission</message>
 	<message key="manager.payment.options.text">Description of Payment Method</message>
 	<message key="manager.payment.options.waiverPolicy">Waiver Policy</message>
@@ -105,8 +110,11 @@
 	<message key="manager.plugins.installFailed">Installation failed</message>
 	<message key="manager.plugins.installSuccessful">Successfully installed version</message>
 	<message key="manager.plugins.invalidPluginArchive">The uploaded plugin archive does not contain a folder that corresponds to the plugin name.</message>
+	<message key="manager.plugins.wrongCategory">The uploaded plugin does not fit the category of the upgraded plugin.</message>
+	<message key="manager.plugins.wrongName">The version.xml in the uploaded plugin contains a plugin name that does not fit the name of the upgraded plugin.</message>
 	<message key="manager.plugins.pleaseInstall">Plugin does not exist.  Please Install instead</message>
 	<message key="manager.plugins.pleaseUpgrade">Plugin already exists, but is newer than installed version.  Please upgrade instead</message>
+	<message key="manager.plugins.settings">Settings</message>
 	<message key="manager.plugins.tarCommandNotFound">The tar command is not available. Please correctly configure it in your "config.inc.php".</message>
 	<message key="manager.plugins.upgrade">Upgrade Plugin</message>
 	<message key="manager.plugins.upgradeDescription">This form allows you to upgrade a plugin.  Please ensure the plugin is compressed as a .tar.gz file.</message>
@@ -153,7 +161,8 @@
 	<message key="manager.reviewForms.title">Title</message>
 	<message key="manager.sections.abstractsNotRequired">Do not require abstracts</message>
 	<message key="manager.sections.assigned">This Section's Editors</message>
-	<message key="manager.sections.confirmDelete">Are you sure you want to permanently delete this section? You will have to re-publish any articles in this section.</message>
+	<message key="manager.sections.confirmDelete">Are you sure you want to permanently delete this section?</message>
+	<message key="manager.sections.alertDelete">Before this section can be deleted, you must move articles published within it into other sections.</message>
 	<message key="manager.sections.create">Create Section</message>
 	<message key="manager.sections.disableComments">Disable reader comments for this section.</message>
 	<message key="manager.section.sectionEditorInstructions">Add a Section Editor to this section to have submissions automatically assigned to the Section Editor. (Otherwise, Section Editors can be assigned manually, after a submission comes in.) If added, a Section Editor can be automatically assigned to oversee the REVIEW (peer review) and/or the EDITING (copyediting, layout and proofreading) of submissions to this section. Section Editors are created by clicking Section Editors under Roles in Journal Management.</message>
@@ -200,12 +209,12 @@
 	<message key="manager.setup.announcementsIntroductionDescription">Enter any additional information that should be displayed to readers on the Announcements page.</message>
 	<message key="manager.setup.appearInAboutJournal">(To appear in About the Journal) </message>
 	<message key="manager.setup.authorCopyrightNotice">Copyright Notice</message>
-	<message key="manager.setup.authorCopyrightNoticeAgree">Require authors to agree to Copyright Notice as part of the submission process.</message>
-	<message key="manager.setup.authorCopyrightNoticeDescription"><![CDATA[The Copyright Notice entered below will appear in About the Journal and in each published item's metadata. While it is up to the journal to determine the nature of its copyright agreement with authors, the Public Knowledge Project recommends the use of the <a href="http://creativecommons.org" target="_new" class="action">Creative Commons</a> license. To that end, it provides <a href="{$sampleCopyrightWordingUrl}" target="_new" class="action">sample Copyright Notice wording</a> that can be cut and pasted into the space below for journals that (a) offer open access, (b) offer delayed open access, or (c) do not offer open access.]]></message>
+	<message key="manager.setup.authorCopyrightNoticeAgree">Require authors to agree to the Copyright Notice in the submission process.</message>
+	<message key="manager.setup.authorCopyrightNoticeDescription"><![CDATA[The Copyright Notice will appear in About the Journal. It should describe for readers and authors whether the copyright holder is the author, journal, or a third party. It should include additional licensing agreements (e.g. <a href="http://creativecommons.org" target="_new" class="action">Creative Commons</a> licenses) that grant rights to readers (see <a href="{$sampleCopyrightWordingUrl}" target="_new" class="action">examples</a>), and it should provide the means for securing permissions, if necessary, for the use of the journal's content.]]></message>
 	<message key="manager.setup.authorGuidelines">Author Guidelines</message>
 	<message key="manager.setup.authorGuidelinesDescription"><![CDATA[Set out for authors the bibliographic and formatting standards used for items submitted to the journal (e.g., <em>Publication Manual of the American Psychological Association</em>, 5th edition, 2001). It is often helpful to provide examples of the common citation formats for journals and books to be used in submissions. Also identify the types of appropriate Supplementary Files (e.g., data-sets, research instruments, etc.) which authors should be encouraged to upload, in addition to their submission, to enhance readers' engagement with their work.]]></message>
 	<message key="manager.setup.competingInterests">Competing Interests</message>
-	<message key="manager.setup.competingInterests.description"><![CDATA[Biomedical journals typically require authors and reviewers to declare if they have any competing interests with regard to their research (see <a href="http://journals.plos.org/plosclinicaltrials/competing.php" target="_new">PLoS Policy</a>).]]></message>
+	<message key="manager.setup.competingInterests.description"><![CDATA[Biomedical journals typically require authors and reviewers to declare if they have any competing interests with regard to their research (see <a href="http://www.plosbiology.org/static/competing.action" target="_new">PLoS Policy</a>).]]></message>
 	<message key="manager.setup.competingInterests.guidelines">Guidelines for filing a Competing Interest statement</message>
 	<message key="manager.setup.competingInterests.requireAuthors">Require submitting Authors to file a Competing Interest (CI) statement with their submission.</message>
 	<message key="manager.setup.competingInterests.requireReviewers">Require Reviewers to file a CI statement with each peer review they submit.</message>
@@ -218,6 +227,14 @@
 	<message key="manager.setup.copyediting">Copyeditors</message>
 	<message key="manager.setup.copyeditInstructions">Copyedit Instructions</message>
 	<message key="manager.setup.copyeditInstructionsDescription">The Copyedit Instructions will be made available to Copyeditors, Authors, and Section Editors in the Submission Editing stage. Below is a default set of instructions in HTML, which can be modified or replaced by the Journal Manager at any point (in HTML or plain text).</message>
+	<message key="manager.setup.permissions.priorAgreement">Prior Agreement</message>
+	<message key="manager.setup.permissions.display">Display</message>
+	<message key="manager.setup.licenseURLDescription">Provide URL for license webpage, if available.</message>
+	<message key="manager.setup.includeCopyrightStatement">Display the copyright statement with content (advisable for asserting an author-held copyright).</message>
+	<message key="manager.setup.includeLicense">Display the license with published work.</message>
+	<message key="manager.setup.resetPermissions">Reset Article Permissions</message>
+	<message key="manager.setup.resetPermissions.description">Copyright statement and license information will be permanently attached to published content, ensuring that this data will not change in the case of a journal changing policies for new submissions. To reset stored permissions information already attached to published content, use the button below.</message>
+	<message key="manager.setup.confirmResetLicense">Are you sure you wish to reset the license and copyright information attached to published content to the license configured in Journal Setup?</message>
 	<message key="manager.setup.copyrightNotice">Copyright notice</message>
 	<message key="manager.setup.coverage">Coverage</message>
 	<message key="manager.setup.coverageChronExamples">(E.g., European Renaissance; Jurassic Period; Third Trimester; etc.)</message>
@@ -239,16 +256,6 @@
 	<message key="manager.setup.disciplineExamples">(E.g., History; Education; Sociology; Psychology; Cultural Studies; Law)</message>
 	<message key="manager.setup.disciplineProvideExamples">Provide examples of relevant academic disciplines for this journal</message>
 	<message key="manager.setup.displayCurrentIssue">Add the table of contents for the current issue (if available).</message>
-	<message key="manager.setup.doiPrefix">DOI Prefix</message>
-	<message key="manager.setup.doiPrefixDescription"><![CDATA[The DOI (Digital Object Identifier) Prefix is assigned by <a href="http://www.crossref.org" target="_new">CrossRef</a> and is in the format 10.xxxx (e.g. 10.1234).]]></message>
-	<message key="manager.setup.doiSuffix">DOI Suffix</message>
-	<message key="manager.setup.doiSuffixDefault">Use default pattern (%j.v%vi%i.%a).</message>
-	<message key="manager.setup.doiSuffixPattern">Use the pattern entered below to generate DOI suffixes.  Use %j for journal initials, %v for the volume number, %i for the issue number, %a for the OJS article ID, and %p for the page number.</message>
-	<message key="manager.setup.doiSuffixPattern.example">For example, vol%viss%ipp%p could create a DOI such as 10.1234/vol3iss2pp230</message>
-	<message key="manager.setup.doiSuffixDescription">A DOI suffix can take any form, but must be unique for each published item.</message>
-	<message key="manager.setup.doiSuffixCustomIdentifier">Use the "Custom Identifier" for published items as the DOI suffix (must be enabled in Step 4).</message>
-	<message key="manager.setup.doiReassign">Reassign DOIs</message>
-	<message key="manager.setup.doiReassign.description">If you change your DOI configuration, DOIs that have already been assigned will not be affected. Once the DOI configuration is saved, use this button to clear all existing DOIs so that the new settings will take effect with existing articles.</message>
 	<message key="manager.setup.editorDecision">Editor Decision</message>
 	<message key="manager.setup.editorialMembers">Go to Board Members and add Editorial Board and/or Review Board members. This can be done at any point in operating the journal.</message>
 	<message key="manager.setup.editorialProcess1">One or more editors handle the basic steps without designated roles.</message>
@@ -286,7 +293,6 @@
 	<message key="manager.setup.form.journalInitialsRequired">The journal initials are required.</message>
 	<message key="manager.setup.form.journalTitleRequired">The journal title is required.</message>
 	<message key="manager.setup.form.numReviewersPerSubmission">The number of reviewers per submission is required.</message>
-	<message key="manager.setup.form.doiPrefixPattern">The DOI pattern must be in the form 10.xxxx.</message>
 	<message key="manager.setup.form.supportEmailRequired">The support email is required.</message>
 	<message key="manager.setup.form.supportNameRequired">The support name is required.</message>
 	<message key="manager.setup.frequencyOfPublication">Starting Point and Frequency</message>
@@ -298,7 +304,6 @@
 	<message key="manager.setup.guidingSubmissions">Step 3. Guiding Submissions</message>
 	<message key="manager.setup.homepageImage">Homepage image</message>
 	<message key="manager.setup.homepageImageDescription">Add an image or graphic file to the middle of the page.</message>
-	<message key="manager.setup.includeCreativeCommons">For journals that offer immediate or delayed open access, include a Creative Commons license with all published work at the appropriate time.</message>
 	<message key="manager.setup.information">Information</message>
 	<message key="manager.setup.information.description">Brief descriptions of the journal for librarians and prospective authors and readers are available in the "Information" section of the sidebar.</message>
 	<message key="manager.setup.information.forAuthors">For Authors</message>
@@ -337,6 +342,7 @@
 	<message key="manager.setup.journalSetupUpdated">Your journal setup has been updated.</message>
 	<message key="manager.setup.journalStyleSheetInvalid">Invalid journal stylesheet format. Accepted format is .css.</message>
 	<message key="manager.setup.journalTheme">Journal Theme</message>
+	<message key="manager.setup.journalThumbnail">Journal thumbnail</message>
 	<message key="manager.setup.journalTitle">Journal title</message>
 	<message key="manager.setup.labelName">Label name</message>
 	<message key="manager.setup.layoutAndGalleys">Layout Editors</message>
@@ -349,8 +355,8 @@
 	<message key="manager.setup.lists">Lists</message>
 	<message key="manager.setup.listsDescription">Enter the maximum number of items (for example, submissions, users, or editing assignments) that appear on each page of a list, and the number of pages links to display on each page.</message>
 	<message key="manager.setup.lockssEnable"><![CDATA[Enable LOCKSS to store and distribute journal content at participating libraries via a LOCKSS <a href="{$lockssUrl}" target="_blank">Publisher Manifest</a> page. A LOCKSS license will appear in About the Journal under Archiving:]]></message>
-	<message key="manager.setup.lockssLicenses"><![CDATA[See <a href="http://lockss.org/lockss/Publishers_and_Titles" target="_blank">other versions of a LOCKSS license</a>.]]></message>
-	<message key="manager.setup.lockssRegister"><![CDATA[Identify 6-10 libraries that will register and cache the journal. For example, turn to institutions where editors or Board members work and/or institutions already participating in LOCKSS. See <a href="http://lockss.org/lockss/Libraries" target="_blank">participating libraries</a>. Use the prepared invitations for (i) <a href="{$lockssExistingArchiveUrl}" target="_blank">libraries participating in LOCKSS</a> or (ii) <a href="{$lockssNewArchiveUrl}" target="_blank">libraries not yet participating in LOCKSS</a>.]]></message>
+	<message key="manager.setup.lockssLicenses"><![CDATA[See <a href="http://www.lockss.org/community/publishers-titles-gln/" target="_blank">other versions of a LOCKSS license</a>.]]></message>
+	<message key="manager.setup.lockssRegister"><![CDATA[Identify 6-10 libraries that will register and cache the journal. For example, turn to institutions where editors or Board members work and/or institutions already participating in LOCKSS. See <a href="http://www.lockss.org/community/" target="_blank">the LOCKSS community</a>. Use the prepared invitations for (i) <a href="{$lockssExistingArchiveUrl}" target="_blank">libraries participating in LOCKSS</a> or (ii) <a href="{$lockssNewArchiveUrl}" target="_blank">libraries not yet participating in LOCKSS</a>.]]></message>
 	<message key="manager.setup.look">The Look</message>
 	<message key="manager.setup.look.description">Homepage header, content, journal header, footer, navigation bar, and style sheet.</message>
 	<message key="manager.setup.mailingAddressDescription">The journal's physical location and mailing address.</message>
@@ -461,11 +467,10 @@
 	<message key="manager.setup.stepsToJournalSite">Five Steps to a Journal Web Site</message>
 	<message key="manager.setup.subjectClassification">Subject Classification</message>
 	<message key="manager.setup.subjectClassificationExamples">(E.g., Mathematics Subject Classification; Library of Congress Classification)</message>
+	<message key="manager.setup.subjectClassificationURLValid">Please provide a valid remote URL (include http://).</message>
 	<message key="manager.setup.subjectExamples">(E.g., Photosynthesis; Black Holes; Four-Color Map Problem; Bayesian Theory)</message>
 	<message key="manager.setup.subjectKeywordTopic">Keywords</message>
 	<message key="manager.setup.subjectProvideExamples">Provide examples of keywords or topics as a guide for authors</message>
-	<message key="manager.setup.submissionEmailLogging">Maintain a log of all emails sent in relation to a submission on its History page.</message>
-	<message key="manager.setup.submissionEventLogging">Maintain a log of all actions taken with a submission on its History page.</message>
 	<message key="manager.setup.submissionGuidelines">Submission guidelines</message>
 	<message key="manager.setup.submissionPreparationChecklist">Submission Preparation Checklist</message>
 	<message key="manager.setup.submissionPreparationChecklistDescription">On making a submission to the journal, authors are first asked to check each item on the Submission Preparation Checklist as completed, before proceeding. The checklist also appears in the Author Guidelines, under About the Journal. The list can be edited below, but all items on the list will require a checkmark before authors can proceed with their submission.</message>
@@ -484,6 +489,7 @@
 	<message key="manager.setup.useCopyeditors">A Copyeditor will be assigned to work with each submission.</message>
 	<message key="manager.setup.useEditorialReviewBoard">An editorial/review board will be used by the journal.</message>
 	<message key="manager.setup.useImageLogo">Logo image</message>
+	<message key="manager.setup.useThumbnail">Thumbnail</message>
 	<message key="manager.setup.useImageTitle">Title image</message>
 	<message key="manager.setup.useJournalStyleSheet">Journal style sheet</message>
 	<message key="manager.setup.useLayoutEditors">A Layout Editor will be assigned to prepare the HTML, PDF, etc., files for electronic publication.</message>
@@ -491,8 +497,51 @@
 	<message key="manager.setup.userRegistration">User Registration</message>
 	<message key="manager.setup.useTextTitle">Title text</message>
 	<message key="manager.setup.volumePerYear">Volumes per year</message>
+	<message key="manager.statistics.defaultMetricDescription">
+		Your journal is configured to record more than one usage metric. Usage statistics will be displayed in severeral contexts.
+		There are cases where a single usage statistic must be used, e.g. to display an ordered list of most-used articles or to rank
+		search results. Please select one of the configured metrics as a default.
+	</message>
 	<message key="manager.statistics.reports">Report Generator</message>
+	<message key="manager.statistics.reports.aggregationColumns">Aggregate stats by:</message>
+	<message key="manager.statistics.reports.defaultReportTemplates">Default report templates</message>
+	<message key="manager.statistics.reports.defaultReport.articleDownloads">Article file downloads</message>
+	<message key="manager.statistics.reports.defaultReport.articleAbstract">Article abstract page views</message>
+	<message key="manager.statistics.reports.defaultReport.articleAbstractAndDownloads">Article abstract and downloads</message>
+	<message key="manager.statistics.reports.defaultReport.issueDownloads">Issue file downloads</message>
+	<message key="manager.statistics.reports.defaultReport.issueTableOfContents">Issue table of contents page views</message>
+	<message key="manager.statistics.reports.defaultReport.issueTableOfContentsAndDownloads">Issue table of contents and downloads</message>
+	<message key="manager.statistics.reports.defaultReport.journalIndexPageViews">Journal main page views</message>
 	<message key="manager.statistics.reports.description">OJS generates reports that track the details associated with processing submissions to the journal from the perspective of submissions, editors, reviewers, and sections, over a given period of time. Reports are generated in CSV format which requires a spreadsheet application to view.</message>
+	<message key="manager.statistics.reports.generateReport">Generate custom report</message>
+	<message key="manager.statistics.reports.advancedOptions">Advanced Options</message>
+	<message key="manager.statistics.reports.advancedOptions.label">Customize columns, filter and ordering options. Changing any of these options might change the expected report template result.</message>
+	<message key="manager.statistics.reports.columns">Columns</message>
+	<message key="manager.statistics.reports.columns.description">Define the columns that will be used to build the report. The columns you select here not only define which data will be presented inside the reports, but also defines the aggregation level of the statistics. For example, if you choose ID, Type and Month columns, the report will sum all views from an object from one month and will present that data in one row. If you choose Day instead of Month, each object will have a row for each day.</message>
+	<message key="manager.statistics.reports.filters">Filters</message>
+	<message key="manager.statistics.reports.objectType">Object Type</message>
+	<message key="manager.statistics.reports.objectId">Object id</message>
+	<message key="manager.statistics.reports.objectId.label">Define one or more object ids, comma separated (e.g. 1,2,3,4,5).</message>
+	<message key="manager.statistics.reports.today">Today</message>
+	<message key="manager.statistics.reports.currentMonth">Current month</message>
+	<message key="manager.statistics.reports.orderBy">Order by</message>
+	<message key="manager.statistics.reports.orderDir">Direction</message>
+	<message key="manager.statistics.reports.orderDir.asc">Ascending</message>
+	<message key="manager.statistics.reports.orderDir.desc">Descending</message>
+	<message key="manager.statistics.reports.month.label">Use the YYYYMM format.</message>
+	<message key="manager.statistics.reports.day.label">Use the YYYYMMDD format.</message>
+	<message key="manager.statistics.reports.cities.label">One or more city names, comma separated (e.g. City Name 1,City Name 2)</message>
+	<message key="manager.statistics.reports.form.columnsRequired">You have to select at least one column to generate the report.</message>
+	<message key="manager.statistics.reports.reportUrl">Report URL</message>
+	<message key="manager.statistics.reports.reportUrl.label">The following url can be used to generate the report with this current form settings. Just copy it, paste into your browser and enter. You can use your favorites to store your custom report url generator.</message>
+	<message key="manager.statistics.reports.filters.byContext">By context</message>
+	<message key="manager.statistics.reports.filters.byContext.description">Narrow results by context (issue and/or article).</message>
+	<message key="manager.statistics.reports.filters.byObject">By object type and/or object id</message>
+	<message key="manager.statistics.reports.filters.byObject.description">Narrow results by object type (journal, issue, article, pdf galleys, other galleys) and/or by one or more object id(s).</message>
+	<message key="manager.statistics.reports.filters.byTime">Select report range</message>
+	<message key="manager.statistics.reports.filters.byTime.dimensionSelector">Or select range by:</message>
+	<message key="manager.statistics.reports.filters.byLocation">By geo location</message>
+	<message key="manager.statistics.reports.filters.byLocation.description">Narrow results by country, region and/or city.</message>
 	<message key="manager.statistics.statistics">Journal Statistics</message>
 	<message key="manager.statistics.statistics.articleViews">Article View Counts (for Authors only)</message>
 	<message key="manager.statistics.statistics.count.accept">Accept</message>
@@ -524,19 +573,14 @@
 	<message key="manager.subscriptionPolicies.delayedOpenAccessDescription2">month(s) after an issue is published.</message>
 	<message key="manager.subscriptionPolicies.delayedOpenAccessDurationValid">Please select a valid duration length.</message>
 	<message key="manager.subscriptionPolicies.delayedOpenAccessPolicyDescription">The following Delayed Open Access Policy will be posted in About the Journal under Policies.</message>
-	<message key="manager.subscriptionPolicies.enableSubscriptionExpiryReminderBeforeMonthsValid">Please use the checkbox provided.</message>
 	<message key="manager.subscriptionPolicies.expiry">Subscription Expiry</message>
 	<message key="manager.subscriptionPolicies.expiryDescription">Upon subscription expiry, readers may be denied access to all subscription content or may continue to retain access to subscription content published prior to the subscription expiry date.</message>
 	<message key="manager.subscriptionPolicies.expiryFull">Full expiry</message>
 	<message key="manager.subscriptionPolicies.expiryFullDescription">Readers are denied access to all subscription content upon subscription expiry.</message>
 	<message key="manager.subscriptionPolicies.expiryPartial">Partial expiry</message>
 	<message key="manager.subscriptionPolicies.expiryPartialDescription">Readers are denied access to recently published subscription content, but retain access to subscription content published prior to the subscription expiry date.</message>
-	<message key="manager.subscriptionPolicies.expiryReminderAfterMonths1">Notify subscribers by email</message>
-	<message key="manager.subscriptionPolicies.expiryReminderAfterMonths2">month(s) after subscription expiry.</message>
 	<message key="manager.subscriptionPolicies.expiryReminderAfterWeeks1">Notify subscribers by email</message>
 	<message key="manager.subscriptionPolicies.expiryReminderAfterWeeks2">week(s) after subscription expiry.</message>
-	<message key="manager.subscriptionPolicies.expiryReminderBeforeMonths1">Notify subscribers by email</message>
-	<message key="manager.subscriptionPolicies.expiryReminderBeforeMonths2">month(s) before subscription expiry.</message>
 	<message key="manager.subscriptionPolicies.expiryReminderBeforeWeeks1">Notify subscribers by email</message>
 	<message key="manager.subscriptionPolicies.expiryReminderBeforeWeeks2">week(s) before subscription expiry.</message>
 	<message key="manager.subscriptionPolicies.expiryReminders">Subscription Expiry Reminders</message>
@@ -589,6 +633,8 @@
 	<message key="manager.subscriptions.form.typeId">Subscription type</message>
 	<message key="manager.subscriptions.form.typeIdRequired">A subscription type is required.</message>
 	<message key="manager.subscriptions.form.typeIdValid">Please select a valid subscription type.</message>
+	<message key="manager.subscriptions.form.dateRemindedBefore">Pre-expiry Reminder Sent</message>
+	<message key="manager.subscriptions.form.dateRemindedAfter">Post-expiry Reminder Sent</message>
 	<message key="manager.subscriptions.form.dateStart">Start date</message>
 	<message key="manager.subscriptions.form.dateStartRequired">A subscription start date is required.</message>
 	<message key="manager.subscriptions.form.dateStartValid">Please select a valid subscription start date.</message>
@@ -685,4 +731,8 @@
 	<message key="manager.subscriptionTypes.name">Subscription type</message>
 	<message key="manager.subscriptionTypes.noneCreated">No subscription types have been created.</message>
 	<message key="manager.subscriptionTypes.subscriptionTypeCreatedSuccessfully">Subscription type created successfully.</message>
+
+	<!-- Categories -->
+	<message key="manager.setup.categories">Categories</message>
+	<message key="manager.setup.categories.description">Choose the most appropriate categories from the set listed above. Readers will be able to browse by category from the complete journal set.</message>
 </locale>

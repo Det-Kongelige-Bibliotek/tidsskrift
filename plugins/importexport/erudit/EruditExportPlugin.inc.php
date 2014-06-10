@@ -1,9 +1,10 @@
 <?php
 
 /**
- * @file EruditExportPlugin.inc.php
+ * @file plugins/importexport/erudit/EruditExportPlugin.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class EruditExportPlugin
@@ -11,9 +12,6 @@
  *
  * @brief Erudit english DTD article export plugin
  */
-
-// $Id$
-
 
 import('classes.plugins.ImportExportPlugin');
 
@@ -49,9 +47,9 @@ class EruditExportPlugin extends ImportExportPlugin {
 		return __('plugins.importexport.erudit.description');
 	}
 
-	function display(&$args) {
+	function display(&$args, $request) {
 		$templateMgr =& TemplateManager::getManager();
-		parent::display($args);
+		parent::display($args, $request);
 
 		$issueDao =& DAORegistry::getDAO('IssueDAO');
 		$publishedArticleDao =& DAORegistry::getDAO('PublishedArticleDAO');
@@ -72,7 +70,7 @@ class EruditExportPlugin extends ImportExportPlugin {
 			default:
 				// Display a list of articles for export
 				$this->setBreadcrumbs();
-				AppLocale::requireComponents(array(LOCALE_COMPONENT_PKP_SUBMISSION));
+				AppLocale::requireComponents(LOCALE_COMPONENT_PKP_SUBMISSION);
 				$publishedArticleDao =& DAORegistry::getDAO('PublishedArticleDAO');
 				$rangeInfo = Handler::getRangeInfo('articles');
 				$articleIds = $publishedArticleDao->getPublishedArticleIdsAlphabetizedByJournal($journal->getId(), false);

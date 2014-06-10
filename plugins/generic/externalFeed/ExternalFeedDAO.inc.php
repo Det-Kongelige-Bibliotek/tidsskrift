@@ -1,9 +1,10 @@
 <?php
 
 /**
- * @file ExternalFeedDAO.inc.php
+ * @file plugins/generic/externalFeed/ExternalFeedDAO.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ExternalFeedDAO
@@ -11,9 +12,6 @@
  *
  * @brief Operations for retrieving and modifying ExternalFeed objects.
  */
-
-// $Id$
-
 
 import('lib.pkp.classes.db.DAO');
 
@@ -69,7 +67,7 @@ class ExternalFeedDAO extends DAO {
 		$externalFeedPlugin =& PluginRegistry::getPlugin('generic', $this->parentPluginName);
 		$externalFeedPlugin->import('ExternalFeed');
 
-		$externalFeed =& new ExternalFeed();
+		$externalFeed = new ExternalFeed();
 		$externalFeed->setId($row['feed_id']);
 		$externalFeed->setJournalId($row['journal_id']);
 		$externalFeed->setUrl($row['url']);
@@ -222,7 +220,7 @@ class ExternalFeedDAO extends DAO {
 			$rangeInfo
 		);
 
-		$returner =& new DAOResultFactory($result, $this, '_returnExternalFeedFromRow');
+		$returner = new DAOResultFactory($result, $this, '_returnExternalFeedFromRow');
 		return $returner;
 	}
 

@@ -3,7 +3,8 @@
 /**
  * @file plugins/generic/booksForReview/classes/BooksForReviewReminder.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class BooksForReviewReminder
@@ -147,7 +148,7 @@ class BooksForReviewReminder extends ScheduledTask {
 	 */
 	function execute() {
 		$journalDao =& DAORegistry::getDAO('JournalDAO');
-		$journals =& $journalDao->getEnabledJournals();
+		$journals =& $journalDao->getJournals(true);
 
 		$todayDate = array(
 						'year' => date('Y'),
@@ -178,7 +179,7 @@ class BooksForReviewReminder extends ScheduledTask {
 				$curDate['year'] = $todayDate['year'];
 			}
 
-			$journals =& $journalDao->getEnabledJournals();
+			$journals =& $journalDao->getJournals(true);
 
 			while (!$journals->eof()) {
 				$journal =& $journals->next();
@@ -197,7 +198,7 @@ class BooksForReviewReminder extends ScheduledTask {
 			$curDate['month'] = 2;
 			$curDate['year'] = $todayDate['year'];
 
-			$journals =& $journalDao->getEnabledJournals();
+			$journals =& $journalDao->getJournals(true);
 
 			while (!$journals->eof()) {
 				$journal =& $journals->next();
@@ -212,7 +213,7 @@ class BooksForReviewReminder extends ScheduledTask {
 
 				$curDate['day'] = 29;
 
-				$journals =& $journalDao->getEnabledJournals();
+				$journals =& $journalDao->getJournals(true);
 
 				while (!$journals->eof()) {
 					$journal =& $journals->next();

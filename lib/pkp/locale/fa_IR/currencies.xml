@@ -4,12 +4,12 @@
 <!--
   * locale/fa_IR/currencies.xml
   *
-  * Copyright (c) 2000-2012 John Willinsky
+  * Copyright (c) 2013-2014 Simon Fraser University Library
+  * Copyright (c) 2000-2014 John Willinsky
   * تحت مجوزGNU GPL v2 منتشرشد. برای دیدن متن کامل فایل docs/COPYING را ببینید.
   *
   * داده های XML واحدهای پول بر اساس ISO 4217.
   *
-  * $Id$
   -->
 
 <currencies locale="fa_IR" >

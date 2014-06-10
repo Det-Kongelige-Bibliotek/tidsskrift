@@ -1,12 +1,12 @@
 {**
- * settingsForm.tpl
+ * plugins/generic/xmlGalley/settingsForm.tpl
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * XML galley plugin settings
  *
- * $Id$
  *}
 {strip}
 {assign var="pageTitle" value="plugins.generic.xmlGalley.displayName"}
@@ -62,9 +62,7 @@
 	<tr valign="top">
 		<td width="10%" class="label">&nbsp;</td>
 		<td width="90%" class="value">
-		<a href="{plugin_url path="test"}">
-			<input type="submit" name="test" class="button defaultButton" value="{translate key="plugins.generic.xmlGalley.settings.externalXSLTTest"}"/>
-		</a>
+		<a href="{plugin_url path="test"}">{translate key="plugins.generic.xmlGalley.settings.externalXSLTTest"}</a>
 		</td>
 	</tr>
 {/if}

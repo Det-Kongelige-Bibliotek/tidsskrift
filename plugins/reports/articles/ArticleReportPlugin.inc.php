@@ -1,9 +1,10 @@
 <?php
 
 /**
- * @file ArticleReportPlugin.inc.php
+ * @file plugins/reports/articles/ArticleReportPlugin.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  * 
  * @class ArticleReportPlugin
@@ -11,9 +12,6 @@
  *
  * @brief Article report plugin
  */
-
-// $Id$
-
 
 import('classes.plugins.ReportPlugin');
 
@@ -26,7 +24,7 @@ class ArticleReportPlugin extends ReportPlugin {
 	 */
 	function register($category, $path) {
 		$success = parent::register($category, $path);
-		if ($success) {
+		if ($success && Config::getVar('general', 'installed')) {
 			$this->import('ArticleReportDAO');
 			$articleReportDAO = new ArticleReportDAO();
 			DAORegistry::registerDAO('ArticleReportDAO', $articleReportDAO);
@@ -70,7 +68,7 @@ class ArticleReportPlugin extends ReportPlugin {
 			}
 		}
 
-		AppLocale::requireComponents(array(LOCALE_COMPONENT_OJS_EDITOR, LOCALE_COMPONENT_PKP_SUBMISSION));
+		AppLocale::requireComponents(LOCALE_COMPONENT_OJS_EDITOR, LOCALE_COMPONENT_PKP_SUBMISSION);
 
 		import('classes.article.Article');
 		$decisionMessages = array(

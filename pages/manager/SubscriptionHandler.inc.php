@@ -1,9 +1,10 @@
 <?php
 
 /**
- * @file SubscriptionHandler.inc.php
+ * @file pages/manager/SubscriptionHandler.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class SubscriptionHandler
@@ -11,8 +12,6 @@
  *
  * Handle requests for subscription management functions.
  */
-
-// $Id$
 
 import('pages.manager.ManagerHandler');
 
@@ -202,6 +201,33 @@ class SubscriptionHandler extends ManagerHandler {
 	}
 
 	/**
+	 * Reset a subscription reminder date.
+	 */
+	function resetDateReminded($args, &$request) {
+		if (isset($args) && !empty($args)) {
+			if ($args[0] == 'individual') {
+				$institutional  = false;
+				$redirect = 'individual';
+			} else {
+				$institutional = true;
+				$redirect = 'institutional';
+			}
+		} else {
+			Request::redirect(null, 'manager');
+		}
+
+		$this->validate();
+		$this->setupTemplate(true, $institutional);
+
+		array_shift($args);
+		$subscriptionId = (int) $args[0];
+		import('classes.subscription.SubscriptionAction');
+		SubscriptionAction::resetDateReminded($args, $institutional);
+
+		Request::redirect(null, null, 'editSubscription', array($redirect, $subscriptionId));
+	}
+
+	/**
 	 * Display a list of subscription types for the current journal.
 	 */
 	function subscriptionTypes() {
@@ -209,8 +235,8 @@ class SubscriptionHandler extends ManagerHandler {
 		$this->setupTemplate();
 
 		$templateMgr =& TemplateManager::getManager();
-		$templateMgr->addJavaScript('lib/pkp/js/jquery.tablednd_0_5.js');
-		$templateMgr->addJavaScript('lib/pkp/js/tablednd.js');
+		$templateMgr->addJavaScript('lib/pkp/js/lib/jquery/plugins/jquery.tablednd.js');
+		$templateMgr->addJavaScript('lib/pkp/js/functions/tablednd.js');
 
 		import('classes.subscription.SubscriptionAction');
 		SubscriptionAction::subscriptionTypes();
@@ -291,24 +317,28 @@ class SubscriptionHandler extends ManagerHandler {
 
 	/**
 	 * Display subscription policies for the current journal.
+	 * @param $args array
+	 * @param $request PKPRequest
 	 */
-	function subscriptionPolicies() {
+	function subscriptionPolicies($args, &$request) {
 		$this->validate();
 		$this->setupTemplate();
 
 		import('classes.subscription.SubscriptionAction');
-		SubscriptionAction::subscriptionPolicies();
+		SubscriptionAction::subscriptionPolicies($args, $request);
 	}
 
 	/**
 	 * Save subscription policies for the current journal.
+	 * @param $args array
+	 * @param $request PKPRequest
 	 */
-	function saveSubscriptionPolicies($args = array()) {
+	function saveSubscriptionPolicies($args, $request) {
 		$this->validate();
 		$this->setupTemplate();
 
 		import('classes.subscription.SubscriptionAction');
-		SubscriptionAction::saveSubscriptionPolicies($args);
+		SubscriptionAction::saveSubscriptionPolicies($args, $request);
 	}
 
 	/**

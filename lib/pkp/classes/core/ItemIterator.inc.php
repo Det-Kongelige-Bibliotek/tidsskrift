@@ -3,7 +3,8 @@
 /**
  * @file classes/core/ItemIterator.inc.php
  *
- * Copyright (c) 2000-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2000-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ItemIterator
@@ -12,8 +13,6 @@
  * @brief Generic iterator class; needs to be overloaded by subclasses
  * providing specific implementations.
  */
-
-// $Id$
 
 
 class ItemIterator {
@@ -95,7 +94,8 @@ class ItemIterator {
 	 * @return array
 	 */
 	function &toArray() {
-		return array();
+		$returner = array();
+		return $returner;
 	}
 }
 

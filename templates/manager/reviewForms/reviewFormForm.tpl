@@ -1,7 +1,8 @@
 {**
- * reviewFormForm.tpl
+ * templates/manager/reviewForms/reviewFormForm.tpl
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Form to create/modify a review form.
@@ -21,7 +22,7 @@
 
 <br/>
 
-<form name="reviewFormForm" method="post" action="{url op="updateReviewForm"}">
+<form id="reviewFormForm" method="post" action="{url op="updateReviewForm"}">
 {if $reviewFormId}
 	<input type="hidden" name="reviewFormId" value="{$reviewFormId}"/>
 {/if}

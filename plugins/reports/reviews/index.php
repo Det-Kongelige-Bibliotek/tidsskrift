@@ -5,17 +5,16 @@
  */
  
 /**
- * @file index.php
+ * @file plugins/reports/reviews/index.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @brief Wrapper for review report plugin.
  *
  * @ingroup plugins_reports_reviews
  */
-
-//$Id$
 
 require_once('ReviewReportPlugin.inc.php');
 

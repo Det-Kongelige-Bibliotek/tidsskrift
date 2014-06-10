@@ -7,16 +7,14 @@
 /**
  * @file plugins/generic/announcementFeed/index.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @ingroup plugins_generic_announcementFeed
  * @brief Wrapper for Announcement Feed plugin. Based on Web Feed Plugin.
  *
  */
-
-// $Id$
-
 
 require_once('AnnouncementFeedPlugin.inc.php');
 

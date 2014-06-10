@@ -4,12 +4,12 @@
 <!--
   * locale/eu_ES/manager.xml
   *
-  * Copyright (c) 2000-2012 John Willinsky
+  * Copyright (c) 2013-2014 Simon Fraser University Library
+  * Copyright (c) 2000-2014 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings for the eu_ES (Basque (Euskara)) locale.
   *
-  * $Id$
   -->
 
 <locale name="eu_ES" full_name = "Basque (Euskara)">
@@ -194,13 +194,13 @@
 	<message key="manager.setup.filter.grid.confirmDelete">Ziur zaude {$filterName} iragazkia ezabatu nahi duzula?</message>
 	<message key="manager.setup.filter.lookup.grid.descriptionConfirm">{$filterDisplayName} datu-basea gehitzea aukeratu duzu. Mesedez, egin klik “OK” botoian baieztatzeko.</message>
 	<message key="manager.setup.filter.lookup.grid.descriptionTemplate">Mesedez, hautatu bilaketa egiteko datu-basea.</message>
-	<message key="manager.setup.filter.lookup.grid.description.iSBNdb"><![CDATA[<p> Iragazki honek <a href="http://isbndb.com/" target="_blank">ISBNdb.com</a> liburuaren eta ISBN-aren datu-basearekin konektatzen du. <p>ISBNdb API gakoa nahitaezkoa da. Gakoa sortzeari buruzko informazioa eskuratzeko, begiratu <a href="http://isbndb.com/docs/api/30-keys.html" target="_blank"> linean dagoen dokumentazioa </a>.</p>]]></message>
+	<message key="manager.setup.filter.lookup.grid.description.iSBNdb"><![CDATA[<p> Iragazki honek <a href="http://isbndb.com/" target="_blank">ISBNdb.com</a> liburuaren eta ISBN-aren datu-basearekin konektatzen du. <p>ISBNdb API gakoa nahitaezkoa da. Gakoa sortzeari buruzko informazioa eskuratzeko, begiratu <a href="http://isbndb.com/api/v1/docs/keys" target="_blank"> linean dagoen dokumentazioa </a>.</p>]]></message>
 	<message key="manager.setup.filter.lookup.grid.description.crossRef"><![CDATA[<p> Iragazki honek CrossRef aipuaren datu-basera konektatzen du, CrossRef-en <a href="http://www.crossref.org/02publishers/openurl_info.html" target="_blank"> OpenURL Query Interface interfazea erabiliz. </p> 
 	<p>Iragazki hori erabiltzeko, CrossRef sistemako zure kontua erabil dezakezu, edo baliozko helbide elektronikoa erregistra dezakezu CrossRef-en <a href="http://w ww.crossref.org/requestaccount/" target="_blank">, hemen</a>.</p>]]></message>
 	<message key="manager.setup.filter.lookup.grid.description.pubMed"><![CDATA[<p> Iragazki honek PubMed-en  <a href="http://www.ncbi.nlm.nih.gov/gquery/gquery.fcgi" target="_blank">Entrez</a> datu-baseen arteko bilatzailearekin konektatzen du. </p>
 	<p>Erregistratzeko helbide elektronikoa ez da guztiz nahitaezkoa, baina beharrezkoa izan daiteke konexio-arazoak izanez gero. Informazio gehiago izateko, begiratu <a href="http://www.be-md.ncbi.nlm.nih.gov/bookshelf/br.fcgi?book=helpeutils&part=chapter2#chapter2.Usage_Guidelines_and_Requiremen" target="_blank"> atala Entrez dokumentazioan.]]></message>
 	<message key="manager.setup.filter.lookup.grid.description.worldCat"><![CDATA[<p> Iragazki honek OCLC zerbitzuetara <a href="http://www.worldcat.org/affiliate/webservices/xisbn/app.jsp" target="_blank">xISBN</a> eta Worldcat-era <a href="http://www.worldcat.org/" target="_blank"> </a> (aukerakoa) konektatzen du. </p>
-	<p>Worldcat  <a href="http://www.worldcat.org/devnet/wiki/SearchAPIWhoCanUse" target="_blank"> API gakoa baduzu, Worldcat-era konektatu zaitezke, beheran agertzen den gakoa sartuz.</p>]]></message>
+	<p>Worldcat  <a href="http://oclc.org/developer/develop/web-services.html" target="_blank"> API gakoa baduzu, Worldcat-era konektatu zaitezke, beheran agertzen den gakoa sartuz.</p>]]></message>
 	<message key="manager.setup.filter.lookup.grid.loadMessage">Mesedez, itxaron aipuen datu-baseen konfigurazio-sareta kargatu arte…</message>
 	<message key="manager.setup.filter.lookup.grid.title">Aipuen Datu-baseen Konektoreak</message>
 	<message key="manager.setup.filter.noMoreTemplates">Eskuragarri dauden eraldaketa guztiak gehitu dira. Mesedez, egin klik “Ezeztatu” botoian konfigurazio-orrira itzultzeko.</message>
@@ -215,4 +215,27 @@
 	<message key="manager.setup.filter.parser.grid.title">Aipuen Erauzketa Zerbitzuak</message>
 	<message key="manager.setup.filter.pleaseSelect">Mesedez, hautatu…</message>
 	<message key="manager.setup.metaCitationsDescription">Aktibatu hurrengo kontrol-laukia aipua eta erreferentzia editatzea gaitzeko. Egileei aurkezpenetan aipu gordinak sartzeko aukera ematen die. Editoreek aipuak markatzeko laguntzailera sartu ahal izango dute; tresna horrek aipu gordinak eta kanpoko datu-baseak (hala nola WorldCat, ISBNdb, PubMed eta beste zenbait) alderatzeko bide ematen du, zehaztasun gehiagorako. Onartutako aipuak azken galerada-fitxategietara esportatu daitezke.</message>
+	<message key="manager.announcements.datePublish">Argitaratua</message>
+	<message key="manager.emails.addEmail">Erantsi helbide elektronikoaren txantiloia</message>
+	<message key="manager.emails.details">Txantiloiaren xehetasunak</message>
+	<message key="manager.emails.data">Txantiloiko mezuaren datuak</message>
+	<message key="manager.emails.disable.message">Posta elektronikoaren txantiloi hau desaktibatzeko zorian zaude. Sistemaren prozesu batzuk baleude txantiloi hau erabiltzen, ez lukete aurrerantzean erabiliko. Eragiketa baieztatu nahi duzu?</message>
+	<message key="manager.emails.enable.message">Posta elektroniko hau aktibatzeko zorian zaude. Eragiketa baieztatu nahi duzu?</message>
+	<message key="manager.emails.resetAll.message">Txantiloi guztiak berrezartzen badituzu, posta elektronikoaren txantiloi guztien aldaketak galduko dira. Eragiketa baieztatu nahi duzu?</message>
+	<message key="manager.emails.reset.message">Txantiloi hau berrezartzen baduzu, mezuko datu guztiak berrezarriko dira lehenetsitako balioetan, eta aldaketa guztiak galduko dira. Eragiketa baieztatu nahi duzu?</message>
+	<message key="manager.masthead.title">Idazpurua</message>
+	<message key="manager.navigation">Nabigazioa</message>
+	<message key="manager.reviewerSearch.advancedSearch.short">Bilaketa aurreratua</message>
+	<message key="manager.reviewerSearch.searchByName.short">Izenaren araberako bilaketa</message>
+	<message key="manager.reviewerSearch.form.instructions">Erabili beheko inprimakia bilatu nahi dituzun hitzentzako gehienezko balioak ezartzeko. Inprimakiak eremu horietako batez besteko kalkulatuak ditu.</message>
+	<message key="manager.reviewerSearch.form.interests.instructions">Sartu berrikuslearen interesak, komek bananduta...</message>
+	<message key="plugins.categories.metadata">Metadatuen pluginak</message>
+	<message key="plugins.categories.metadata.description">Metadatuen pluginek metadatu estandar gehigarriak inplementatzen dituzte,</message>
+	<message key="plugins.categories.citationLookup">Aipuen datu basearen konektore pluginak</message>
+	<message key="plugins.categories.citationLookup.description">Aipuen datu basearen konektore pluginak aipuen datu baseetara konektatzen dira aipuak bilatzeko, adib., aipuak editatzen diren bitartean.</message>
+	<message key="plugins.categories.citationOutput">Aipuen irteerarako pluginak</message>
+	<message key="plugins.categories.citationOutput.description">Aipuen irteerarako pluginek aipu estandarrak inplementatzen dituzte. Horrek aipuen formatu pluginak ordezten ditu.</message>
+	<message key="plugins.categories.citationParser">Aipuak erauzteko pluginak</message>
+	<message key="plugins.categories.citationParser.description">Aipuak erauzteko pluginek eremu mailako datuak erauzten dituzte aipu gordinetatik (adib., egilea, titulua, etab.).</message>
+	<message key="manager.setup.layout.blockManagement">Alboko barraren kudeaketa</message>
 </locale>

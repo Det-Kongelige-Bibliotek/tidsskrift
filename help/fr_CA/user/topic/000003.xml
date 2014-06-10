@@ -1,15 +1,15 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE topic SYSTEM "../../../../lib/pkp/dtd/helpTopic.dtd">
 
 <!--
   * 000003.xml
   *
-  * Copyright (c) 2003-2012 John Willinsky
+  * Copyright (c) 2013-2014 Simon Fraser University Library
+  * Copyright (c) 2003-2014 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * User Interface - Register and Profile
   *
-  * $Id$
   -->
 
 <topic id="user/topic/000003" locale="fr_CA" title="Inscription et profil" toc="user/toc/000000" key="user.registerAndProfile">

@@ -3,7 +3,8 @@
 /**
  * @file classes/xml/XMLNode.inc.php
  *
- * Copyright (c) 2000-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2000-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class XMLNode
@@ -13,7 +14,6 @@
  * This handler parses an XML document into a tree structure of XMLNode objects.
  */
 
-// $Id$
 
 class XMLNode {
 

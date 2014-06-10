@@ -6,7 +6,8 @@
 /**
  * @file classes/admin/form/PKPSiteSettingsForm.inc.php
  *
- * Copyright (c) 2000-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2000-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class SiteSettingsForm
@@ -14,8 +15,6 @@
  *
  * @brief Form to edit site settings.
  */
-
-// $Id$
 
 
 define('SITE_MIN_PASSWORD_LENGTH', 4);
@@ -48,6 +47,9 @@ class PKPSiteSettingsForm extends Form {
 		$publicFileManager = new PublicFileManager();
 		$siteStyleFilename = $publicFileManager->getSiteFilesPath() . '/' . $site->getSiteStyleFilename();
 		$templateMgr =& TemplateManager::getManager();
+		$templateMgr->assign('showThumbnail', $site->getSetting('showThumbnail'));
+		$templateMgr->assign('showTitle', $site->getSetting('showTitle'));
+		$templateMgr->assign('showDescription', $site->getSetting('showDescription'));
 		$templateMgr->assign('originalStyleFilename', $site->getOriginalStyleFilename());
 		$templateMgr->assign('pageHeaderTitleImage', $site->getSetting('pageHeaderTitleImage'));
 		$templateMgr->assign('styleFilename', $site->getSiteStyleFilename());
@@ -65,16 +67,25 @@ class PKPSiteSettingsForm extends Form {
 		$siteDao =& DAORegistry::getDAO('SiteDAO');
 		$site =& $siteDao->getSite();
 
-		$this->_data = array(
+		$data = array(
 			'title' => $site->getSetting('title'), // Localized
 			'intro' => $site->getSetting('intro'), // Localized
 			'redirect' => $site->getRedirect(),
+			'showThumbnail' => $site->getSetting('showThumbnail'),
+			'showTitle' => $site->getSetting('showTitle'),
+			'showDescription' => $site->getSetting('showDescription'),
 			'about' => $site->getSetting('about'), // Localized
 			'contactName' => $site->getSetting('contactName'), // Localized
 			'contactEmail' => $site->getSetting('contactEmail'), // Localized
 			'minPasswordLength' => $site->getMinPasswordLength(),
-			'pageHeaderTitleType' => $site->getSetting('pageHeaderTitleType') // Localized
+			'pageHeaderTitleType' => $site->getSetting('pageHeaderTitleType'), // Localized
+			'siteTheme' => $site->getSetting('siteTheme'),
+			'oneStepReset' => $site->getSetting('oneStepReset') ? true : false,
 		);
+
+		foreach ($data as $key => $value) {
+			$this->setData($key, $value);
+		}
 	}
 
 	function getLocaleFieldNames() {
@@ -86,7 +97,7 @@ class PKPSiteSettingsForm extends Form {
 	 */
 	function readInputData() {
 		$this->readUserVars(
-			array('pageHeaderTitleType', 'title', 'intro', 'about', 'redirect', 'contactName', 'contactEmail', 'minPasswordLength', 'pageHeaderTitleImageAltText')
+			array('pageHeaderTitleType', 'title', 'intro', 'about', 'redirect', 'contactName', 'contactEmail', 'minPasswordLength', 'oneStepReset', 'pageHeaderTitleImageAltText', 'showThumbnail', 'showTitle', 'showDescription', 'siteTheme')
 		);
 	}
 
@@ -105,6 +116,8 @@ class PKPSiteSettingsForm extends Form {
 			$siteSettingsDao->updateSetting($setting, $this->getData($setting), null, true);
 		}
 
+		$site->updateSetting('siteTheme', $this->getData('siteTheme'), 'string', false);
+
 		$setting = $site->getSetting('pageHeaderTitleImage');
 		if (!empty($setting)) {
 			$imageAltText = $this->getData('pageHeaderTitleImageAltText');
@@ -112,6 +125,11 @@ class PKPSiteSettingsForm extends Form {
 			$setting[$locale]['altText'] = $imageAltText[$locale];
 			$site->updateSetting('pageHeaderTitleImage', $setting, 'object', true);
 		}
+
+		$site->updateSetting('showThumbnail', $this->getData('showThumbnail'), 'bool');
+		$site->updateSetting('showTitle', $this->getData('showTitle'), 'bool');
+		$site->updateSetting('showDescription', $this->getData('showDescription'), 'bool');
+		$site->updateSetting('oneStepReset', $this->getData('oneStepReset'), 'bool');
 
 		$siteDao->updateObject($site);
 		return true;
@@ -122,18 +140,18 @@ class PKPSiteSettingsForm extends Form {
 	 */
 	function uploadSiteStyleSheet() {
 		import('classes.file.PublicFileManager');
-		$fileManager = new PublicFileManager();
+		$publicFileManager = new PublicFileManager();
 		$site =& Request::getSite();
-		if ($fileManager->uploadedFileExists('siteStyleSheet')) {
-			$type = $fileManager->getUploadedFileType('siteStyleSheet');
+		if ($publicFileManager->uploadedFileExists('siteStyleSheet')) {
+			$type = $publicFileManager->getUploadedFileType('siteStyleSheet');
 			if ($type != 'text/plain' && $type != 'text/css') {
 				return false;
 			}
 
 			$uploadName = $site->getSiteStyleFilename();
-			if($fileManager->uploadSiteFile('siteStyleSheet', $uploadName)) {
+			if ($publicFileManager->uploadSiteFile('siteStyleSheet', $uploadName)) {
 				$siteDao =& DAORegistry::getDAO('SiteDAO');
-				$site->setOriginalStyleFilename($fileManager->getUploadedFileName('siteStyleSheet'));
+				$site->setOriginalStyleFilename($publicFileManager->getUploadedFileName('siteStyleSheet'));
 				$siteDao->updateObject($site);
 			}
 		}
@@ -146,20 +164,20 @@ class PKPSiteSettingsForm extends Form {
 	 */
 	function uploadPageHeaderTitleImage($locale) {
 		import('classes.file.PublicFileManager');
-		$fileManager = new PublicFileManager();
+		$publicFileManager = new PublicFileManager();
 		$site =& Request::getSite();
-		if ($fileManager->uploadedFileExists('pageHeaderTitleImage')) {
-			$type = $fileManager->getUploadedFileType('pageHeaderTitleImage');
-			$extension = $fileManager->getImageExtension($type);
+		if ($publicFileManager->uploadedFileExists('pageHeaderTitleImage')) {
+			$type = $publicFileManager->getUploadedFileType('pageHeaderTitleImage');
+			$extension = $publicFileManager->getImageExtension($type);
 			if (!$extension) return false;
 
 			$uploadName = 'pageHeaderTitleImage_' . $locale . $extension;
-			if($fileManager->uploadSiteFile('pageHeaderTitleImage', $uploadName)) {
+			if ($publicFileManager->uploadSiteFile('pageHeaderTitleImage', $uploadName)) {
 				$siteDao =& DAORegistry::getDAO('SiteDAO');
 				$setting = $site->getSetting('pageHeaderTitleImage');
-				list($width, $height) = getimagesize($fileManager->getSiteFilesPath() . '/' . $uploadName);
+				list($width, $height) = getimagesize($publicFileManager->getSiteFilesPath() . '/' . $uploadName);
 				$setting[$locale] = array(
-					'originalFilename' => $fileManager->getUploadedFileName('pageHeaderTitleImage'),
+					'originalFilename' => $publicFileManager->getUploadedFileName('pageHeaderTitleImage'),
 					'width' => $width,
 					'height' => $height,
 					'uploadName' => $uploadName,

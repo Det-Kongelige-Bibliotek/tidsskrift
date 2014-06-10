@@ -3,7 +3,8 @@
 /**
  * @file classes/mail/MailTemplate.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class MailTemplate
@@ -11,9 +12,6 @@
  *
  * @brief Subclass of PKPMailTemplate for mailing a template email.
  */
-
-// $Id$
-
 
 import('lib.pkp.classes.mail.PKPMailTemplate');
 
@@ -90,7 +88,7 @@ class MailTemplate extends PKPMailTemplate {
 		$user =& Request::getUser();
 		if ($user) {
 			$this->setFrom($user->getEmail(), $user->getFullName());
-		} elseif ($journal == null) {
+		} elseif (is_null($journal) || is_null($journal->getSetting('contactEmail'))) {
 			$site =& Request::getSite();
 			$this->setFrom($site->getLocalizedContactEmail(), $site->getLocalizedContactName());
 

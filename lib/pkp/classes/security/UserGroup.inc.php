@@ -3,7 +3,8 @@
 /**
  * @file classes/security/UserGroup.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class UserGroup
@@ -17,7 +18,6 @@
 import('classes.security.Role');
 
 class UserGroup extends DataObject {
-
 	/**
 	 * Constructor.
 	 */
@@ -42,12 +42,12 @@ class UserGroup extends DataObject {
 		$this->setData('path', $path);
 	}
 
-	function getPressId() {
-		return $this->getData('pressId');
+	function getContextId() {
+		return $this->getData('contextId');
 	}
 
-	function setPressId($pressId) {
-		$this->setData('pressId', $pressId);
+	function setContextId($contextId) {
+		$this->setData('contextId', $contextId);
 	}
 
 

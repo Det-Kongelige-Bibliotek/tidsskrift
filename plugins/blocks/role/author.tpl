@@ -1,12 +1,12 @@
 {**
- * author.tpl
+ * plugins/blocks/role/author.tpl
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Author navigation sidebar.
  *
- * $Id$
  *}
 <div class="block" id="sidebarAuthor">
 	<span class="blockTitle">{translate key="user.role.author"}</span>

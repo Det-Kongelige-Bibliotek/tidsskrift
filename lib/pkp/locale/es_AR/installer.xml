@@ -4,19 +4,19 @@
 <!--
   * ../pkp//locale/es_AR/installer.xml
   *
-  * Copyright (c) 2000-2012 John Willinsky
+  * Copyright (c) 2013-2014 Simon Fraser University Library
+  * Copyright (c) 2000-2014 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings for the es_AR (Español (Argentina)) locale.
   *
-  * $Id$
   -->
 
 <locale name="es_AR" full_name = "Español (Argentina)">
 	<message key="installer.additionalLocales">Interfaz en otro idioma</message>
 	<message key="installer.administratorAccount">Cuenta del administrador</message>
 	<message key="installer.administratorAccountInstructions">La cuenta del administrador tendrá acceso completo al sistema. Se pueden crear cuentas de usuarios adicionales después de la isntalación.</message>
-	<message key="installer.checkNo"><![CDATA[<span class="formError">NO</span>]]></message>
+	<message key="installer.checkNo"><![CDATA[<span class="pkp_form_error formError">NO</span>]]></message>
 	<message key="installer.checkYes">Sí</message>
 	<message key="installer.clientCharset">Cliente para el conjunto de caracteres</message>
 	<message key="installer.clientCharsetInstructions">Código de caracteres para el envío y de recepción de datos de los navegadores.</message>
@@ -59,14 +59,14 @@
 	<message key="installer.installParseDBFileError"><![CDATA[Error en la sintaxis en el archivo de instalación de la base de datos <tt>{$file}</tt>.]]></message>
 	<message key="installer.locale">Interfaz de idioma (archivo "Locale")</message>
 	<message key="installer.localeSettings">Opciones del archivo locale</message>
-	<message key="installer.miscSettings">Otras Opciones</message>
 	<message key="installer.oaiRepositoryIdInstructions"><![CDATA[Identificador único utilizado para identificar los archivos de metadatos para su captura mediante el protocolo <a href="http://www.openarchives.org/" target="_blank">Open Archives Initiative</a> de recolección de metadatos PMH-OAI.]]></message>
 	<message key="installer.oaiRepositoryId">Identificador OAI del repositorio</message>
 	<message key="installer.publicFilesDirError">El directorio de archivos de acceso público no existe o no tiene el permiso de escritura.</message>
 	<message key="installer.releaseNotes">Notas</message>
 	<message key="installer.securitySettings">Opciones de seguridad</message>
-	<message key="installer.skipFilesDir">No crear subdirectorios (sólo cuando se haga una instalación manual)</message>
 	<message key="installer.installationWrongPhp"><![CDATA[<br/><strong>ATENCION: Su versión actual de PHP no cumple los requerimientos mínimos para una correcta instalación. SE recomiendo actualizar a una versión más reciente de PHP.</strong>]]></message>
 	<message key="installer.installParseEmailTemplatesFileError"><![CDATA[Error al parsear el archivo de plantilla de correo <tt>{$file}</tt>.]]></message>
 	<message key="installer.locale.maybeIncomplete">Las internacionalizaciones seleccionadas podrían estar incompletas</message>
+	<message key="installer.installParseFilterConfigFileError"><![CDATA[Error al interpretar el arhivo de configuración de filtros: <tt>{$file}</tt>]]></message>
+	<message key="installer.oaiSettings">Configuración de OAI</message>
 </locale>

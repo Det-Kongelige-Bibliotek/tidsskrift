@@ -1,9 +1,10 @@
 <?php
 
 /**
- * @file ExternalFeedBlockPlugin.inc.php
+ * @file plugins/generic/externalFeed/ExternalFeedBlockPlugin.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ExternalFeedBlockPlugin
@@ -11,9 +12,6 @@
  *
  * @brief Class for block component of external feed plugin
  */
-
-// $Id$
-
 
 import('lib.pkp.classes.plugins.BlockPlugin');
 
@@ -100,7 +98,7 @@ class ExternalFeedBlockPlugin extends BlockPlugin {
 				(!empty($requestedPage)) && $requestedPage != 'index'))
 			) continue;
 
-			$feed =& new SimplePie();
+			$feed = new SimplePie();
 			$feed->set_feed_url($currentFeed->getUrl());
 			$feed->enable_order_by_date(false);
 			$feed->set_cache_location(CacheManager::getFileCachePath());

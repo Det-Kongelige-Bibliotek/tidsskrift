@@ -7,7 +7,8 @@
 /**
  * @file classes/submission/common/PKPAction.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PKPAction
@@ -34,7 +35,7 @@ class PKPAction {
 	 * @param $submission Submission
 	 * @return string the rendered response
 	 */
-	 function editCitations(&$request, &$submission) {
+	function editCitations(&$request, &$submission) {
 		$router =& $request->getRouter();
 		$dispatcher =& $this->getDispatcher();
 		$templateMgr =& TemplateManager::getManager();
@@ -45,11 +46,10 @@ class PKPAction {
 
 		// Add extra java script required for ajax components
 		// FIXME: Must be removed after OMP->OJS backporting
-		$templateMgr->addJavaScript('lib/pkp/js/grid-clickhandler.js');
-		$templateMgr->addJavaScript('lib/pkp/js/modal.js');
+		$templateMgr->addJavaScript('lib/pkp/js/functions/modal.js');
 		$templateMgr->addJavaScript('lib/pkp/js/lib/jquery/plugins/validate/jquery.validate.min.js');
-		$templateMgr->addJavaScript('lib/pkp/js/jqueryValidatorI18n.js');
-		$templateMgr->addJavaScript('lib/pkp/js/splitter.js');
+		$templateMgr->addJavaScript('lib/pkp/js/functions/jqueryValidatorI18n.js');
+		$templateMgr->addJavaScript('lib/pkp/js/lib/jquery/plugins/jquery.splitter.js');
 
 
 		// Check whether the citation editor requirements are complete.
@@ -66,16 +66,14 @@ class PKPAction {
 		// 2) Citation editing must be enabled for the journal.
 		if (!$citationEditorConfigurationError) {
 			$context =& $router->getContext($request);
-		 	if (!$context->getSetting('metaCitations')) $citationEditorConfigurationError = 'submission.citations.editor.pleaseSetup';
+			if (!$context->getSetting('metaCitations')) $citationEditorConfigurationError = 'submission.citations.editor.pleaseSetup';
 		}
 
 		// 3) At least one citation parser is available.
+		$citationDao =& DAORegistry::getDAO('CitationDAO'); // NB: This also loads the parser/lookup filter category constants.
 		if (!$citationEditorConfigurationError) {
-			$filterDao =& DAORegistry::getDAO('FilterDAO');
-			$inputSample = 'arbitrary strings';
-			import('lib.pkp.classes.metadata.MetadataDescription');
-			$outputSample = new MetadataDescription('lib.pkp.classes.metadata.nlm.NlmCitationSchema', ASSOC_TYPE_CITATION);
-			$configuredCitationParsers =& $filterDao->getCompatibleObjects($inputSample, $outputSample, $context->getId());
+			$filterDao =& DAORegistry::getDAO('FilterDAO'); /* @var $filterDao FilterDAO */
+			$configuredCitationParsers =& $filterDao->getObjectsByGroup(CITATION_PARSER_FILTER_GROUP, $context->getId());
 			if (!count($configuredCitationParsers)) $citationEditorConfigurationError = 'submission.citations.editor.pleaseAddParserFilter';
 		}
 
@@ -97,7 +95,6 @@ class PKPAction {
 		$templateMgr->assign('introductionHide', $introductionHide);
 
 		// Display an initial help message.
-		$citationDao =& DAORegistry::getDAO('CitationDAO');
 		$citations =& $citationDao->getObjectsByAssocId(ASSOC_TYPE_ARTICLE, $submission->getId());
 		if ($citations->getCount() > 0) {
 			$initialHelpMessage = __('submission.citations.editor.details.pleaseClickOnCitationToStartEditing');

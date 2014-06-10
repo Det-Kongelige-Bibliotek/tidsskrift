@@ -1,12 +1,12 @@
 {**
- * editorDecisionEmail.tpl
+ * templates/submission/comment/editorDecisionEmail.tpl
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Editor Decision email template form
  *
- * $Id$
  *}
 {strip}
 {assign var="pageTitle" value="email.compose"}
@@ -18,14 +18,14 @@
 {literal}
 <!--
 function deleteAttachment(fileId) {
-	document.emailForm.deleteAttachment.value = fileId;
-	document.emailForm.submit();
+	document.getElementById('emailForm').deleteAttachment.value = fileId;
+	document.getElementById('emailForm').submit();
 }
 // -->
 {/literal}
 </script>
 <div id="editorDecisionEmail">
-<form method="post" name="emailForm" action="{$formActionUrl}"{if $attachmentsEnabled} enctype="multipart/form-data"{/if}>
+<form method="post" id="emailForm" name="emailForm" action="{$formActionUrl}"{if $attachmentsEnabled} enctype="multipart/form-data"{/if}>
 <input type="hidden" name="continued" value="1"/>
 {if $hiddenFormParams}
 	{foreach from=$hiddenFormParams item=hiddenFormParam key=key}
@@ -36,7 +36,7 @@ function deleteAttachment(fileId) {
 {if $attachmentsEnabled}
 	<input type="hidden" name="deleteAttachment" value="" />
 	{foreach from=$persistAttachments item=temporaryFile}
-		<input type="hidden" name="persistAttachments[]" value="{$temporaryFile->getFileId()}" />
+		<input type="hidden" name="persistAttachments[]" value="{$temporaryFile->getId()}" />
 	{/foreach}
 {/if}
 
@@ -128,7 +128,7 @@ function deleteAttachment(fileId) {
 		{foreach from=$persistAttachments item=temporaryFile}
 			{$attachmentNum|escape}.&nbsp;{$temporaryFile->getOriginalFileName()|escape}&nbsp;
 			({$temporaryFile->getNiceFileSize()})&nbsp;
-			<a href="javascript:deleteAttachment({$temporaryFile->getFileId()})" class="action">{translate key="common.delete"}</a>
+			<a href="javascript:deleteAttachment({$temporaryFile->getId()})" class="action">{translate key="common.delete"}</a>
 			<br/>
 			{assign var=attachmentNum value=$attachmentNum+1}
 		{/foreach}

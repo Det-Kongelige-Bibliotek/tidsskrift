@@ -3,7 +3,8 @@
 /**
  * @file plugins/generic/tinymce/TinyMCEPlugin.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class TinyMCEPlugin
@@ -161,6 +162,16 @@ class TinyMCEPlugin extends GenericPlugin {
 					$fields[] = "authors-$i-competingInterests";
 				}
 				$fields[] = 'abstract';
+				break;
+			case 'manager/payments':
+				$fields[] = 'submissionFeeDescription';
+				$fields[] = 'fastTrackFeeDescription';
+				$fields[] = 'publicationFeeDescription';
+				$fields[] = 'waiverPolicy';
+				$fields[] = 'purchaseIssueFeeDescription';
+				$fields[] = 'purchaseArticleFeeDescription';
+				$fields[] = 'membershipFeeDescription';
+				$fields[] = 'donationFeeDescription';
 				break;
 			case 'user/profile':
 			case 'user/register':
@@ -352,7 +363,7 @@ class TinyMCEPlugin extends GenericPlugin {
 			<script language="javascript" type="text/javascript">
 				tinyMCE_GZ.init({
 					relative_urls : "false",
-					plugins : "paste,fullscreen,jbimages",
+					plugins : "paste,jbimages,fullscreen",
 					themes : "advanced",
 					languages : "' . join(',', $localeList) . '",
 					disk_cache : true
@@ -361,7 +372,7 @@ class TinyMCEPlugin extends GenericPlugin {
 			<script language="javascript" type="text/javascript">
 				tinyMCE.init({
 					entity_encoding : "raw",
-					plugins : "paste,fullscreen,jbimages",
+					plugins : "paste,jbimages,fullscreen",
 					mode : "exact",
 					language : "' . String::substr(AppLocale::getLocale(), 0, 2) . '",
 					elements : "' . $enableFields . '",

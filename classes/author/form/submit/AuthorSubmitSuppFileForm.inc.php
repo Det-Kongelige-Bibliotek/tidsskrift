@@ -3,7 +3,8 @@
 /**
  * @file classes/author/form/submit/AuthorSubmitSuppFileForm.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class AuthorSubmitSuppFileForm
@@ -11,9 +12,6 @@
  *
  * @brief Supplementary file author submission form.
  */
-
-// $Id$
-
 
 import('lib.pkp.classes.form.Form');
 

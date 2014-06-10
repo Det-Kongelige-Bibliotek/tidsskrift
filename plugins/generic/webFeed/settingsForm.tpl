@@ -1,12 +1,12 @@
 {**
- * settingsForm.tpl
+ * plugins/generic/webFeed/settingsForm.tpl
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Web feeds plugin settings
  *
- * $Id$
  *}
 {strip}
 {assign var="pageTitle" value="plugins.generic.webfeed.displayName"}
@@ -48,7 +48,7 @@
 		<input type="text" name="recentItems" id="recentItems" value="{$recentItems|escape}" size="2" maxlength="90" class="textField" />
 		{translate key="plugins.generic.webfeed.settings.recentArticles"}</td>
 	</tr>
-	
+
 </table>
 
 <br/>

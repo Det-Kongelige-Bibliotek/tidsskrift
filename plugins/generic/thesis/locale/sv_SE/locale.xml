@@ -2,19 +2,19 @@
 <!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
 
 <!--
-  * locale.xml
+  * plugins/generic/thesis/locale/sv_SE/locale.xml
   *
   * Translated to sv_SE per@funke.com 2010-03-15
   *
-  * Copyright (c) 2003-2012 John Willinsky
+  * Copyright (c) 2013-2014 Simon Fraser University Library
+  * Copyright (c) 2003-2014 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Thesis abstracts plugin localization strings for the en_US (U.S. English) locale.
   *
-  * $Id: locale.xml,v 1.7.2.1 2009/04/08 19:43:18 asmecher Exp $
   -->
  
-<locale name="en_US" full_name="U.S. English">
+<locale name="sv_SE" full_name="Swedish">
 
 	<!-- Thesis Abstract Management -->
 	<message key="plugins.generic.thesis.manager.settings">Inställningar</message>

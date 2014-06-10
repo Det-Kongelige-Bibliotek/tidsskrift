@@ -1,15 +1,15 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE toc SYSTEM "../../../../lib/pkp/dtd/helpToc.dtd">
 
 <!--
   * 000000.xml
   *
-  * Copyright (c) 2003-2012 John Willinsky
+  * Copyright (c) 2013-2014 Simon Fraser University Library
+  * Copyright (c) 2003-2014 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Main table of contents for help. 
   *
-  * $Id$
   -->
 
 <toc id="index/toc/000000" locale="vi_VN" title="Hướng dẫn sử dụng OJS" parent_topic="index/topic/000000">

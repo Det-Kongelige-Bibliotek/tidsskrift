@@ -3,7 +3,8 @@
 /**
  * @file pages/admin/AdminPeopleHandler.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class AdminPeopleHandler
@@ -11,8 +12,6 @@
  *
  * @brief Handle requests for people management functions. 
  */
-
-// $Id$
 
 import('pages.admin.AdminHandler');
 
@@ -77,7 +76,7 @@ class AdminPeopleHandler extends AdminHandler {
 			$search = $searchInitial;
 		}
 
-		$rangeInfo = Handler::getRangeInfo('users');
+		$rangeInfo = $this->getRangeInfo('users');
 
 		if ($roleId) {
 			$users =& $roleDao->getUsersByRoleId($roleId, null, $searchType, $search, $searchMatch, $rangeInfo);

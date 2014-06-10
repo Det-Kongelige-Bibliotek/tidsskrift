@@ -3,7 +3,8 @@
 /**
  * @file classes/cliTool/UpgradeTool.php
  *
- * Copyright (c) 2000-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2000-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class upgradeTool
@@ -13,8 +14,6 @@
  *
  * Note: Some functions require fopen wrappers to be enabled.
  */
-
-// $Id$
 
 
 define('RUNNING_UPGRADE', 1);
@@ -51,7 +50,7 @@ class UpgradeTool extends CommandLineTool {
 			. "Supported commands:\n"
 			. "    check                     perform version check\n"
 			. "    latest                    display latest version info\n"
-			//. "    upgrade [pretend]         execute upgrade script\n"
+			. "    upgrade                   execute upgrade script\n"
 			. "    patch                     download and apply patch for latest version\n"
 			. "    download [package|patch]  download latest version (does not unpack/install)\n";
 	}

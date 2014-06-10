@@ -1,9 +1,10 @@
 <?php
 
 /**
- * @file importExport.php
+ * @file tools/importExport.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class importExport
@@ -11,9 +12,6 @@
  *
  * @brief CLI tool to perform import/export tasks
  */
-
-// $Id$
-
 
 require(dirname(__FILE__) . '/bootstrap.inc.php');
 

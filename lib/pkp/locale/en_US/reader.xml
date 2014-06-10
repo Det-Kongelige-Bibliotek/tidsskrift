@@ -4,12 +4,12 @@
 <!--
   * locale/en_US/reader.xml
   *
-  * Copyright (c) 2000-2012 John Willinsky
+  * Copyright (c) 2013-2014 Simon Fraser University Library
+  * Copyright (c) 2000-2014 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings for the en_US (English) locale.
   *
-  * $Id$
   -->
 
 <locale name="en_US" full_name = "English">
@@ -50,14 +50,14 @@
 
 	<message key="rt.admin.sharing">Sharing</message>
 	<message key="rt.admin.sharing.enabled">Sharing Enabled</message>
-	<message key="rt.admin.sharing.description"><![CDATA[To enable your readers to share journal articles, sign up for an account with <a href="http://addthis.com">addthis.com</a>, and copy/paste the Sharing button code below.]]></message>
+	<message key="rt.admin.sharing.description"><![CDATA[To enable your readers to share content, sign up for an account with <a href="http://www.addthis.com">addthis.com</a>, and copy/paste the Sharing button code below.]]></message>
 
 	<message key="rt.admin.sharing.basic">Basic Settings</message>
 	<message key="rt.admin.sharing.userNameLabel">AddThis.com user name</message>
 	<message key="rt.admin.sharing.buttonStyleLabel">Button style</message>
 	<message key="rt.admin.sharing.dropDownMenuLabel">Use drop-down menu</message>
 	<message key="rt.admin.sharing.advanced">Advanced Settings (optional)</message>
-	<message key="rt.admin.sharing.customizationLink"><![CDATA[See the <a href="http://www.addthis.com/help/customize/custom-button/">AddThis.com customization documentation</a> for reference.]]></message>
+	<message key="rt.admin.sharing.customizationLink"><![CDATA[See the <a href="http://support.addthis.com/customer/portal/articles/381236-custom-buttons">AddThis.com customization documentation</a> for reference.]]></message>
 	<message key="rt.admin.sharing.brandLabel">Brand</message>
 	<message key="rt.admin.sharing.dropDownLabel"><![CDATA[Drop-down options <br /> (comma separated list)]]></message>
 	<message key="rt.admin.sharing.languageLabel">Language</message>
@@ -71,6 +71,7 @@
 	<message key="rt.admin.searches.edit.editSearch">Edit Search</message>
 	<message key="rt.admin.selectedVersion">Related items</message>
 	<message key="rt.admin.settings.abstract">Abstract (presents the item's abstract).</message>
+	<message key="rt.admin.settings.viewReviewPolicy">View Review Policy</message>
 	<message key="rt.admin.settings.authorBio">About the author (displays the bio statements entered by the author).</message>
 	<message key="rt.admin.settings.captureCite">How to cite item (provides bibliographic detail for item).</message>
 	<message key="rt.admin.settings.defineTerms">Look up terms (enables readers to double-click on any word in an item and send the word to a dictionary).</message>
@@ -147,7 +148,7 @@
 	<message key="rt.metadata.pkpItem">PKP Metadata Items</message>
 	<message key="rt.metadata.pkp.language">English=en</message>
 	<message key="rt.metadata.pkp.publisher">Organizing agency, location</message>
-	<message key="rt.metadata.pkp.source">Journal/conference title; vol., no. (year)</message>
+	<message key="rt.metadata.pkp.source">Title; vol., no. (year)</message>
 	<message key="rt.metadata.pkp.sponsors">Sponsor(s)</message>
 	<message key="rt.metadata.pkp.subjectClass">Subject classification</message>
 	<message key="rt.metadata.pkp.subject">Keyword(s)</message>

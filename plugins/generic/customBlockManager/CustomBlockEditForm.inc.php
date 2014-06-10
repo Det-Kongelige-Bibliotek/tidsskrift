@@ -1,9 +1,10 @@
 <?php
 
 /**
- * @file CustomBlockEditForm.inc.php
+ * @file plugins/generic/customBlockManager/CustomBlockEditForm.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @package plugins.generic.customBlockManager
@@ -71,15 +72,15 @@ class CustomBlockEditForm extends Form {
 		<script language="javascript" type="text/javascript">
 			tinyMCE.init({
 			mode : "textareas",
-			plugins : "style,paste",
+			plugins : "style,paste,jbimages",
 			theme : "advanced",
 			theme_advanced_buttons1 : "formatselect,fontselect,fontsizeselect",
 			theme_advanced_buttons2 : "bold,italic,underline,separator,strikethrough,justifyleft,justifycenter,justifyright, justifyfull,bullist,numlist,undo,redo,link,unlink",
-			theme_advanced_buttons3 : "cut,copy,paste,pastetext,pasteword,|,cleanup,help,code,",
+			theme_advanced_buttons3 : "cut,copy,paste,pastetext,pasteword,|,cleanup,help,code,jbimages",
 			theme_advanced_toolbar_location : "bottom",
 			theme_advanced_toolbar_align : "left",
 			content_css : "' . Request::getBaseUrl() . '/styles/common.css", 
-			relative_urls : false, 		
+			relative_urls : false,
 			document_base_url : "'. Request::getBaseUrl() .'/'.$publicFileManager->getJournalFilesPath($journalId) .'/", 
 			extended_valid_elements : "span[*], div[*]"
 			});

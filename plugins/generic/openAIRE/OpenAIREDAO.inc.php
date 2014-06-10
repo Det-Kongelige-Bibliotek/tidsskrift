@@ -3,7 +3,8 @@
 /**
  * @file plugins/generic/openAIRE/OpenAIREDAO.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class OpenAIREDAO
@@ -16,8 +17,8 @@ import('classes.oai.ojs.OAIDAO');
 
 
 class OpenAIREDAO extends OAIDAO {
-	
- 	/**
+
+	/**
 	 * Constructor.
 	 */
 	function OpenAIREDAO() {
@@ -37,54 +38,29 @@ class OpenAIREDAO extends OAIDAO {
 	//
 
 	/**
-	 * Return set of OAI records matching specified parameters.
-	 * @param $journalId int
-	 * @parma $from int timestamp
-	 * @parma $until int timestamp
+	 * Return set of OAI records or identifiers matching specified parameters.
+	 * @param $setIds array Objects ids that specify an OAI set, in this case only journal ID.
+	 * @param $from int timestamp
+	 * @param $until int timestamp
 	 * @param $offset int
 	 * @param $limit int
 	 * @param $total int
+	 * @param $funcName string
 	 * @return array OAIRecord
 	 */
-	function &getOpenAIRERecords($journalId, $from, $until, $offset, $limit, &$total) {
+	function &getOpenAIRERecordsOrIdentifiers($setIds, $from, $until, $offset, $limit, &$total, $funcName) {
 		$records = array();
 
-		$params = array('projectID');
-		if (isset($journalId)) {
-			array_push($params, (int) $journalId);
-		}
-		$result =& $this->retrieve(
-			'SELECT	pa.*,
-				a.last_modified,
-				a.article_id,
-				j.journal_id,
-				s.section_id,
-				i.issue_id
-			FROM	published_articles pa,
-				issues i,
-				journals j,
-				articles a,
-				article_settings api,
-				sections s
-			WHERE	pa.article_id = a.article_id
-				AND api.article_id = a.article_id AND api.setting_name = ? AND api.setting_value IS NOT NULL AND api.setting_value <> \'\'
-				AND s.section_id = a.section_id
-				AND j.journal_id = a.journal_id
-				AND pa.issue_id = i.issue_id
-				AND i.published = 1'
-				. (isset($journalId) ? ' AND a.journal_id = ?' : '')
-				. (isset($from) ? ' AND a.last_modified >= ' . $this->datetimeToDB($from) : '')
-				. (isset($until) ? ' AND a.last_modified <= ' . $this->datetimeToDB($until) : '')
-				. ' ORDER BY journal_id',
-			$params
-		);
+		$result =& $this->_getRecordsRecordSet($setIds, $from, $until, null);
 
 		$total = $result->RecordCount();
 
 		$result->Move($offset);
 		for ($count = 0; $count < $limit && !$result->EOF; $count++) {
 			$row =& $result->GetRowAssoc(false);
-			$records[] =& $this->_returnRecordFromRow($row);
+			if ($this->isOpenAIRERecord($row)) {
+				$records[] =& $this->$funcName($row);
+			}
 			$result->moveNext();
 		}
 
@@ -93,60 +69,28 @@ class OpenAIREDAO extends OAIDAO {
 
 		return $records;
 	}
-	
+
 	/**
-	 * Return set of OAI identifiers matching specified parameters.
-	 * @param $journalId int
-	 * @parma $from int timestamp
-	 * @parma $until int timestamp
-	 * @param $offset int
-	 * @param $limit int
-	 * @param $total int
-	 * @return array OAIIdentifier
+	 * Check if it's an OpenAIRE record, if it contains projectID.
+	 * @param $row array of database fields
+	 * @return boolean
 	 */
-	function &getOpenAIREIdentifiers($journalId, $from, $until, $offset, $limit, &$total) {
-		$records = array();
+	function isOpenAIRERecord($row) {
+		if (!isset($row['tombstone_id'])) {
+			$params = array('projectID', (int) $row['article_id']);
+			$result =& $this->retrieve(
+				'SELECT COUNT(*) FROM article_settings WHERE setting_name = ? AND setting_value IS NOT NULL AND setting_value <> \'\' AND article_id = ?',
+				$params
+			);
+			$returner = (isset($result->fields[0]) && $result->fields[0] == 1) ? true : false;
+			$result->Close();
+			unset($result);
 
-		$params = array('projectID');
-		if (isset($journalId)) {
-			array_push($params, (int) $journalId);
+			return $returner;
+		} else {
+			$dataObjectTombstoneSettingsDao =& DAORegistry::getDAO('DataObjectTombstoneSettingsDAO');
+			return $dataObjectTombstoneSettingsDao->getSetting($row['tombstone_id'], 'openaire');
 		}
-		$result =& $this->retrieve(
-			'SELECT	pa.article_id,
-				a.last_modified,
-				j.journal_id,
-				s.section_id
-			FROM	published_articles pa,
-				issues i,
-				journals j,
-				articles a,
-				article_settings api,
-				sections s
-			WHERE	pa.article_id = a.article_id
-				AND api.article_id = a.article_id AND api.setting_name = ? AND api.setting_value IS NOT NULL AND api.setting_value <> \'\'
-				AND s.section_id = a.section_id
-				AND j.journal_id = a.journal_id
-				AND pa.issue_id = i.issue_id AND i.published = 1'
-				. (isset($journalId) ? ' AND a.journal_id = ?' : '')
-				. (isset($from) ? ' AND a.last_modified >= ' . $this->datetimeToDB($from) : '')
-				. (isset($until) ? ' AND a.last_modified <= ' . $this->datetimeToDB($until) : '')
-				. ' ORDER BY journal_id',
-			$params
-		);
-
-		$total = $result->RecordCount();
-
-		$result->Move($offset);
-		for ($count = 0; $count < $limit && !$result->EOF; $count++) {
-			$row =& $result->GetRowAssoc(false);
-			$records[] =& $this->_returnIdentifierFromRow($row);
-			$result->moveNext();
-		}
-
-		$result->Close();
-		unset($result);
-
-		return $records;
 	}
 
 	/**
@@ -155,18 +99,19 @@ class OpenAIREDAO extends OAIDAO {
 	 * @return boolean
 	 */
 	function isOpenAIREArticle($articleId) {
+		$params = array('projectID', (int) $articleId);
 		$result =& $this->retrieve(
-			'SELECT COUNT(*) FROM article_settings WHERE setting_name = "projectID" AND setting_value IS NOT NULL AND setting_value <> \'\' AND article_id = ?',
-			array($articleId)
+			'SELECT COUNT(*) FROM article_settings WHERE setting_name = ? AND setting_value IS NOT NULL AND setting_value <> \'\' AND article_id = ?',
+			$params
 		);
 		$returner = (isset($result->fields[0]) && $result->fields[0] == 1) ? true : false;
-
 		$result->Close();
 		unset($result);
 
-		return $returner;		
+		return $returner;
 	}
-		
+
+
 }
 
 ?>

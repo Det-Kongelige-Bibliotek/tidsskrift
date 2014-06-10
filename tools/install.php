@@ -3,7 +3,8 @@
 /**
  * @file tools/install.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class installTool
@@ -11,9 +12,6 @@
  *
  * @brief CLI tool for installing OJS.
  */
-
-// $Id$
-
 
 require(dirname(__FILE__) . '/bootstrap.inc.php');
 
@@ -34,7 +32,7 @@ class OJSInstallTool extends InstallTool {
 	 * FIXME: Use readline if available?
 	 */
 	function readParams() {
-		AppLocale::requireComponents(array(LOCALE_COMPONENT_PKP_INSTALLER, LOCALE_COMPONENT_APPLICATION_COMMON, LOCALE_COMPONENT_PKP_USER));
+		AppLocale::requireComponents(LOCALE_COMPONENT_PKP_INSTALLER, LOCALE_COMPONENT_APPLICATION_COMMON, LOCALE_COMPONENT_PKP_USER);
 		printf("%s\n", __('installer.ojsInstallation'));
 
 		parent::readParams();

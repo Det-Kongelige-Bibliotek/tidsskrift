@@ -3,7 +3,8 @@
 /**
  * @file classes/core/PKPRequest.inc.php
  *
- * Copyright (c) 2000-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2000-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PKPRequest
@@ -83,8 +84,19 @@ class PKPRequest {
 			return;
 		}
 
-		header("Refresh: 0; url=$url");
+		header("Location: $url");
 		exit();
+	}
+
+	/**
+	 * Request an HTTP redirect via JSON to be used from components.
+	 * @param $url string
+	 */
+	function redirectUrlJson($url) {
+		import('lib.pkp.classes.core.JSONMessage');
+		$json = new JSONMessage(true);
+		$json->setEvent('redirectRequested', $url);
+		return $json->getString();
 	}
 
 	/**
@@ -150,7 +162,18 @@ class PKPRequest {
 		$_this =& PKPRequest::_checkThis();
 
 		if (!isset($_this->_basePath)) {
-			$_this->_basePath = dirname($_SERVER['SCRIPT_NAME']);
+			$path = preg_replace('#/[^/]*$#', '', $_SERVER['SCRIPT_NAME']);
+
+			// Encode charcters which need to be encoded in a URL.
+			// Simply using rawurlencode() doesn't work because it
+			// also encodes characters which are valid in a URL (i.e. @, $).
+			$parts = explode('/', $path);
+			foreach ($parts as $i => $part) {
+				$pieces = array_map(array($this, 'encodeBasePathFragment'), str_split($part));
+				$parts[$i] = implode('', $pieces);
+			}
+			$_this->_basePath = implode('/', $parts);
+
 			if ($_this->_basePath == '/' || $_this->_basePath == '\\') {
 				$_this->_basePath = '';
 			}
@@ -158,6 +181,19 @@ class PKPRequest {
 		}
 
 		return $_this->_basePath;
+	}
+
+	/**
+	 * Callback function for getBasePath() to correctly encode (or not encode)
+	 * a basepath fragment.
+	 * @param string $fragment
+	 * @return string
+	 */
+	function encodeBasePathFragment($fragment) {
+		if (!preg_match('/[A-Za-z0-9-._~!$&\'()*+,;=:@]/', $fragment)) {
+			return rawurlencode($fragment);
+		}
+		return $fragment;
 	}
 
 	/**
@@ -232,7 +268,9 @@ class PKPRequest {
 	}
 
 	/**
-	 * Get the complete set of URL parameters to the current request as an associative array.
+	 * Get the complete set of URL parameters to the current request as an
+	 * associative array. (Excludes reserved parameters, such as "path",
+	 * which are used by disable_path_info mode.)
 	 * @return array
 	 */
 	function getQueryArray() {
@@ -243,6 +281,11 @@ class PKPRequest {
 
 		if (isset($queryString)) {
 			parse_str($queryString, $queryArray);
+		}
+
+		// Filter out disable_path_info reserved parameters
+		foreach (array_merge(Application::getContextList(), array('path', 'page', 'op')) as $varName) {
+			if (isset($queryArray[$varName])) unset($queryArray[$varName]);
 		}
 
 		return $queryArray;
@@ -296,7 +339,7 @@ class PKPRequest {
 		$_this =& PKPRequest::_checkThis();
 
 		if (!isset($_this->_protocol)) {
-			$_this->_protocol = (!isset($_SERVER['HTTPS']) || strtolower($_SERVER['HTTPS']) != 'on') ? 'http' : 'https';
+			$_this->_protocol = (!isset($_SERVER['HTTPS']) || strtolower_codesafe($_SERVER['HTTPS']) != 'on') ? 'http' : 'https';
 			HookRegistry::call('Request::getProtocol', array(&$_this->_protocol));
 		}
 		return $_this->_protocol;
@@ -400,8 +443,8 @@ class PKPRequest {
 	}
 
 	/**
-	 * Determine whether a user agent is a bot or not using an external
-	 * list of regular expressions.
+	 * Determine whether the user agent is a bot or not.
+	 * @return boolean
 	 */
 	function isBot() {
 		$_this =& PKPRequest::_checkThis();
@@ -409,15 +452,7 @@ class PKPRequest {
 		static $isBot;
 		if (!isset($isBot)) {
 			$userAgent = $_this->getUserAgent();
-			$isBot = false;
-			$userAgentsFile = Config::getVar('general', 'registry_dir') . DIRECTORY_SEPARATOR . 'botAgents.txt';
-			$regexps = array_filter(file($userAgentsFile), create_function('&$a', 'return ($a = trim($a)) && !empty($a) && $a[0] != \'#\';'));
-			foreach ($regexps as $regexp) {
-				if (String::regexp_match($regexp, $userAgent)) {
-					$isBot = true;
-					return $isBot;
-				}
-			}
+			$isBot = Core::isUserAgentBot($userAgent);
 		}
 		return $isBot;
 	}
@@ -756,6 +791,12 @@ class PKPRequest {
 		// we can put a deprecation warning in here.
 		$_this =& PKPRequest::_checkThis();
 		$router =& $_this->getRouter();
+
+		if (is_null($router)) {
+			assert(false);
+			$nullValue = null;
+			return $nullValue;
+		}
 
 		// Construct the method call
 		$callable = array($router, $method);

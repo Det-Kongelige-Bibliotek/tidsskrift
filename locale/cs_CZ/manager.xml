@@ -4,12 +4,12 @@
 <!--
   * /locale/cs_CZ/manager.xml
   *
-  * Copyright (c) 2003-2012 John Willinsky
+  * Copyright (c) 2013-2014 Simon Fraser University Library
+  * Copyright (c) 2003-2014 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings for the cs_CZ (Czech) locale.
   *
-  * $Id$
   -->
 
 <locale name="cs_CZ" full_name = "Czech">
@@ -123,7 +123,6 @@
 	<message key="manager.reviewForms.title">Název</message>
 	<message key="manager.sections.abstractsNotRequired">Nepožadovat abstrakta</message>
 	<message key="manager.sections.assigned">Editoři této sekce</message>
-	<message key="manager.sections.confirmDelete">Jste si jistý, že chcete trvale odstranit tuto sekci? Budete muset znovu publikovat všechny články v této sekci.</message>
 	<message key="manager.sections.create">Vytvořit sekci</message>
 	<message key="manager.sections.disableComments">Zakázat komentáře čtenářů pro tuto sekci.</message>
 	<message key="manager.section.sectionEditorInstructions">Vyberte z dostupných editorů sekcí a "Přidělte editora" této sekci.</message>
@@ -173,7 +172,7 @@
 	<message key="manager.setup.authorGuidelines">Instrukce autorům</message>
 	<message key="manager.setup.authorGuidelinesDescription"><![CDATA[Stanovte pro autory bibliografický standard a standard pro formátování textu, které mají použít ve svých příspěvcích do časopisu (například <i>Publication Manual of the American Psychological Association</i>, 5th edition, 2001). Většinou je užitečné, pokud poskytnete příklady běžných způsobů citování časopisů a knih, které budou v příspěvcích použity. Také vymezte patřičné typy doplňkových souborů (například souborů s daty, výzkumné nástroje atd.), k jejichž nahrání společně s příspěvkem by měli být autoři motivováni, aby ve větší míře zpřístupnili čtenářům svou práci.]]></message>
 	<message key="manager.setup.competingInterests">Střet zájmů</message>
-	<message key="manager.setup.competingInterests.description"><![CDATA[Biomedicínské časopisy obvykle požadují od autorů a recenzentů prohlášení o střetu zájmů ohledně jejich výzkumu (viz <a href="http://journals.plos.org/plosclinicaltrials/competing.php" target="_new">PLoS Policy</a>).]]></message>
+	<message key="manager.setup.competingInterests.description"><![CDATA[Biomedicínské časopisy obvykle požadují od autorů a recenzentů prohlášení o střetu zájmů ohledně jejich výzkumu (viz <a href="http://www.plosbiology.org/static/competing.action" target="_new">PLoS Policy</a>).]]></message>
 	<message key="manager.setup.competingInterests.guidelines">Instrukce pro zasílání prohlášení o střetu zájmů</message>
 	<message key="manager.setup.competingInterests.requireAuthors">Požadovat od autorů, aby spolu s příspěvkem zaslali soubor s prohlášením o střetu zájmů.</message>
 	<message key="manager.setup.competingInterests.requireReviewers">Požadovat od recenzentů, aby s každým svým posudkem zasílali soubor s prohlášením o střetu zájmů.</message>
@@ -254,7 +253,6 @@
 	<message key="manager.setup.guidingSubmissions">Krok 3. Instrukce pro příspěvky</message>
 	<message key="manager.setup.homepageImage">Obrázek domácí stránky</message>
 	<message key="manager.setup.homepageImageDescription">Přidat obrázek na střed stránky.</message>
-	<message key="manager.setup.includeCreativeCommons">Přiřaďte v časopisech, které nabízejí okamžitý nebo zpožděný otevřený přístup, v patřičném čase veškeré publikované práce pod Creative Common licenci.</message>
 	<message key="manager.setup.information">Informace</message>
 	<message key="manager.setup.information.description">Stručné popisy časopisu pro knihovníky, případné autory a čtenáře jsou dostupné v sekci "Informace" postranního panelu.</message>
 	<message key="manager.setup.information.forAuthors">Pro autory</message>
@@ -302,8 +300,8 @@
 	<message key="manager.setup.lists">Seznamy</message>
 	<message key="manager.setup.listsDescription">Zadejte maximální počet položek (například příspěvků, uživatelů nebo úkolů), které se zobrzí na každé stránce seznamu a počet odkazů na stránky zobrazených na každé stránce.</message>
 	<message key="manager.setup.lockssEnable"><![CDATA[Umožněte technologii LOCKSS ukládat a distribuovat obsah časopisu v zúčastněných knihovnách přes LOCKSS stránku <a href="{$lockssUrl}" target="_blank">Seznam vydavatelů</a>. LOCKSS licence se zobrazí v části O časopisu – Archivování:]]></message>
-	<message key="manager.setup.lockssLicenses"><![CDATA[Viz <a href="http://lockss.org/lockss/Publishers_and_Titles" target="_blank">další verze LOCKSS licence</a>.]]></message>
-	<message key="manager.setup.lockssRegister"><![CDATA[Identifikujte 6–10 knihoven, které budou registrovat a uskladňovat časopis. Například se obraťte na instituce, kde pracují editoři nebo členové redakční rady a/nebo na instituce, které se již účastní LOCKSS. Viz <a href="http://lockss.org/lockss/Libraries" target="_blank">zúčastněné knihovny</a>. Využijte připravená pozvání pro (i) <a href="{$lockssExistingArchiveUrl}" target="_blank">knihovny účastnící se LOCKSS</a> nebo (ii) <a href="{$lockssNewArchiveUrl}" target="_blank">knihovny, které ještě nejsou zapojené v LOCKSS</a>.]]></message>
+	<message key="manager.setup.lockssLicenses"><![CDATA[Viz <a href="http://www.lockss.org/community/publishers-titles-gln/" target="_blank">další verze LOCKSS licence</a>.]]></message>
+	<message key="manager.setup.lockssRegister"><![CDATA[Identifikujte 6–10 knihoven, které budou registrovat a uskladňovat časopis. Například se obraťte na instituce, kde pracují editoři nebo členové redakční rady a/nebo na instituce, které se již účastní LOCKSS. Viz <a href="http://www.lockss.org/community/" target="_blank">zúčastněné knihovny</a>. Využijte připravená pozvání pro (i) <a href="{$lockssExistingArchiveUrl}" target="_blank">knihovny účastnící se LOCKSS</a> nebo (ii) <a href="{$lockssNewArchiveUrl}" target="_blank">knihovny, které ještě nejsou zapojené v LOCKSS</a>.]]></message>
 	<message key="manager.setup.look">Vzhled</message>
 	<message key="manager.setup.look.description">Záhlaví domácí stránky, obsah, záhlaví časopisu, zápatí, navigační panel a kaskádové styly.</message>
 	<message key="manager.setup.mailingAddressDescription">Zeměpisné umístění časopisu a poštovní adresa.</message>
@@ -474,19 +472,14 @@
 	<message key="manager.subscriptionPolicies.delayedOpenAccessDescription2">měsíc(ů) poté, co bylo číslo publikováno.</message>
 	<message key="manager.subscriptionPolicies.delayedOpenAccessDurationValid">Vyberte prosím platnou dobu trvání.</message>
 	<message key="manager.subscriptionPolicies.delayedOpenAccessPolicyDescription">Následující Pravidla zpožděného otevřeného přístupu budou uvedena na stránce O časopisu pod Pravidly.</message>
-	<message key="manager.subscriptionPolicies.enableSubscriptionExpiryReminderBeforeMonthsValid">Použijte prosím poskytnuté zaškrtávací políčko.</message>
 	<message key="manager.subscriptionPolicies.expiry">Vypršení předplatného</message>
 	<message key="manager.subscriptionPolicies.expiryDescription">Po vypršení předplatného může být čtenářům zamítnut přístup k veškerému placenému obsahu nebo si mohou zachovat přístup k předplacenému obsahu, který byl publikován před vypršením předplatného.</message>
 	<message key="manager.subscriptionPolicies.expiryFull">Úplné vypršení</message>
 	<message key="manager.subscriptionPolicies.expiryFullDescription">Čtenářům je po vypršení předplatného zakázan přístup k veškerému předplacenému obsahu.</message>
 	<message key="manager.subscriptionPolicies.expiryPartial">Částečné vypršení</message>
 	<message key="manager.subscriptionPolicies.expiryPartialDescription">Čtenáři mají zakázaný přístup k nově publikovanému předplacenému obsahu, ale zůstává jim povolen přístup k předplacenému obsahu vydanému před datem vypršení předplatného.</message>
-	<message key="manager.subscriptionPolicies.expiryReminderAfterMonths1">Upozornit předplatitele emailem</message>
-	<message key="manager.subscriptionPolicies.expiryReminderAfterMonths2">měsíc(e) po vypršení předplatného.</message>
 	<message key="manager.subscriptionPolicies.expiryReminderAfterWeeks1">Upozornit předplatitele emailem</message>
 	<message key="manager.subscriptionPolicies.expiryReminderAfterWeeks2">týden(týdny) po vypršení předplatného.</message>
-	<message key="manager.subscriptionPolicies.expiryReminderBeforeMonths1">Upozornit předplatitele emailem</message>
-	<message key="manager.subscriptionPolicies.expiryReminderBeforeMonths2">měsíc(e) před vypršením předplatného.</message>
 	<message key="manager.subscriptionPolicies.expiryReminderBeforeWeeks1">Upozornit předplatitele emailem</message>
 	<message key="manager.subscriptionPolicies.expiryReminderBeforeWeeks2">týden(týdny) před vypršením předplatného.</message>
 	<message key="manager.subscriptionPolicies.expiryReminders">Připomenutí vypršení předplatného</message>
@@ -659,7 +652,7 @@
 	<message key="manager.setup.doiSuffixPattern">Použijte níže vložený vzorec pro generování DOI přípon. Použijte %j pro inciály časopisu, %v pro číslo ročníku, %i pro číslo čísla, %a pro ID OJS článku a %p pro číslo stránky.</message>
 	<message key="manager.setup.doiSuffixPattern.example">Například vol%viss%ipp%p by mohlo vytvořit DOI jako 10.1234/vol3iss2pp230</message>
 	<message key="manager.setup.doiSuffixDescription">DOI přípona může mít jakýkoliv formát, ale musí být jedinečná pro každou publikovanou položku.</message>
-	<message key="manager.setup.doiSuffixCustomIdentifier">Použít "Uživatelský identifikátor" pro publikované položky jako DOI příponu (musí být povoleno v Kroku 4).</message>
+	<message key="manager.setup.doiSuffixPublisherId">Použít "Uživatelský identifikátor" pro publikované položky jako DOI příponu (musí být povoleno v Kroku 4).</message>
 	<message key="manager.setup.form.doiPrefixPattern">DOI vzorec musí být ve formátu 10.xxxx.</message>
 	<message key="manager.setup.journalFaviconDescription">Přidat faviconu pro tento časopis, která se bude zobrazovat vedle navigační lišty, když uživatelé navštíví vaše stránky.</message>
 	<message key="manager.setup.publisherNoteDescription">Tento text se zobrazí pod hlavičkou "Vydavatel" a nad jménem/url vydavatele pod "Sponzorování časopisu" na stránce "O časopisu".</message>

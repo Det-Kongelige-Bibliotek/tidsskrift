@@ -3,7 +3,8 @@
 /**
  * @file classes/group/GroupMembershipDAO.inc.php
  *
- * Copyright (c) 2000-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2000-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class GroupMembershipDAO
@@ -12,8 +13,6 @@
  *
  * @brief Operations for retrieving and modifying group membership info.
  */
-
-// $Id$
 
 
 import ('lib.pkp.classes.group.GroupMembership');
@@ -67,6 +66,14 @@ class GroupMembershipDAO extends DAO {
 	}
 
 	/**
+	 * Instantiate a new data object.
+	 * @return GroupMembership
+	 */
+	function newDataObject() {
+		return new GroupMembership();
+	}
+
+	/**
 	 * Internal function to return a GroupMembership object from a row.
 	 * @param $row array
 	 * @return GroupMembership
@@ -79,10 +86,10 @@ class GroupMembershipDAO extends DAO {
 		}
 		$userId = $row['user_id'];
 		if (!isset($users[$userId])) {
-			$users[$userId] =& $this->userDao->getUser($userId);
+			$users[$userId] =& $this->userDao->getById($userId);
 		}
 
-		$membership = new GroupMembership();
+		$membership = $this->newDataObject();
 		$membership->setGroupId($row['group_id']);
 		$membership->setUserId($row['user_id']);
 		$membership->setUser($users[$userId]);
@@ -208,10 +215,10 @@ class GroupMembershipDAO extends DAO {
 				)
 			);
 
-			$result->moveNext();
+			$result->MoveNext();
 		}
 
-		$result->close();
+		$result->Close();
 		unset($result);
 	}
 }

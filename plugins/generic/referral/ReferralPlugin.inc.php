@@ -3,7 +3,8 @@
 /**
  * @file plugins/generic/referral/ReferralPlugin.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ReferralPlugin
@@ -11,9 +12,6 @@
  *
  * @brief Referral plugin to track and maintain potential references to published articles
  */
-
-// $Id$
-
 
 import('lib.pkp.classes.plugins.GenericPlugin');
 
@@ -51,15 +49,16 @@ class ReferralPlugin extends GenericPlugin {
 		return parent::getManagementVerbs($verbs);
 	}
 
- 	/*
- 	 * Execute a management verb on this plugin
- 	 * @param $verb string
- 	 * @param $args array
-	 * @param $message string Location for the plugin to put a result msg
- 	 * @return boolean
- 	 */
-	function manage($verb, $args, &$message) {
-		if (!parent::manage($verb, $args, $message)) return false;
+	/*
+	 * Execute a management verb on this plugin
+	 * @param $verb string
+	 * @param $args array
+	 * @param $message string Result status message
+	 * @param $messageParams array Parameters for the message key
+	 * @return boolean
+	 */
+	function manage($verb, $args, &$message, &$messageParams) {
+		if (!parent::manage($verb, $args, $message, $messageParams)) return false;
 
 		switch ($verb) {
 			case 'settings':
@@ -150,8 +149,22 @@ class ReferralPlugin extends GenericPlugin {
 				$referralFilter = (int) Request::getUserVar('referralFilter');
 				if ($referralFilter == 0) $referralFilter = null;
 
-				$referrals =& $referralDao->getReferralsByUserId($user->getId(), $referralFilter, $rangeInfo);
+				// Fetch article titles
+				$journal = Request::getJournal();
+				$referrals = $referralDao->getByUserId($user->getId(), $journal->getId(), $referralFilter, $rangeInfo);
+				$articleDao = DAORegistry::getDAO('ArticleDAO');
+				$articleTitles = $referralsArray = array();
+				while ($referral = $referrals->next()) {
+					$article = $articleDao->getArticle($referral->getArticleId());
+					if (!$article) continue;
+					$articleTitles[$article->getId()] = $article->getLocalizedTitle();
+					$referralsArray[] = $referral;
+				}
+				// Turn the array back into an interator for display
+				import('lib.pkp.classes.core.VirtualArrayIterator');
+				$referrals = new VirtualArrayIterator($referralsArray, $referrals->getCount(), $referrals->getPage(), $rangeInfo->getCount());
 
+				$templateMgr->assign('articleTitles', $articleTitles);
 				$templateMgr->assign('referrals', $referrals);
 				$templateMgr->assign('referralFilter', $referralFilter);
 				$templateMgr->display($this->getTemplatePath() . 'authorReferrals.tpl', 'text/html', 'ReferralPlugin::addAuthorReferralContent');
@@ -236,7 +249,7 @@ class ReferralPlugin extends GenericPlugin {
 			$referral->setUrl($referrer);
 			$referral->setStatus(REFERRAL_STATUS_NEW);
 			$referral->setDateAdded(Core::getCurrentDate());
-			$referralDao->insertReferral($referral);
+			$referralDao->replaceReferral($referral);
 		}
 		return false;
 	}

@@ -7,15 +7,14 @@
 /**
  * @file pages/sectionEditor/index.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @ingroup pages_sectionEditor
  * @brief Handle requests for section editor functions.
  *
  */
-
-// $Id$
 
 switch ($op) {
 	//
@@ -98,10 +97,8 @@ switch ($op) {
 	// Submission History
 	//
 	case 'submissionEventLog':
-	case 'submissionEventLogType':
 	case 'clearSubmissionEventLog':
 	case 'submissionEmailLog':
-	case 'submissionEmailLogType':
 	case 'clearSubmissionEmailLog':
 	case 'addSubmissionNote':
 	case 'removeSubmissionNote':
@@ -138,9 +135,11 @@ switch ($op) {
 	 //
 	 // Payments
 	 //
+	case 'reassignReviewer':
 	case 'waiveSubmissionFee':
 	case 'waiveFastTrackFee':
 	case 'waivePublicationFee':
+	case 'downloadLayoutTemplate':
 		define('HANDLER_CLASS', 'SubmissionEditHandler');
 		import('pages.sectionEditor.SubmissionEditHandler');
 		break;
@@ -150,7 +149,7 @@ switch ($op) {
 	case 'viewPeerReviewComments':
 	case 'postPeerReviewComment':
 	case 'viewEditorDecisionComments':
-	case 'blindCcReviewsToReviewers':
+	case 'bccEditorDecisionCommentToReviewers':
 	case 'postEditorDecisionComment':
 	case 'viewCopyeditComments':
 	case 'postCopyeditComment':

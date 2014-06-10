@@ -3,7 +3,8 @@
 /**
  * @file classes/cache/GenericCache.inc.php
  *
- * Copyright (c) 2000-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2000-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class GenericCache
@@ -13,8 +14,6 @@
  * to be overridden with a more specific implementation, it can be used as the
  * null cache.
  */
-
-// $Id$
 
 
 // Pseudotype to represent a cache miss

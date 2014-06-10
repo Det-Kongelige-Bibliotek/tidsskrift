@@ -7,7 +7,8 @@
 /**
  * @file classes/user/form/RegistrationForm.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class RegistrationForm
@@ -29,6 +30,9 @@ class RegistrationForm extends Form {
 	/** @var boolean whether or not captcha is enabled for this form */
 	var $captchaEnabled;
 
+	/** @var boolean whether to use reCaptcha or the default captcha */
+	var $reCaptchaEnabled;
+
 	/** @var boolean whether or not implicit authentication is used */
 	var $implicitAuth;
 
@@ -48,6 +52,9 @@ class RegistrationForm extends Form {
 			import('lib.pkp.classes.captcha.CaptchaManager');
 			$captchaManager = new CaptchaManager();
 			$this->captchaEnabled = ($captchaManager->isEnabled() && Config::getVar('captcha', 'captcha_on_register'))?true:false;
+			if ($this->captchaEnabled) {
+				$this->reCaptchaEnabled = Config::getVar('captcha', 'recaptcha')?true:false;
+			}
 
 			// Validation checks for this form
 			$this->addCheck(new FormValidator($this, 'username', 'required', 'user.profile.form.usernameRequired'));
@@ -68,10 +75,15 @@ class RegistrationForm extends Form {
 				$this->addCheck(new FormValidator($this, 'lastName', 'required', 'user.profile.form.lastNameRequired'));
 				$this->addCheck(new FormValidatorUrl($this, 'userUrl', 'optional', 'user.profile.form.urlInvalid'));
 				$this->addCheck(new FormValidatorEmail($this, 'email', 'required', 'user.profile.form.emailRequired'));
+				$this->addCheck(new FormValidatorORCID($this, 'orcid', 'optional', 'user.profile.form.orcidInvalid'));
 				$this->addCheck(new FormValidatorCustom($this, 'email', 'required', 'user.register.form.emailsDoNotMatch', create_function('$email,$form', 'return $email == $form->getData(\'confirmEmail\');'), array(&$this)));
 				$this->addCheck(new FormValidatorCustom($this, 'email', 'required', 'user.register.form.emailExists', array(DAORegistry::getDAO('UserDAO'), 'userExistsByEmail'), array(), true));
 				if ($this->captchaEnabled) {
-					$this->addCheck(new FormValidatorCaptcha($this, 'captcha', 'captchaId', 'common.captchaField.badCaptcha'));
+					if ($this->reCaptchaEnabled) {
+						$this->addCheck(new FormValidatorReCaptcha($this, 'recaptcha_challenge_field', 'recaptcha_response_field', Request::getRemoteAddr(), 'common.captchaField.badCaptcha'));
+					} else {
+						$this->addCheck(new FormValidatorCaptcha($this, 'captcha', 'captchaId', 'common.captchaField.badCaptcha'));
+					}
 				}
 
 				$authDao =& DAORegistry::getDAO('AuthSourceDAO');
@@ -95,12 +107,22 @@ class RegistrationForm extends Form {
 		$journal =& Request::getJournal();
 
 		if ($this->captchaEnabled) {
-			import('lib.pkp.classes.captcha.CaptchaManager');
-			$captchaManager = new CaptchaManager();
-			$captcha =& $captchaManager->createCaptcha();
-			if ($captcha) {
+			$templateMgr->assign('reCaptchaEnabled', $this->reCaptchaEnabled);
+			if ($this->reCaptchaEnabled) {
+				import('lib.pkp.lib.recaptcha.recaptchalib');
+				$publicKey = Config::getVar('captcha', 'recaptcha_public_key');
+				$useSSL = Config::getVar('security', 'force_ssl')?true:false;
+				$reCaptchaHtml = recaptcha_get_html($publicKey, null, $useSSL);
+				$templateMgr->assign('reCaptchaHtml', $reCaptchaHtml);
 				$templateMgr->assign('captchaEnabled', $this->captchaEnabled);
-				$this->setData('captchaId', $captcha->getId());
+			} else {
+				import('lib.pkp.classes.captcha.CaptchaManager');
+				$captchaManager = new CaptchaManager();
+				$captcha =& $captchaManager->createCaptcha();
+				if ($captcha) {
+					$templateMgr->assign('captchaEnabled', $this->captchaEnabled);
+					$this->setData('captchaId', $captcha->getId());
+				}
 			}
 		}
 
@@ -148,14 +170,19 @@ class RegistrationForm extends Form {
 			'username', 'password', 'password2',
 			'salutation', 'firstName', 'middleName', 'lastName',
 			'gender', 'initials', 'country',
-			'affiliation', 'email', 'confirmEmail', 'userUrl', 'phone', 'fax', 'signature',
+			'affiliation', 'email', 'confirmEmail', 'orcid', 'userUrl', 'phone', 'fax', 'signature',
 			'mailingAddress', 'biography', 'interestsTextOnly', 'keywords', 'userLocales',
 			'registerAsReader', 'openAccessNotification', 'registerAsAuthor',
 			'registerAsReviewer', 'existingUser', 'sendPassword'
 		);
 		if ($this->captchaEnabled) {
-			$userVars[] = 'captchaId';
-			$userVars[] = 'captcha';
+			if ($this->reCaptchaEnabled) {
+				$userVars[] = 'recaptcha_challenge_field';
+				$userVars[] = 'recaptcha_response_field';
+			} else {
+				$userVars[] = 'captchaId';
+				$userVars[] = 'captcha';
+			}
 		}
 
 		$this->readUserVars($userVars);
@@ -190,9 +217,9 @@ class RegistrationForm extends Form {
 				$sessionManager =& SessionManager::getManager();
 				$session =& $sessionManager->getUserSession();
 
-				$user =& $userDao->getUserByUsername($session->getSessionVar('username'));
+				$user =& $userDao->getByUsername($session->getSessionVar('username'));
 			} else {
-				$user =& $userDao->getUserByUsername($this->getData('username'));
+				$user =& $userDao->getByUsername($this->getData('username'));
 			}
 
 			if ($user == null) {
@@ -215,6 +242,7 @@ class RegistrationForm extends Form {
 			$user->setAffiliation($this->getData('affiliation'), null); // Localized
 			$user->setSignature($this->getData('signature'), null); // Localized
 			$user->setEmail($this->getData('email'));
+			$user->setData('orcid', $this->getData('orcid'));
 			$user->setUrl($this->getData('userUrl'));
 			$user->setPhone($this->getData('phone'));
 			$user->setFax($this->getData('fax'));
@@ -287,7 +315,7 @@ class RegistrationForm extends Form {
 
 		foreach ($allowedRoles as $k => $v) {
 			$roleId = $roleDao->getRoleIdFromPath($k);
-			if ($this->getData($v) && !$roleDao->roleExists($journal->getId(), $userId, $roleId)) {
+			if ($this->getData($v) && !$roleDao->userHasRole($journal->getId(), $userId, $roleId)) {
 				$role = new Role();
 				$role->setJournalId($journal->getId());
 				$role->setUserId($userId);

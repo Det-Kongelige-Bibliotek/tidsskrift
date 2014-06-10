@@ -3,7 +3,8 @@
 /**
  * @file classes/xml/XMLCustomWriter.inc.php
  *
- * Copyright (c) 2000-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2000-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class XMLCustomWriter
@@ -11,8 +12,6 @@
  *
  * @brief Wrapper class for writing XML documents using PHP 4.x or 5.x
  */
-
-// $Id$
 
 
 import ('lib.pkp.classes.xml.XMLNode');
@@ -123,8 +122,12 @@ class XMLCustomWriter {
 	}
 
 	function &createChildFromFile(&$doc, &$node, $name, $filename) {
-		$contents =& FileManager::readFile($filename);
-		if ($contents === false) return null;
+		$fileManager = new FileManager();
+		$contents =& $fileManager->readFile($filename);
+		if ($contents === false) {
+			$nullVar = null;
+			return $nullVar;
+		}
 	}
 }
 

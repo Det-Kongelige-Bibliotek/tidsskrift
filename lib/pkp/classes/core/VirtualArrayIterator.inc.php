@@ -3,7 +3,8 @@
 /**
  * @file classes/core/VirtualArrayIterator.inc.php
  *
- * Copyright (c) 2000-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2000-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class VirtualArrayIterator
@@ -12,8 +13,6 @@
  * @brief Provides paging and iteration for "virtual" arrays -- arrays for which only
  * the current "page" is available, but are much bigger in entirety.
  */
-
-// $Id$
 
 
 import('lib.pkp.classes.core.ItemIterator');
@@ -53,6 +52,19 @@ class VirtualArrayIterator extends ItemIterator {
 		$this->itemsPerPage = $itemsPerPage;
 		$this->wasEmpty = count($this->theArray)==0;
 		reset($this->theArray);
+	}
+
+	/**
+	 * Factory Method.
+	 * Extracts the appropriate page items from the whole array and
+	 * calls the constructor.
+	 * @param $wholeArray array The whole array of items
+	 * @param $rangeInfo int The number of items per page
+	 * @return object VirtualArrayIterator
+	 */
+	static function factory($wholeArray, $rangeInfo) {
+		if ($rangeInfo->isValid()) $slicedArray = array_slice($wholeArray, $rangeInfo->getCount() * ($rangeInfo->getPage()-1), $rangeInfo->getCount());
+		return new VirtualArrayIterator($slicedArray, count($wholeArray), $rangeInfo->getPage(), $rangeInfo->getCount());
 	}
 
 	/**

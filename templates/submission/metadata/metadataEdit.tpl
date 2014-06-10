@@ -1,7 +1,8 @@
 {**
- * metadataEdit.tpl
+ * templates/submission/metadata/metadataEdit.tpl
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Form for changing metadata of an article (used in MetadataForm)
@@ -13,7 +14,7 @@
 
 {url|assign:"competingInterestGuidelinesUrl" page="information" op="competingInterestGuidelines"}
 
-<form name="metadata" method="post" action="{url op="saveMetadata"}" enctype="multipart/form-data">
+<form id="metadata" method="post" action="{url op="saveMetadata"}" enctype="multipart/form-data">
 <input type="hidden" name="articleId" value="{$articleId|escape}" />
 {include file="common/formErrors.tpl"}
 
@@ -23,7 +24,7 @@
 <!--
 // Move author up/down
 function moveAuthor(dir, authorIndex) {
-	var form = document.metadata;
+	var form = document.getElementById('metadata');
 	form.moveAuthor.value = 1;
 	form.moveAuthorDir.value = dir;
 	form.moveAuthorIndex.value = authorIndex;
@@ -96,8 +97,12 @@ function moveAuthor(dir, authorIndex) {
 		<td class="value"><input type="text" name="authors[{$authorIndex|escape}][email]" id="authors-{$authorIndex|escape}-email" value="{$author.email|escape}" size="30" maxlength="90" class="textField" /></td>
 	</tr>
 	<tr valign="top">
+		<td class="label">{fieldLabel name="authors-$authorIndex-orcid" key="user.orcid"}</td>
+		<td class="value"><input type="text" name="authors[{$authorIndex|escape}][orcid]" id="authors-{$authorIndex|escape}-orcid" value="{$author.orcid|escape}" size="30" maxlength="90" class="textField" /><br />{translate key="user.orcid.description"}</td>
+	</tr>
+	<tr valign="top">
 		<td class="label">{fieldLabel name="authors-$authorIndex-url" key="user.url"}</td>
-		<td class="value"><input type="text" name="authors[{$authorIndex|escape}][url]" id="authors-{$authorIndex|escape}-url" value="{$author.url|escape}" size="30" maxlength="90" class="textField" /></td>
+		<td class="value"><input type="text" name="authors[{$authorIndex|escape}][url]" id="authors-{$authorIndex|escape}-url" value="{$author.url|escape}" size="30" maxlength="255" class="textField" /></td>
 	</tr>
 	<tr valign="top">
 		<td class="label">{fieldLabel name="authors-$authorIndex-affiliation" key="user.affiliation"}</td>
@@ -166,6 +171,14 @@ function moveAuthor(dir, authorIndex) {
 		<td class="value"><input type="text" name="authors[0][lastName]" id="authors-0-lastName" size="20" maxlength="90" class="textField" /></td>
 	</tr>
 	<tr valign="top">
+		<td class="label">{fieldLabel name="authors-0-email" required="true" key="user.email"}</td>
+		<td class="value"><input type="text" name="authors[0][email]" id="authors-0-email" size="30" maxlength="90" class="textField" /></td>
+	</tr>
+	<tr valign="top">
+		<td class="label">{fieldLabel name="authors-0-url" key="user.url"}</td>
+		<td class="value"><input type="text" name="authors[0][url]" id="authors-0-url" size="30" maxlength="255" class="textField" /></td>
+	</tr>
+	<tr valign="top">
 		<td class="label">{fieldLabel name="authors-0-affiliation" key="user.affiliation"}</td>
 		<td class="value">
 			<textarea name="authors[0][affiliation][{$formLocale|escape}]" class="textArea" id="authors-0-affiliation" rows="5" cols="40"></textarea><br/>
@@ -173,12 +186,13 @@ function moveAuthor(dir, authorIndex) {
 		</td>
 	</tr>
 	<tr valign="top">
-		<td class="label">{fieldLabel name="authors-0-email" required="true" key="user.email"}</td>
-		<td class="value"><input type="text" name="authors[0][email]" id="authors-0-email" size="30" maxlength="90" class="textField" /></td>
-	</tr>
-	<tr valign="top">
-		<td class="label">{fieldLabel name="authors-0-url" key="user.url"}</td>
-		<td class="value"><input type="text" name="authors[0][url]" id="authors-0-url" size="30" maxlength="90" class="textField" /></td>
+		<td class="label">{fieldLabel name="authors-$authorIndex-country" key="common.country"}</td>
+		<td class="value">
+			<select name="authors[0][country]" id="authors-0-country" class="selectMenu">
+				<option value=""></option>
+				{html_options options=$countries}
+			</select>
+		</td>
 	</tr>
 	{if $currentJournal->getSetting('requireAuthorCompetingInterests')}
 		<tr valign="top">
@@ -389,6 +403,11 @@ function moveAuthor(dir, authorIndex) {
 
 <div class="separator"></div>
 
+{foreach from=$pubIdPlugins item=pubIdPlugin}
+	{assign var=pubIdMetadataFile value=$pubIdPlugin->getPubIdMetadataFile()}
+	{include file="$pubIdMetadataFile" pubObject=$article}
+{/foreach}
+
 {call_hook name="Templates::Submission::MetadataEdit::AdditionalMetadata"}
 
 {if $journalSettings.metaCitations}
@@ -430,7 +449,7 @@ function moveAuthor(dir, authorIndex) {
 <table width="100%" class="data">
 	<tr valign="top">
 		<td width="20%" class="label">{fieldLabel name="hideAuthor" key="issue.toc"}</td>
-		<td width="80%" class="value">{translate key="editor.article.hideTocAuthorDescription"}: 
+		<td width="80%" class="value">{translate key="editor.article.hideTocAuthorDescription"}:
 			<select name="hideAuthor" id="hideAuthor" class="selectMenu">
 				{html_options options=$hideAuthorOptions selected=$hideAuthor|escape}
 			</select>
@@ -438,10 +457,29 @@ function moveAuthor(dir, authorIndex) {
 	</tr>
 </table>
 </div>
-{/if}
+
+<div id="permissions">
+<h3>{translate key="submission.permissions"}</h3>
+<table width="100%" class="data">
+	<tr valign="top">
+		<td width="20%" class="label">{fieldLabel name="copyrightHolder" key="submission.copyrightHolder"}</td>
+		<td width="80%" class="value"><input type="text" name="copyrightHolder[{$formLocale|escape}]" id="copyrightHolder" value="{$copyrightHolder[$formLocale]|escape}" size="60" maxlength="255" class="textField" /></td>
+	</tr>
+	<tr valign="top">
+		<td class="label">{fieldLabel name="copyrightYear" key="submission.copyrightYear"}</td>
+		<td class="value"><input type="text" name="copyrightYear" id="copyrightYear" value="{$copyrightYear|escape}" size="10" maxlength="255" class="textField" /></td>
+	</tr>
+	<tr valign="top">
+		<td class="label">{fieldLabel name="licenseURL" key="submission.licenseURL"}</td>
+		<td class="value"><input type="text" name="licenseURL" id="licenseURL" value="{$licenseURL|escape}" size="60" maxlength="255" class="textField" /></td>
+	</tr>
+</table>
+
+</div>
 
 <div class="separator"></div>
 
+{/if}{* $isEditor *}
 
 <p><input type="submit" value="{translate key="submission.saveMetadata"}" class="button defaultButton"/> <input type="button" value="{translate key="common.cancel"}" class="button" onclick="history.go(-1)" /></p>
 

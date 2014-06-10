@@ -1,9 +1,10 @@
 <?php
 
 /**
- * @file mergeUsers.php
+ * @file tools/mergeUsers.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class mergeUsers
@@ -11,9 +12,6 @@
  *
  * @brief CLI tool for merging two OJS 2 user accounts.
  */
-
-// $Id$
-
 
 require(dirname(__FILE__) . '/bootstrap.inc.php');
 

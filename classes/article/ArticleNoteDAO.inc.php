@@ -3,7 +3,8 @@
 /**
  * @file classes/article/ArticleNoteDAO.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ArticleNoteDAO
@@ -12,9 +13,6 @@
  *
  * @brief Operations for retrieving and modifying ArticleNote objects.
  */
-
-// $Id$
-
 
 import('classes.article.ArticleNote');
 import('classes.note.NoteDAO');
@@ -66,8 +64,6 @@ class ArticleNoteDAO extends NoteDAO {
 	function insertArticleNote(&$articleNote) {
 		if (Config::getVar('debug', 'deprecation_warnings')) trigger_error('Deprecated function');
 		$articleNote->setAssocType(ASSOC_TYPE_ARTICLE);
-		$journal =& Request::getJournal();
-		$articleNote->setContextId($journal->getId());
 		return $this->insertObject($articleNote);
 	}
 

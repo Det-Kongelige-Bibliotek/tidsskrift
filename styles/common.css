@@ -1,19 +1,20 @@
 /**
- * common.css
+ * styles/common.css
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Site-wide shared stylesheet.
  *
- * $Id$
  */
 
-/*
+/**
  * Notifications
  * FIXME: (Re)move once OJS styles are consolidated with new styles and themes
  */
 @import url("../lib/pkp/styles/themes/default/pnotify.css");
+@import url("../lib/pkp/styles/themes/default/notificationIcons.css");
 
 .ui-pnotify-title {
 	font-size: 0.8em;
@@ -30,25 +31,22 @@
 /**
  * Common HTML elements
  */
-body {
-font-size:130%;
-font-family: Georgia,'Times New Roman',Times,serif;
-background-color: #FFF;
-}
+
 a:link {
-	color: #000;
+	color: #375;
 }
 
 a:active {
-	color: red;
+	color: #253;
 }
 
 a:visited {
-	color: #999;
+	color: #375;
 }
 
 a:hover {
-	color: #716b7a;
+	color: #253;
+	background: #CDC;
 }
 
 
@@ -57,15 +55,11 @@ a:hover {
  */
 
 #header {
-	background-color: #000;
+	background-color: #ABA;
 }
-#header h1{
-	color: #FFF;
-}
-
 
 #footer {
-	background-color: #000;
+	background-color: #ABA;
 }
 
 #main {
@@ -73,10 +67,6 @@ a:hover {
 	margin: 0 auto;
 }
 
-a.textLink{
-	text-transform: none;
-	text-decoration: none;
-}
 
 /**
  * Access icons and key
@@ -330,11 +320,23 @@ pre {
  * Table styles
  */
 
-table.listing tr.highlight {
-	background: yellow;
+.highlightReviewerNotNotified, .highlightCopyediting {
+	background: #EDEBC4;
+}
+.highlightNoDecision, .highlightLayoutEditing {
+	background: #D8E9BD;
+}
+.highlightRevisedCopyUploaded, .higlightProofreading {
+	background: #C6EBE4;
+}
+.highlightReviewerConfirmationOverdue {
+	background: #9DD1E6;
+}
+.highlightReviewerCompletionOverdue {
+	background: #74C5D8;
 }
 
-table.listing tr.fastTracked {
+.fastTracked {
 	background-color: #ABA;
 }
 
@@ -381,10 +383,8 @@ td.notificationFunction {
 }
 
 /* Font Sizer */
-
-.smallFont {
-	outline: none; /*for making it look nice in FF */
-	background: url(../lib/pkp/templates/images/icons/font-down.png);
+#sizer a {
+	outline: none;
 	text-indent: -9999px;
 	display: block;
 	float: left;
@@ -394,44 +394,13 @@ td.notificationFunction {
 	margin-left: 8px;
 }
 
-a.smallFont:hover {
-	background: url(../lib/pkp/templates/images/icons/font-down.png);
-	color: none;
+#journalListPageInfo {
+	float: right;
 }
 
-.defaultFont {
-	/*if you want to hide the default font button, use display:none */
-	background: url(../lib/pkp/templates/images/icons/font-default.png);
-	text-indent: -9999px;
-	outline: none;
-	display: block;
+#journalListPageLinks {
 	float: left;
-	width: 20px;
-	height: 23px;
-	margin-right: 4px;
-
 }
-
-a.defaultFont:hover {
-	background: url(../lib/pkp/templates/images/icons/font-default.png);
-	color: none;
-}
-
-.largeFont {
-	background: url(../lib/pkp/templates/images/icons/font-up.png);
-	outline: none;
-	text-indent: -9999px;
-	display: block;
-	float: left;
-	width: 20px;
-	height: 23px;
-}
-
-a.largeFont:hover {
-	background: url(../lib/pkp/templates/images/icons/font-up.png);
-	color: none;
-}
-
 
 
 /* @group Tag-it */
@@ -501,13 +470,4 @@ ul.tagit input[type="text"] {
 
 
 /* @end */
-.cookie{
-  padding-right: 5px !important;
-  padding-bottom:5px;
-  background: url("https://tidsskrift.dk/styles/iconsmall.png") no-repeat scroll 100% 50% transparent;
-}
 
-a.titleLink {
-  text-transform: none;
-  text-decoration: none;
-}

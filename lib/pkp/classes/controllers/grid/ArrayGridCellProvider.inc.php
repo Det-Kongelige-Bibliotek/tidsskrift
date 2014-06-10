@@ -3,7 +3,8 @@
 /**
  * @file classes/controllers/grid/ArrayGridCellProvider.inc.php
  *
- * Copyright (c) 2000-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2000-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ArrayGridCellProvider
@@ -36,7 +37,9 @@ class ArrayGridCellProvider extends GridCellProvider {
 	function getTemplateVarsFromRowColumn(&$row, $column) {
 		$element =& $row->getData();
 		$columnId = $column->getId();
-		assert(is_array($element) && isset($element[$columnId]));
+		assert(is_array($element) && in_array($columnId, array_keys($element)));
 		return array('label' => $element[$columnId]);
 	}
 }
+
+?>

@@ -1,12 +1,12 @@
 {**
- * management.tpl
+ * templates/sectionEditor/submission/management.tpl
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Subtemplate defining the submission management table.
  *
- * $Id$
  *}
 <div id="submission">
 <h3>{translate key="article.submission"}</h3>

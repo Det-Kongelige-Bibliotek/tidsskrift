@@ -1,0 +1,74 @@
+10c10,11
+< ; Copyright (c) 2003-2012 John Willinsky
+---
+> ; Copyright (c) 2013-2014 Simon Fraser University Library
+> ; Copyright (c) 2003-2014 John Willinsky
+15a17
+> ;
+94a97,99
+> ; Display a message on the site admin and journal manager user home pages if there is an upgrade available
+> show_upgrade_warning = On
+> 
+103,104c108,109
+< username = root
+< password = 
+---
+> username = ojs
+> password = ojs
+140c145,148
+< 
+---
+> ;
+> ; When using web_cache, configure a tool to periodically clear out cache files
+> ; such as CRON. For example, configure it to run the following command:
+> ; find .../ojs/cache -maxdepth 1 -name wc-\*.html -mtime +1 -exec rm "{}" ";"
+152c160
+< locale = da_DK
+---
+> locale = en_US
+229c237
+< allowed_html = "<a> <em> <strong> <cite> <code> <ul> <ol> <li> <dl> <dt> <dd> <b> <i> <u> <img src|alt> <sup> <sub> <br> <p>"
+---
+> allowed_html = "<a href|target> <em> <strong> <cite> <code> <ul> <ol> <li> <dl> <dt> <dd> <b> <i> <u> <img src|alt> <sup> <sub> <br> <p>"
+242,248c250,256
+< ;implicit_auth_header_first_name = HTTP_TDL_GIVENNAME
+< ;implicit_auth_header_last_name = HTTP_TDL_SN
+< ;implicit_auth_header_email = HTTP_TDL_MAIL
+< ;implicit_auth_header_phone = HTTP_TDL_TELEPHONENUMBER
+< ;implicit_auth_header_initials = HTTP_TDL_METADATA_INITIALS
+< ;implicit_auth_header_mailing_address = HTTP_TDL_METADATA_TDLHOMEPOSTALADDRESS
+< ;implicit_auth_header_uin = HTTP_TDL_TDLUID
+---
+> ;implicit_auth_header_first_name = HTTP_GIVENNAME
+> ;implicit_auth_header_last_name = HTTP_SN
+> ;implicit_auth_header_email = HTTP_MAIL
+> ;implicit_auth_header_phone = HTTP_TELEPHONENUMBER
+> ;implicit_auth_header_initials = HTTP_METADATA_INITIALS
+> ;implicit_auth_header_mailing_address = HTTP_METADATA_HOMEPOSTALADDRESS
+> ;implicit_auth_header_uin = HTTP_UID
+251c259
+< ;implicit_auth_admin_list = "100000040@tdl.org 85B7FA892DAA90F7@utexas.edu 100000012@tdl.org"
+---
+> ;implicit_auth_admin_list = "jdoe@email.ca jshmo@email.ca"
+390a399,408
+> ; Whether to use reCaptcha instead of default Captcha
+> recaptcha = off
+> 
+> ; Public key for reCaptcha (see http://www.google.com/recaptcha)
+> ; recaptcha_public_key = your_public_key
+> 
+> ; Private key for reCaptcha (see http://www.google.com/recaptcha)
+> ; recaptcha_private_key = your_private_key
+> 
+> 
+407a426,431
+> ; egrep (used in copyAccessLogFileTool)
+> egrep = /bin/egrep
+> 
+> ; gunzip (used in copyAccessLogFileTool)
+> gunzip = /bin/gunzip
+> 
+447c471
+< display_errors = On
+---
+> display_errors = Off

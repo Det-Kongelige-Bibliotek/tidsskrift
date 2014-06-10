@@ -1,12 +1,12 @@
 {**
- * issues.tpl
+ * plugins/importexport/crossref/issues.tpl
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * List of issues to potentially export
  *
- * $Id$
  *}
 {strip}
 {assign var="pageTitle" value="plugins.importexport.crossref.export.selectIssue"}
@@ -18,7 +18,7 @@
 {literal}
 <!--
 function toggleChecked() {
-	var elements = document.issues.elements;
+	var elements = document.getElementById('issues').elements;
 	for (var i=0; i < elements.length; i++) {
 		if (elements[i].name == 'issueId[]') {
 			elements[i].checked = !elements[i].checked;
@@ -31,8 +31,8 @@ function toggleChecked() {
 
 <br/>
 
-<div id="issues">
-<form action="{plugin_url path="exportIssues"}" method="post" name="issues">
+<div id="issuesDiv">
+<form action="{plugin_url path="exportIssues"}" method="post" id="issues">
 <table width="100%" class="listing">
 	<tr>
 		<td colspan="5" class="headseparator">&nbsp;</td>
@@ -47,13 +47,14 @@ function toggleChecked() {
 	<tr>
 		<td colspan="5" class="headseparator">&nbsp;</td>
 	</tr>
-	
+
 	{iterate from=issues item=issue}
+	{assign var="issueId" value=$issue->getId()}
 	<tr valign="top">
 		<td><input type="checkbox" name="issueId[]" value="{$issue->getId()}"/></td>
 		<td><a href="{url page="issue" op="view" path=$issue->getId()}" class="action">{$issue->getIssueIdentification()|strip_unsafe_html|nl2br}</a></td>
 		<td>{$issue->getDatePublished()|date_format:"$dateFormatShort"|default:"&mdash;"}</td>
-		<td>{$issue->getNumArticles()|escape}</td>
+		<td>{$numArticles[$issueId]|escape}</td>
 		<td align="right"><a href="{plugin_url path="exportIssue"|to_array:$issue->getId()}" class="action">{translate key="common.export"}</a></td>
 	</tr>
 	<tr>

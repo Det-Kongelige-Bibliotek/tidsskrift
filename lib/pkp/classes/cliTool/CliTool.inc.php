@@ -7,7 +7,8 @@
 /**
  * @file classes/cliTool/CliTool.inc.php
  *
- * Copyright (c) 2000-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2000-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class CommandLineTool
@@ -18,8 +19,6 @@
  * FIXME: Write a PKPCliRequest and PKPCliRouter class and use the dispatcher
  *  to bootstrap and route tool requests.
  */
-
-// $Id$
 
 
 /** Initialization code */
@@ -50,7 +49,7 @@ class CommandLineTool {
 	var $argv;
 
 	function CommandLineTool($argv = array()) {
-		// Initialize the a request object with a page router
+		// Initialize the request object with a page router
 		$application =& PKPApplication::getApplication();
 		$request =& $application->getRequest();
 

@@ -4,12 +4,12 @@
 <!--
   * locale.xml
   *
+  * Copyright (c) 2013-2014 Simon Fraser University Library
   * Copyright (c) 2003-2009 Siavash Miri and Alec Smecher
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings for the fr_CA (Français (Canada)) locale.
   *
-  * $Id$
   -->
  
 <locale name="fr_CA" full_name="Français (Canada)">

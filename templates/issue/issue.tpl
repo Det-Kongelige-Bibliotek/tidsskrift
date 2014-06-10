@@ -1,19 +1,19 @@
 {**
- * issue.tpl
+ * templates/issue/issue.tpl
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Issue
  *
- * $Id$
- *} 
+ *}
 {foreach name=sections from=$publishedArticles item=section key=sectionId}
 {if $section.title}<h4 class="tocSectionTitle">{$section.title|escape}</h4>{/if}
 
 {foreach from=$section.articles item=article}
 	{assign var=articlePath value=$article->getBestArticleId($currentJournal)}
-	
+
 <table class="tocArticle" width="100%">
 <tr valign="top">
 	{if $article->getLocalizedFileName() && $article->getLocalizedShowCoverPage() && !$article->getHideCoverPageToc($locale)}
@@ -42,10 +42,9 @@
 	<td class="tocGalleys">
 		{if $hasAccess || ($subscriptionRequired && $showGalleyLinks)}
 			{foreach from=$article->getGalleys() item=galley name=galleyList}
-				<a href="{url page="article" op="viewFile" path=$articlePath|to_array:$galley->getBestGalleyId($currentJournal)}" 
-class="file">{$galley->getGalleyLabel()|escape}</a>
+				<a href="{url page="article" op="view" path=$articlePath|to_array:$galley->getBestGalleyId($currentJournal)}" {if $galley->getRemoteURL()}target="_blank" {/if}class="file">{$galley->getGalleyLabel()|escape}</a>
 				{if $subscriptionRequired && $showGalleyLinks && $restrictOnlyPdf}
-					{if $article->getAccessStatus() == $smarty.const.ARTICLE_ACCESS_OPEN || !$galley->isPdfGalley()}	
+					{if $article->getAccessStatus() == $smarty.const.ARTICLE_ACCESS_OPEN || !$galley->isPdfGalley()}
 						<img class="accessLogo" src="{$baseUrl}/lib/pkp/templates/images/icons/fulltext_open_medium.gif" alt="{translate key="article.accessLogoOpen.altText"}" />
 					{else}
 						<img class="accessLogo" src="{$baseUrl}/lib/pkp/templates/images/icons/fulltext_restricted_medium.gif" alt="{translate key="article.accessLogoRestricted.altText"}" />
@@ -58,7 +57,7 @@ class="file">{$galley->getGalleyLabel()|escape}</a>
 				{else}
 					<img class="accessLogo" src="{$baseUrl}/lib/pkp/templates/images/icons/fulltext_restricted_medium.gif" alt="{translate key="article.accessLogoRestricted.altText"}" />
 				{/if}
-			{/if}				
+			{/if}
 		{/if}
 	</td>
 </tr>
@@ -75,6 +74,7 @@ class="file">{$galley->getGalleyLabel()|escape}</a>
 	<td class="tocPages">{$article->getPages()|escape}</td>
 </tr>
 </table>
+{call_hook name="Templates::Issue::Issue::Article"}
 {/foreach}
 
 {if !$smarty.foreach.sections.last}

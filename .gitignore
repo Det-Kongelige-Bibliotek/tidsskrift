@@ -3,3 +3,4 @@ config.inc.php.bk
 ojs.sql
 ojs_installed
 .vagrant/
+backup/

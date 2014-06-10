@@ -3,7 +3,8 @@
 /**
  * @file pages/about/AboutHandler.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class AboutHandler
@@ -11,9 +12,6 @@
  *
  * @brief Handle requests for editor functions. 
  */
-
-// $Id$
-
 
 import('classes.handler.Handler');
 
@@ -27,17 +25,19 @@ class AboutHandler extends Handler {
 
 	/**
 	 * Display about index page.
+	 * @param $args array
+	 * @param $request PKPRequest
 	 */
-	function index() {
+	function index($args, &$request) {
 		$this->validate();
 		$this->setupTemplate();
 
 		$templateMgr =& TemplateManager::getManager();
 		$journalDao =& DAORegistry::getDAO('JournalDAO');
-		$journalPath = Request::getRequestedJournalPath();
+		$journalPath = $request->getRequestedJournalPath();
 
 		if ($journalPath != 'index' && $journalDao->journalExistsByPath($journalPath)) {
-			$journal =& Request::getJournal();
+			$journal =& $request->getJournal();
 
 			$journalSettingsDao =& DAORegistry::getDAO('JournalSettingsDAO');
 			$templateMgr->assign_by_ref('journalSettings', $journalSettingsDao->getJournalSettings($journal->getId()));
@@ -46,7 +46,7 @@ class AboutHandler extends Handler {
 			if (isset($customAboutItems[AppLocale::getLocale()])) $templateMgr->assign('customAboutItems', $customAboutItems[AppLocale::getLocale()]);
 			elseif (isset($customAboutItems[AppLocale::getPrimaryLocale()])) $templateMgr->assign('customAboutItems', $customAboutItems[AppLocale::getPrimaryLocale()]);
 
-			foreach ($this->getPublicStatisticsNames() as $name) {
+			foreach ($this->_getPublicStatisticsNames() as $name) {
 				if ($journal->getSetting($name)) {
 					$templateMgr->assign('publicStatisticsEnabled', true);
 					break;
@@ -55,21 +55,23 @@ class AboutHandler extends Handler {
 			
 			// Hide membership if the payment method is not configured
 			import('classes.payment.ojs.OJSPaymentManager');
-			$paymentManager =& OJSPaymentManager::getManager();
+			$paymentManager = new OJSPaymentManager($request);
 			$templateMgr->assign('paymentConfigured', $paymentManager->isConfigured());
 
-			$groupDao =& DAORegistry::getDAO('GroupDAO');
-			$groups =& $groupDao->getGroups(ASSOC_TYPE_JOURNAL, $journal->getId(), GROUP_CONTEXT_PEOPLE);
+			if ($journal->getSetting('boardEnabled')) {
+				$groupDao =& DAORegistry::getDAO('GroupDAO');
+				$groups =& $groupDao->getGroups(ASSOC_TYPE_JOURNAL, $journal->getId(), GROUP_CONTEXT_PEOPLE);
+				$templateMgr->assign_by_ref('peopleGroups', $groups);
+			}
 
-			$templateMgr->assign_by_ref('peopleGroups', $groups);
 			$templateMgr->assign('helpTopicId', 'user.about');
 			$templateMgr->display('about/index.tpl');
 		} else {
-			$site =& Request::getSite();
+			$site =& $request->getSite();
 			$about = $site->getLocalizedAbout();
 			$templateMgr->assign('about', $about);
 
-			$journals =& $journalDao->getEnabledJournals(); //Enabled Added
+			$journals =& $journalDao->getJournals(true);
 			$templateMgr->assign_by_ref('journals', $journals);
 			$templateMgr->display('about/site.tpl');
 		}
@@ -85,7 +87,7 @@ class AboutHandler extends Handler {
 		$templateMgr =& TemplateManager::getManager();
 		$journal =& Request::getJournal();
 		
-		AppLocale::requireComponents(array(LOCALE_COMPONENT_OJS_MANAGER, LOCALE_COMPONENT_PKP_MANAGER));
+		AppLocale::requireComponents(LOCALE_COMPONENT_OJS_MANAGER, LOCALE_COMPONENT_PKP_MANAGER);
 
 		if (!$journal || !$journal->getSetting('restrictSiteAccess')) {
 			$templateMgr->setCacheability(CACHEABILITY_PUBLIC);
@@ -197,7 +199,7 @@ class AboutHandler extends Handler {
 		$groupId = (int) array_shift($args);
 
 		$groupDao =& DAORegistry::getDAO('GroupDAO');
-		$group =& $groupDao->getGroup($groupId);
+		$group =& $groupDao->getById($groupId);
 
 		if (	!$journal || !$group ||
 			$group->getContext() != GROUP_CONTEXT_PEOPLE ||
@@ -333,8 +335,10 @@ class AboutHandler extends Handler {
 
 	/**
 	 * Display subscriptions page.
+	 * @param $args array
+	 * @param $request PKPRequest
 	 */
-	function subscriptions() {
+	function subscriptions($args, &$request) {
 		$this->addCheck(new HandlerValidatorJournal($this));
 		$this->validate();
 		$this->setupTemplate(true);
@@ -343,7 +347,7 @@ class AboutHandler extends Handler {
 		$journalSettingsDao =& DAORegistry::getDAO('JournalSettingsDAO');
 		$subscriptionTypeDao =& DAORegistry::getDAO('SubscriptionTypeDAO');
 
-		$journal =& Request::getJournal();
+		$journal =& $request->getJournal();
 		$journalId = $journal->getId();
 
 		$subscriptionName =& $journalSettingsDao->getSetting($journalId, 'subscriptionName');
@@ -355,6 +359,10 @@ class AboutHandler extends Handler {
 		$individualSubscriptionTypes =& $subscriptionTypeDao->getSubscriptionTypesByInstitutional($journalId, false, false);
 		$institutionalSubscriptionTypes =& $subscriptionTypeDao->getSubscriptionTypesByInstitutional($journalId, true, false);
 
+		import('classes.payment.ojs.OJSPaymentManager');
+		$paymentManager = new OJSPaymentManager($request);
+		$acceptGiftSubscriptionPayments = $paymentManager->acceptGiftSubscriptionPayments();
+
 		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->assign('subscriptionName', $subscriptionName);
 		$templateMgr->assign('subscriptionEmail', $subscriptionEmail);
@@ -362,6 +370,7 @@ class AboutHandler extends Handler {
 		$templateMgr->assign('subscriptionFax', $subscriptionFax);
 		$templateMgr->assign('subscriptionMailingAddress', $subscriptionMailingAddress);
 		$templateMgr->assign('subscriptionAdditionalInformation', $subscriptionAdditionalInformation);
+		$templateMgr->assign('acceptGiftSubscriptionPayments', $acceptGiftSubscriptionPayments);
 		$templateMgr->assign('individualSubscriptionTypes', $individualSubscriptionTypes);
 		$templateMgr->assign('institutionalSubscriptionTypes', $institutionalSubscriptionTypes);
 		
@@ -370,8 +379,10 @@ class AboutHandler extends Handler {
 
 	/**
 	 * Display subscriptions page.
+	 * @param $args array
+	 * @param $request PKPRequest
 	 */
-	function memberships() {
+	function memberships($args, &$request) {
 		$this->addCheck(new HandlerValidatorJournal($this));
 		$this->validate();
 		$this->setupTemplate(true);
@@ -380,7 +391,7 @@ class AboutHandler extends Handler {
 		$journalId = $journal->getId();
 
 		import('classes.payment.ojs.OJSPaymentManager');
-		$paymentManager =& OJSPaymentManager::getManager();
+		$paymentManager = new OJSPaymentManager($request);
 
 		$membershipEnabled = $paymentManager->membershipEnabled();
 
@@ -399,7 +410,7 @@ class AboutHandler extends Handler {
 			$templateMgr->display('about/memberships.tpl');
 			return;
 		}		
-		Request::redirect(null, 'about');
+		$request->redirect(null, 'about');
 	}
 
 	/**
@@ -430,6 +441,7 @@ class AboutHandler extends Handler {
 	 * Display Journal Sponsorship page.
 	 */
 	function journalSponsorship() {
+		$this->addCheck(new HandlerValidatorJournal($this));
 		$this->validate();
 		$this->setupTemplate(true);
 
@@ -462,7 +474,7 @@ class AboutHandler extends Handler {
 
 		if ($user) {
 			$rolesByJournal = array();
-			$journals =& $journalDao->getEnabledJournals();
+			$journals =& $journalDao->getJournals(true);
 			// Fetch the user's roles for each journal
 			foreach ($journals->toArray() as $journal) {
 				$roles =& $roleDao->getRolesByUserId($user->getId(), $journal->getId());
@@ -472,7 +484,7 @@ class AboutHandler extends Handler {
 			}
 		}
 
-		$journals =& $journalDao->getEnabledJournals();
+		$journals =& $journalDao->getJournals(true);
 		$templateMgr->assign_by_ref('journals', $journals->toArray());
 		if (isset($rolesByJournal)) {
 			$templateMgr->assign_by_ref('rolesByJournal', $rolesByJournal);
@@ -488,6 +500,7 @@ class AboutHandler extends Handler {
 	 * Display journal history.
 	 */
 	function history() {
+		$this->addCheck(new HandlerValidatorJournal($this));
 		$this->validate();
 		$this->setupTemplate(true);
 
@@ -523,31 +536,45 @@ class AboutHandler extends Handler {
 	/**
 	 * Display a list of public stats for the current journal.
 	 * WARNING: This implementation should be kept roughly synchronized
-	 * with the reader's statistics view in the About pages.
+	 * with the journal manager's statistics view.
 	 */
-	function statistics() {
+	function statistics($args, $request) {
+		$this->addCheck(new HandlerValidatorJournal($this));
 		$this->validate();
 		$this->setupTemplate(true);
 
-		$journal =& Request::getJournal();
-		$templateMgr =& TemplateManager::getManager();
+		$journal =& $request->getJournal();
+		$templateMgr =& TemplateManager::getManager($request);
 		$templateMgr->assign('helpTopicId','user.about');
 
-		$statisticsYear = Request::getUserVar('statisticsYear');
-		if (empty($statisticsYear)) $statisticsYear = date('Y');
+		// Get the statistics year
+		$statisticsYear = (int) $request->getUserVar('statisticsYear');
+
+		// Ensure that the requested statistics year is within a sane range
+		$journalStatisticsDao =& DAORegistry::getDAO('JournalStatisticsDAO');
+		$lastYear = strftime('%Y');
+		$firstDate = $journalStatisticsDao->getFirstActivityDate($journal->getId());
+		if (!$firstDate) $firstYear = $lastYear;
+		else $firstYear = strftime('%Y', $firstDate);
+		if ($statisticsYear < $firstYear || $statisticsYear > $lastYear) {
+			// Request out of range; redirect to the current year's statistics
+			return $request->redirect(null, null, null, null, array('statisticsYear' => strftime('%Y')));
+		}
+
 		$templateMgr->assign('statisticsYear', $statisticsYear);
+		$templateMgr->assign('firstYear', $firstYear);
+		$templateMgr->assign('lastYear', $lastYear);
 
 		$sectionIds = $journal->getSetting('statisticsSectionIds');
 		if (!is_array($sectionIds)) $sectionIds = array();
 		$templateMgr->assign('sectionIds', $sectionIds);
 
-		foreach ($this->getPublicStatisticsNames() as $name) {
+		foreach ($this->_getPublicStatisticsNames() as $name) {
 			$templateMgr->assign($name, $journal->getSetting($name));
 		}
 		$fromDate = mktime(0, 0, 0, 1, 1, $statisticsYear);
 		$toDate = mktime(23, 59, 59, 12, 31, $statisticsYear);
 
-		$journalStatisticsDao =& DAORegistry::getDAO('JournalStatisticsDAO');
 		$articleStatistics = $journalStatisticsDao->getArticleStatistics($journal->getId(), null, $fromDate, $toDate);
 		$templateMgr->assign('articleStatistics', $articleStatistics);
 
@@ -581,12 +608,14 @@ class AboutHandler extends Handler {
 		$templateMgr->display('about/statistics.tpl');
 	}
 
-	function getPublicStatisticsNames() {
+	/**
+	 * @see StatisticsHandler::_getPublicStatisticsNames()
+	 */
+	function _getPublicStatisticsNames() {
 		import ('pages.manager.ManagerHandler');
 		import ('pages.manager.StatisticsHandler');
-		return StatisticsHandler::getPublicStatisticsNames();
+		return StatisticsHandler::_getPublicStatisticsNames();
 	}
-
 }
 
 ?>

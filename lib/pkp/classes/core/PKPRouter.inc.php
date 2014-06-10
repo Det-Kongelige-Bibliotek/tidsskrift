@@ -3,7 +3,8 @@
 /**
  * @file classes/core/PKPRouter.inc.php
  *
- * Copyright (c) 2000-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2000-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PKPRouter
@@ -147,33 +148,24 @@ class PKPRouter {
 		// Validate context parameters
 		assert(isset($this->_contextDepth) && isset($this->_contextList));
 
+		$isPathInfoEnabled = $request->isPathInfoEnabled();
+		$userVars = array();
+		$url = null;
+
 		// Determine the context path
 		if (empty($this->_contextPaths)) {
-			if ($request->isPathInfoEnabled()) {
-				// Retrieve context from the path info
+			if ($isPathInfoEnabled) {
+				// Retrieve url from the path info
 				if (isset($_SERVER['PATH_INFO'])) {
-					// Split the path info into its constituents. Save all non-context
-					// path info in $this->_contextPaths[$this->_contextDepth]
-					// by limiting the explode statement.
-					$this->_contextPaths = explode('/', trim($_SERVER['PATH_INFO'], '/'), $this->_contextDepth + 1);
-					// Remove the part of the path info that is not relevant for context (if present)
-					unset($this->_contextPaths[$this->_contextDepth]);
+					$url = $_SERVER['PATH_INFO'];
 				}
 			} else {
-				// Retrieve context from url query string
-				foreach($this->_contextList as $key => $contextName) {
-					$this->_contextPaths[$key] = $request->getUserVar($contextName);
-				}
+				$url = $request->getCompleteUrl();
+				$userVars = $request->getUserVars();
 			}
 
-			// Canonicalize and clean context paths
-			for($key = 0; $key < $this->_contextDepth; $key++) {
-				$this->_contextPaths[$key] = (
-					isset($this->_contextPaths[$key]) && !empty($this->_contextPaths[$key]) ?
-					$this->_contextPaths[$key] : 'index'
-				);
-				$this->_contextPaths[$key] = Core::cleanFileVar($this->_contextPaths[$key]);
-			}
+			$this->_contextPaths = Core::getContextPaths($url, $isPathInfoEnabled,
+				$this->_contextList, $this->_contextDepth, $userVars);
 
 			HookRegistry::call('Router::getRequestedContextPaths', array(&$this->_contextPaths));
 		}
@@ -311,7 +303,7 @@ class PKPRouter {
 	 * @param $path mixed Optional string or array of args to pass to handler
 	 * @param $params array Optional set of name => value pairs to pass as user parameters
 	 * @param $anchor string Optional name of anchor to add to URL
-	 * @param $escape boolean Whether or not to escape ampersands for this URL; default false.
+	 * @param $escape boolean Whether or not to escape ampersands, square brackets, etc. for this URL; default false.
 	 * @return string the URL
 	 */
 	function url(&$request, $newContext = null, $handler = null, $op = null, $path = null,
@@ -375,7 +367,7 @@ class PKPRouter {
 
 			// Set a generic authorization message if no
 			// specific authorization message was set.
-			if (is_null($authorizationMessage)) $authorizationMessage = 'user.authorization.accessDenied';
+			if ($authorizationMessage == '') $authorizationMessage = 'user.authorization.accessDenied';
 
 			// Handle the authorization failure.
 			$result = $this->handleAuthorizationFailure($request, $authorizationMessage);
@@ -460,7 +452,6 @@ class PKPRouter {
 				$contextObject =& $this->getContextByName($request, $contextName);
 				if ($contextObject) $contextValue = $contextObject->getPath();
 				else $contextValue = 'index';
-
 			}
 
 			// Check whether the base URL is overridden.
@@ -468,7 +459,7 @@ class PKPRouter {
 				$overriddenBaseUrl = Config::getVar('general', "base_url[$contextValue]");
 			}
 
-			$context[] = $contextParameter.$contextValue;;
+			$context[] = $contextParameter.$contextValue;
 		}
 
 		// Generate the base url

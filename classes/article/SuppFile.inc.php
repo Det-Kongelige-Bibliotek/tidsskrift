@@ -3,7 +3,8 @@
 /**
  * @file classes/article/SuppFile.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class SuppFile
@@ -12,9 +13,6 @@
  *
  * @brief Supplementary file class.
  */
-
-// $Id$
-
 
 import('classes.article.ArticleFile');
 
@@ -50,25 +48,6 @@ class SuppFile extends ArticleFile {
 	}
 
 	/**
-	 * Get public ID of supplementary file.
-	 * @return string
-	 */
-	function getPublicSuppFileId() {
-		// Ensure that blanks are treated as nulls.
-		$returner = $this->getData('publicSuppFileId');
-		if ($returner === '') return null;
-		return $returner;
-	}
-
-	/**
-	 * Set public ID of supplementary file.
-	 * @param $suppFileId string
-	 */
-	function setPublicSuppFileId($publicSuppFileId) {
-		return $this->setData('publicSuppFileId', $publicSuppFileId);
-	}
-
-	/**
 	 * Get ID of article.
 	 * @return int
 	 */
@@ -97,8 +76,8 @@ class SuppFile extends ArticleFile {
 	 * @param $locale string
 	 * @return string
 	 */
-	function getTitle() {
-		return $this->getData('title');
+	function getTitle($locale) {
+		return $this->getData('title', $locale);
 	}
 
 	/**
@@ -389,6 +368,22 @@ class SuppFile extends ArticleFile {
 	}
 
 	/**
+	 * Set remote URL of supplementary file.
+	 * @param $remoteURL string
+	 */
+	function setRemoteURL($remoteURL) {
+		return $this->setData('remoteURL', $remoteURL);
+	}
+
+	/**
+	 * Get remote URL of supplementary file.
+	 * @return string
+	 */
+	function getRemoteURL() {
+		return $this->getData('remoteURL');
+	}
+
+	/**
 	 * Return the "best" supp file ID -- If a public ID is set,
 	 * use it; otherwise use the internal Id. (Checks the journal
 	 * settings to ensure that the public ID feature is enabled.)
@@ -401,11 +396,11 @@ class SuppFile extends ArticleFile {
 			$articleDao =& DAORegistry::getDAO('ArticleDAO');
 			$article =& $articleDao->getArticle($this->getArticleId());
 			$journalDao =& DAORegistry::getDAO('JournalDAO');
-			$journal =& $journalDao->getJournal($article->getJournalId());
+			$journal =& $journalDao->getById($article->getJournalId());
 		}
 
 		if ($journal->getSetting('enablePublicSuppFileId')) {
-			$publicSuppFileId = $this->getPublicSuppFileId();
+			$publicSuppFileId = $this->getPubId('publisher-id');
 			if (!empty($publicSuppFileId)) return $publicSuppFileId;
 		}
 		return $this->getId();

@@ -3,7 +3,8 @@
 <!--
   * locale/sr_SR/countries.xml
   *
-  * Copyright (c) 2000-2012 John Willinsky
+  * Copyright (c) 2013-2014 Simon Fraser University Library
+  * Copyright (c) 2000-2014 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localized list of countries.
@@ -12,7 +13,6 @@
   *
   * Translation: Igor Lekić igor.lekic@ff.uns.ac.rs
   *
-  * $Id$
   -->
 <countries>
 	<country name="Afganistan" code="AF"/>

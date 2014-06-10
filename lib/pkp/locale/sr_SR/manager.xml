@@ -4,12 +4,12 @@
 <!--
   * locale/sr_SR/manager.xml
   *
-  * Copyright (c) 2000-2012 John Willinsky
+  * Copyright (c) 2013-2014 Simon Fraser University Library
+  * Copyright (c) 2000-2014 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings for the sr_SR (Serbian) locale.
   *
-  * $Id$
   -->
 
 <locale name="sr_SR" full_name = "Serbian">
@@ -167,13 +167,13 @@
 	<message key="manager.setup.filter.lookup.grid.descriptionConfirm">Izabrali ste da dodate {$filterDisplayName} bazu podataka. Kliknite na "OK" da biste potvrdili..</message>
 	<message key="manager.setup.filter.lookup.grid.descriptionTemplate">Izaberite bazu za pronalaženje podataka.</message>
 	<message key="manager.setup.filter.lookup.grid.description.iSBNdb"><![CDATA[<p> Ovaj filter se povezuje sa <a href="http://isbndb.com/" target="_blank">ISBNdb.com</a> bazom podataka knjiga i ISBN-ova.</p>
-<p>ISBNdb API ključ je obavezan. Za informacije o generisanju ključa, pogledajte <a href="http://isbndb.com/docs/api/30-keys.html" target="_blank">online dokumentaciju</a>.</p>]]></message>
+<p>ISBNdb API ključ je obavezan. Za informacije o generisanju ključa, pogledajte <a href="http://isbndb.com/api/v1/docs/keys" target="_blank">online dokumentaciju</a>.</p>]]></message>
 	<message key="manager.setup.filter.lookup.grid.description.crossRef"><![CDATA[<p>Ovaj filter se povezuje sa CrossRef bazom citata koristeći CrossRef <a href="http://www.crossref.org/02publishers/openurl_info.html" target="_blank">OpenURL Query Interface</a>.</p>
 <p> Da biste koristili ovaj filter, možete da koristite svoj nalog CrossRef sistema, ili da registrujte važeću imejl adresu na CrossRef <a href="http://www.crossref.org/requestaccount/" target="_blank">ovde</a>.</p>]]></message>
 	<message key="manager.setup.filter.lookup.grid.description.pubMed"><![CDATA[<p>Ovaj filter se povezuje sa PubMed <a href="http://www.ncbi.nlm.nih.gov/gquery/gquery.fcgi" target="_blank">Entrez</a> bazom za pretragu citata.</p>
 	<p>Registracioni imejl nije obavezan, ali može biti neophodan ukoliko naiđete na probleme sa konekcijom. Pogledajte sekciju <a href="http://www.be-md.ncbi.nlm.nih.gov/bookshelf/br.fcgi?book=helpeutils&part=chapter2#chapter2.Usage_Guidelines_and_Requiremen" target="_blank">Uputstvo za korišćenje i sistemski zahtevi</a> u Entrez dokumentaciji za više informacija.</p>]]></message>
 	<message key="manager.setup.filter.lookup.grid.description.worldCat"><![CDATA[<p>Ovaj filter se povezuje na OCLC servis <a href="http://www.worldcat.org/affiliate/webservices/xisbn/app.jsp" target="_blank">xISBN</a> i <a href="http://www.worldcat.org/" target="_blank">Worldcat</a> (opciono).</p>
-	<p>Ukoliko imate Worldcat <a href="http://www.worldcat.org/devnet/wiki/SearchAPIWhoCanUse" target="_blank">API ključ</a> možete se povezati na Worldcat unosom ključa ispod.</p>]]></message>
+	<p>Ukoliko imate Worldcat <a href="http://oclc.org/developer/develop/web-services.html" target="_blank">API ključ</a> možete se povezati na Worldcat unosom ključa ispod.</p>]]></message>
 	<message key="manager.setup.filter.lookup.grid.loadMessage">Molimo sačekajte dok se konfiguracija baze učita...</message>
 	<message key="manager.setup.filter.lookup.grid.title">Konektori baze citata</message>
 	<message key="manager.setup.filter.noMoreTemplates">Sve moguće transformacije su dodate. Kliknite "Odustani" da biste se vratili na stranicu podešavanja.</message>
@@ -217,4 +217,23 @@
 	<message key="plugins.categories.reports">Raport dodaci</message>
 	<message key="plugins.categories.themes.description">Dodatak šablona može se koristiti za promenu izgleda celokupnog sistema.</message>
 	<message key="plugins.categories.themes">Dodaci šablona</message>
+	<message key="manager.announcements.datePublish">Objavljeno</message>
+	<message key="manager.emails.addEmail">Dodaj šablon imejla</message>
+	<message key="manager.emails.data">Podaci poruke šablona</message>
+	<message key="manager.emails.details">Detalji šablona</message>
+	<message key="manager.emails.disable.message">Na putu ste da isključite ovaj imejl šablon. Ukoliko postoje procesi koji su ga koristili, više ga neće koristiti. Da li ste sigurni da želite da nastavite?</message>
+	<message key="manager.emails.enable.message">Da li ste sigurni da želite da uključite ovaj šablon?</message>
+	<message key="manager.emails.resetAll.message">Ukoliko resetujete sve šablone, sve modifikacije koje ste uradili biće izgubljene, da li ste sigurni da želite da nastavite?</message>
+	<message key="manager.emails.reset.message">Ukoliko resetujete ovaj šablon, svi podaci biće vraćeni na osnovne vrednosti, a sve promene će biti izgubljene, da li želite da nastavite?</message>
+	<message key="manager.masthead.title">Uprava</message>
+	<message key="manager.navigation">Navigacija</message>
+	<message key="manager.reviewerSearch.advancedSearch.short">Napredna pretraga</message>
+	<message key="manager.reviewerSearch.searchByName.short">Pretraži po imenu</message>
+	<message key="manager.reviewerSearch.form.interests.instructions">Unesite interese recenzenta odvojene zarezom.</message>
+	<message key="manager.setup.layout.blockManagement">Menadžer bočnog menija</message>
+	<message key="plugins.categories.metadata">Dodaci metapodataka</message>
+	<message key="plugins.categories.metadata.description">Dodaci metapodataka implementiraju dodatne standarde meta podataka.</message>
+	<message key="plugins.categories.citationLookup">Dodaci veza baza podataka citata</message>
+	<message key="plugins.categories.citationOutput">Dodaci izlaznog formata citata</message>
+	<message key="plugins.categories.citationParser">Dodaci za ekstrakciju citata</message>
 </locale>

@@ -3,7 +3,8 @@
 /**
  * @file classes/author/form/submit/AuthorSubmitStep4Form.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class AuthorSubmitStep4Form
@@ -12,17 +13,14 @@
  * @brief Form for Step 4 of author article submission.
  */
 
-// $Id$
-
-
 import('classes.author.form.submit.AuthorSubmitForm');
 
 class AuthorSubmitStep4Form extends AuthorSubmitForm {
 	/**
 	 * Constructor.
 	 */
-	function AuthorSubmitStep4Form(&$article, &$journal) {
-		parent::AuthorSubmitForm($article, 4, $journal);
+	function AuthorSubmitStep4Form(&$article, &$journal, $request) {
+		parent::AuthorSubmitForm($article, 4, $journal, $request);
 	}
 
 	/**

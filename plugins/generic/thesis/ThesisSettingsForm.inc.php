@@ -1,9 +1,10 @@
 <?php
 
 /**
- * @file ThesisSettingsForm.inc.php
+ * @file plugins/generic/thesis/ThesisSettingsForm.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ThesisSettingsForm
@@ -11,9 +12,6 @@
  *
  * @brief Form for journal managers to modify Thesis Abstract plugin settings
  */
-
-// $Id$
-
 
 import('lib.pkp.classes.form.Form');
 

@@ -6,7 +6,8 @@
 /**
  * @file classes/process/Process.inc.php
  *
- * Copyright (c) 2000-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2000-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class Process
@@ -15,7 +16,6 @@
  *
  * @brief A class representing a running process.
  */
-
 
 // Process types
 define('PROCESS_TYPE_CITATION_CHECKING', 0x01);

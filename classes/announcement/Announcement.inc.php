@@ -7,7 +7,8 @@
 /**
  * @file classes/announcement/Announcement.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class Announcement
@@ -18,12 +19,15 @@
  *
  */
 
-// $Id$
-
 import('lib.pkp.classes.announcement.PKPAnnouncement');
 
 class Announcement extends PKPAnnouncement {
-
+	/**
+	 * Constructor
+	 */
+	function Announcement() {
+		parent::PKPAnnouncement();
+	}
 }
 
 ?>

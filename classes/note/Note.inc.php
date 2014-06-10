@@ -3,7 +3,8 @@
 /**
  * @file classes/note/Note.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class Note
@@ -12,9 +13,6 @@
  *
  * @brief Class for OJS Note.
  */
-
-// $Id$
-
 
 import('classes.article.ArticleFile');
 import('lib.pkp.classes.note.PKPNote');

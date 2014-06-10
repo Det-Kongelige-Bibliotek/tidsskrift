@@ -2,14 +2,14 @@
 <!DOCTYPE locale SYSTEM "../../lib/pkp/dtd/locale.dtd">
 
 <!--
-  * locale.xml
+  * locale/eu_ES/locale.xml
   *
-  * Copyright (c) 2003-2012 John Willinsky
+  * Copyright (c) 2013-2014 Simon Fraser University Library
+  * Copyright (c) 2003-2014 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
-  * Localization strings for the en_US (U.S. English) locale.
+  * Localization strings.
   *
-  * $Id$
   -->
  
 <locale name="eu_ES" full_name="Euskara">
@@ -247,12 +247,6 @@
 	 * LOG - This section contains entries related to log entries.
 	 *
 	-->
-	<message key="submission.event.logLevel">Maila</message>
-	<message key="submission.event.logLevel.info">Info</message>
-	<message key="submission.event.logLevel.notice">Berri-ematea</message>
-	<message key="submission.event.logLevel.warning">Abisua</message>
-	<message key="submission.event.logLevel.error">Errorea</message>
-	
 	<message key="submission.event.general.defaultEvent">Bidalketako gertaera</message>
 	<message key="submission.event.general.articleSubmitted">Artikulua bidali</message>
 	<message key="submission.event.general.issueScheduled">Artikulua argitaratzera bidali</message>
@@ -379,7 +373,7 @@ editoreari onartzen duten ala ez, eta bide beretik bidaltzen dizkiote ebaluazioa
 eta gomendioa ere. Ebaluatzaileen onarpena (edo ezespena), eta ondorengo 
 ebaluazio-txostena eta gomendioa Editoreek sartzen dute bidalketaren 
 Ebaluazio-orrian, ebaluazio-prozesua erregistratuta uzteko.</message>
-	<message key="manager.setup.lockssDescription"><![CDATA[Open Journal Systems-ek <a href="http://lockss.org/" target="_blank"> LOCKSS</a> (Lots of Copies Keep Stuff Safe) sistema erabiltzen du aldizkariaren artxibo seguru eta iraunkorra segurtatzeko. LOCKSS iturburu irekiko softwarea da, Stanford-eko Unibertsitateko Liburutegiak garatua, liburutegiei hautatutako web-aldizkariak mantentzen laguntzeko. LOCKSSek erregularki begiratzen du erregistratutako aldizkarien webguneetan, zenbaki edo eduki berririk argitaratu den ikusteko eta, hala bada, artxibatzeko. Artxibo bakoitza etengabe balidatzen da liburutegiko beste cache batzuen kontra, eta eduki hondatu edo galdurik aurkitzen bada, beste cacheak edo aldizkaria erabiltzen dira leheneratzeko.
+	<message key="manager.setup.lockssDescription"><![CDATA[Open Journal Systems-ek <a href="http://www.lockss.org/" target="_blank"> LOCKSS</a> (Lots of Copies Keep Stuff Safe) sistema erabiltzen du aldizkariaren artxibo seguru eta iraunkorra segurtatzeko. LOCKSS iturburu irekiko softwarea da, Stanford-eko Unibertsitateko Liburutegiak garatua, liburutegiei hautatutako web-aldizkariak mantentzen laguntzeko. LOCKSSek erregularki begiratzen du erregistratutako aldizkarien webguneetan, zenbaki edo eduki berririk argitaratu den ikusteko eta, hala bada, artxibatzeko. Artxibo bakoitza etengabe balidatzen da liburutegiko beste cache batzuen kontra, eta eduki hondatu edo galdurik aurkitzen bada, beste cacheak edo aldizkaria erabiltzen dira leheneratzeko.
 <br /><br />
 Argitaratzen hasi arte, ez da beharrezkoa LOCKSS euskarria gehitzea Open Journal Systems-i. Orduan, bi urrats hauek egin beharko dira:]]></message>
 	
@@ -663,7 +657,6 @@ da bidali zuzentzeko fitxategia hautatu arte Ebaluazio-orrian, Editorearen eraba
 	
 	<!-- Profile -->
 	<!-- Registration -->
-	<message key="user.register.repeatPassword">Errepikatu pasahitza</message>
 	<message key="user.register.selectJournal">Hautatu zein aldizkaritan erregistratu nahi duzun</message>
 	<message key="user.register.noJournals">Gune honetan ez dago zu erregistratzeko moduko aldizkaririk.</message>
 	<message key="user.register.privacyStatement">Pribatutasun-deklarazioa</message>
@@ -828,9 +821,9 @@ Prozesu editoriala eta argitaratze-prozesua</message>
 
 <ul>
 	<li><a href="http://www.php.net/" target="_blank">PHP</a> >= {$phpRequiredVersion} (PHP 5.x barne); orain PHP {$phpVersion}{$wrongPhpText} daukazu.</li>
-	<li><a href="http://www.mysql.com/" target="_blank">MySQL</a> >= 3.23.23 (MySQL 4.x barne) edo <a href="http://www.postgresql.org/" target="_blank">PostgreSQL</a> >= 7.1 (PostgreSQL 8.x barne)</li>
+	<li><a href="http://www.mysql.com/" target="_blank">MySQL</a> >= 4.1 edo <a href="http://www.postgresql.org/" target="_blank">PostgreSQL</a> >= 7.1 (PostgreSQL 8.x barne)</li>
 	<li><a href="http://httpd.apache.org/" target="_blank">Apache</a> >= 1.3.2x edo >= 2.0.4x edo Microsoft IIS 6</li>
-	<li>Sistema eragilea: Goiko softwarea onartzen duen edozein SE, besteak beste: <a href="http://www.linux.org/" target="_blank">Linux</a>, <a href="http://www.bsd.org/" target="_blank">BSD</a>, <a href="http://www.sun.com/" target="_blank">Solaris</a>, <a href="http://www.apple.com/" target="_blank">Mac OS X</a>, <a href="http://www.microsoft.com/">Windows</a></li>
+	<li>Sistema eragilea: Goiko softwarea onartzen duen edozein SE, besteak beste: <a href="http://www.linux.org/" target="_blank">Linux</a>, <a href="http://www.bsd.org/" target="_blank">BSD</a>, <a href="http://www.oracle.com/sun/" target="_blank">Solaris</a>, <a href="http://www.apple.com/" target="_blank">Mac OS X</a>, <a href="http://www.microsoft.com/">Windows</a></li>
 </ul>
 
 <p>Hala ere, PKPk ez dauka software-bertsio eta plataforma konbinazio posible guztiak probatzeko adina baliabide eta, beraz, ezin du bermatu denek ondo funtzionatuko dutenik.</p>
@@ -978,12 +971,6 @@ Balidazioak huts egin dezake bilaketa egiteko inprimaki-datuak bidaltzea eskatze
 
 	<message key="rt.metadata.pkp.primaryAuthor">Egilearen izena, erakundea, herrialdea</message>
 	<message key="rt.metadata.pkp.peerReviewed">Adituek ebaluatutako artikulua</message>
-	<message key="rt.metadata.pkp.doi">Digital Object Identifier (DOI)</message>
-
-
-
-
-
 	<message key="rt.beNotifiedWhen">Jakinarazi....</message>
 
 	<message key="rt.thisJournal">Bilatu aldizkarian</message>
@@ -1079,7 +1066,7 @@ Balidazioak huts egin dezake bilaketa egiteko inprimaki-datuak bidaltzea eskatze
 	<message key="user.subscriptions.form.deleteIpRange">Ezabatu</message>
 	<message key="user.subscriptions.form.addIpRange">Gehitu</message>
 	<message key="article.pdf.download">Deskargatu PDF fitxategi hau.</message>
-	<message key="article.pdf.pluginMissing"><![CDATA[<p> Hautatu duzun PDF fitxategia hemen kargatu beharko litzateke, zure web arakatzaileak PDF formatua duten testuak irakurtzeko plugina instalatuta badu (adibidez, <a href="http://www.adobe.com/products/acrobat/readstep2.html">Adobe Acrobat Reader </a>irakurlearen bertsio berri bat).</p> <p>Osterantzean, PDF artxiboa zuzenean deskargatu dezakezu zure ordenagailura, eta bertan PDF irakurle bat erabiliz ireki dezakezu. PDFa deskargatzeko, egin klik beheko “Deskargatu” estekan. </p> <p>PDFak inprimatzeari, godetzeari eta horiekin lan egiteari buruzko informazio gehiago nahi baduzu, Highwire Press-ek PDFei buruz <a href="http://highwire.stanford.edu/help/pdf-faq.dtl"> maiz egiten diren galdera (FAQ) lagungarriak eskaintzen ditu </a>.</p>]]></message>
+	<message key="article.pdf.pluginMissing"><![CDATA[<p> Hautatu duzun PDF fitxategia hemen kargatu beharko litzateke, zure web arakatzaileak PDF formatua duten testuak irakurtzeko plugina instalatuta badu (adibidez, <a href="https://get.adobe.com/reader/">Adobe Acrobat Reader </a>irakurlearen bertsio berri bat).</p> <p>Osterantzean, PDF artxiboa zuzenean deskargatu dezakezu zure ordenagailura, eta bertan PDF irakurle bat erabiliz ireki dezakezu. PDFa deskargatzeko, egin klik beheko “Deskargatu” estekan. </p> <p>PDFak inprimatzeari, godetzeari eta horiekin lan egiteari buruzko informazio gehiago nahi baduzu, Highwire Press-ek PDFei buruz <a href="http://highwire.stanford.edu/help/pdf-faq.dtl"> maiz egiten diren galdera (FAQ) lagungarriak eskaintzen ditu </a>.</p>]]></message>
 	<message key="about.history">Aldizkariaren historia</message>
 	<message key="about.subscriptions.individual">Harpidetza indibidualak</message>
 	<message key="about.subscriptions.institutional">Harpidetza instituzionalak</message>
@@ -1116,5 +1103,65 @@ Balidazioak huts egin dezake bilaketa egiteko inprimaki-datuak bidaltzea eskatze
 	<message key="user.authorization.sectionAssignment">Zure atalekoa ez den artikulu batean sartu nahi duzu.</message>
 	<message key="user.authorization.invalidCopyditorSubmission">Zuzentzailearen aurkezpena ez da baliozkoa edo ez da kontsultatu zuzentzailearen aurkezpenik!</message>
 	<message key="user.authorization.invalidSectionEditorSubmission">Ataleko editorearen aurkezpena ez da baliozkoa edo ez da kontsultatu Ataleko editorearen aurkezpenik!</message>
+	<message key="gifts.recipientDescription">Norentzat da opari hau?</message>
+	<message key="gifts.thankYou">Mila esker</message>
+	<message key="gifts.details">Opariaren xehetasunak</message>
+	<message key="gifts.gift">Oparia</message>
+	<message key="gifts.myGifts">Nire opariak</message>
+	<message key="gifts.manageMyGifts">Kudeatu nire opariak</message>
+	<message key="gifts.status.notRedeemed">Eskuragarri</message>
+	<message key="navigation.categories">Kategoriak</message>
+	<message key="navigation.categories.browse">Arakatu</message>
+	<message key="issue.fullIssue">Edizio osoa</message>
+	<message key="issue.nonpdf.title">Edizioa jaistea</message>
+	<message key="issue.viewIssue">Ikus edizioa</message>
+	<message key="issue.viewIssueDescription">Ikus edo kargatu edizio osoa</message>
+	<message key="plugins.categories.pubIds">Identifikatzaile publikoaren pluginak</message>
+	<message key="plugins.categories.pubIds.description">Plugin hauek laguntza inplementatzen dute identifikatzaile publiko batentzat</message>
+	<message key="site.noJournals">Ez dago aldizkaririk eskuragarri.</message>
+	<message key="gifts.buyer">Nondik</message>
+	<message key="gifts.buyerDescription">Norentzat da opari hau?</message>
+	<message key="gifts.recipient">Nora</message>
+	<message key="gifts.thankYouMessage">Oparia erosi da. Opariaren hartzaileari bidaltzen zaion mezuaren kopia bat jasoko duzu behin ordainketa prozesatu ondoren.</message>
+	<message key="gifts.purchaseGiftIndividualSubscription">Doako harpidetza</message>
+	<message key="gifts.subscriptionFormIntroduction">Mesedez, bete beheko inprimakia. Harremanetarako ematen den informazioa, baita zure opariaren oharra ere, erabili egingo dira hartzaileari mezu bat bidaltzeko eta doako harpidetza berria jakinarazteko (mezu horren kopia bat ere jasoko duzu zuk).</message>
+	<message key="gifts.detailsDescription">Mesedez, hautatu beheko oparia eta erantsi hartzaileari bidaliko zaion mezu pertsonalizatu bat (mezu horren kopia bat ere jasoko duzu zuk).</message>
+	<message key="gifts.noteTitle">Titulua</message>
+	<message key="gifts.note">Opariaren oharra</message>
+	<message key="gifts.noteTitleRequired">Mesedez, ipini titulu bat zure mezu pertsonalizatuari.</message>
+	<message key="gifts.noteRequired">Mesedez, idatzi mezu pertsonalizatu bat.</message>
+	<message key="gifts.localeRequired">Mesedez, hautatu hizkuntza bat zure mezu pertsonalizatuarentzat.</message>
+	<message key="gifts.subscriptions">Harpidetzak</message>
+	<message key="payment.type.gift.subscription">Harpidetza</message>
+	<message key="gifts.redeemGift">Trukatu oparia</message>
+	<message key="gifts.status.redeemed">Trukatua</message>
+	<message key="gifts.status.redeemGift">Trukatu oparia</message>
+	<message key="gifts.subscriptionsDescription">Hemen trukatutako opari gisa emandako harpidetzak gaur egun duzun harpidetza ordeztuko du (harpidetzarik baduzu). Harpidetzak truke datatik aurrera hasiko dira, eta harpidetza motak irauten duen artean izango dira baliodunak.</message>
+	<message key="gifts.purchaseGiftSubscription">Eman harpidetza opari gisa</message>
+	<message key="gifts.giftSubscriptionsAvailable">Opari gisa emandako harpidetzak ere eskuragarri daude. Hartzaileak edozein unetan truka ditzake opari gisa emandako harpidetzak, eta aldizkari honi laguntzeko modu ezin hobea da.</message>
+	<message key="gifts.noSubscriptions">Ez dago opari gisa emandako harpidetzarik</message>
+	<message key="gifts.giftRedeemed">Oparia ondo trukatu da.</message>
+	<message key="gifts.noGiftToRedeem">Oparia ez dago trukatzeko eskuragarri.</message>
+	<message key="gifts.giftAlreadyRedeemed">Opari hau trukatu da jadanik.</message>
+	<message key="gifts.giftNotValid">Opari hau ez da baliodouna, eta ezin da trukatu.</message>
+	<message key="gifts.subscriptionTypeNotValid">Opari honetarako harpidetza mota hau ez da balioduna. Mesedez, jarri harremanetan harpidetzaren kudeatzailearekin.</message>
+	<message key="gifts.subscriptionNonExpiring">Oparia ez da trukatu jadanik amaitzen ez den harpidetza egina duzulako aldizkari honekin.</message>
+	<message key="payment.loginRequired.forIssue">Harpidetza edo alearen erosketa eskatzen da itemera sartzeko. Harpidetza egiaztatzeko, sartu aurreko erosketan, edo ale erosketan, hasi aldizkariaren saioa.</message>
+	<message key="payment.type.purchaseIssue">Erosi ale bat</message>
+	<message key="payment.type.gift">Oparia</message>
+	<message key="installer.allowFileUploads"><![CDATA[Zure zerbitzariak fitxategiak gora kargatzen uzten du gaur egun: <strong>{$allowFileUploads}</strong>]]></message>
+	<message key="installer.maxFileUploadSize"><![CDATA[Zure zerbitzariak gehienez tamaina hau duten fitxategiak gora kargatzen uzten du gaur egun: <strong>{$maxFileUploadSize}</strong>]]></message>
+	<message key="site.upgradeAvailable.admin"><![CDATA[OJSren bertsio berri bat dago eskuragarri! Gaur egun OJS {$currentVersion} erabiltzen ari zara. Azken bertsioa OJS {$latestVersion} da. Mesedez, zoaz <a href="http://pkp.sfu.ca/ojs_download" target="_new">this page</a> orrira azken bertsioa kargatzeko eta eguneratzeko argibideak aurkitzeko.]]></message>
+	<message key="site.upgradeAvailable.manager"><![CDATA[OJSren bertsio berri bat dago eskuragarri! Une honetan OJS {$currentVersion} erabiltzen ari zara. Azken bertsioa OJS {$latestVersion} da. Mesedez, jarri harremanetan zure Webguneko Administratzailearekin ({$siteAdminName}, <a href="mailto:{$siteAdminEmail}">{$siteAdminEmail}</a>) bertsio berria atera dela jakinarazteko. Informazio gehiago aurki daiteke hemen: <a href="http://pkp.sfu.ca/ojs_download" target="_new">here</a>.]]></message>
+	<message key="editor.submissionEditing.notes"><![CDATA[<ol>
+	<![CDATA[<ol>
+	<li>Azpimarratutako itemek editore batek esku hartzea beharrezkoa dela adierazten dute; honela etikatuta daude:
+		<ul>
+			<li class="highlightCopyediting">Beharrezkoa da esku hartzea berrikuspen fasean</li>
+			<li class="highlightLayoutEditing">Beharrezkoa da esku hartzea edizio diseinuaren fasean</li>
+			<li class="higlightProofreading">Beharrezkoa da esku hartzea zuzenketa fasean</li>
+		</ul>
+	</li>
+</ol>]]></message>
 </locale>
 

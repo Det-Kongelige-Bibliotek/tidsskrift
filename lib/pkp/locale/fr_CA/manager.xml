@@ -4,12 +4,12 @@
 <!--
   * locale/fr_CA/manager.xml
   *
-  * Copyright (c) 2000-2012 John Willinsky
+  * Copyright (c) 2000-2013 Simon Fraser University Library
+  * Copyright (c) 2000-2013 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings for the fr_CA (Français (Canada)) locale.
   *
-  * $Id$
   -->
 
 <locale name="fr_CA" full_name = "Français (Canada)">
@@ -116,7 +116,7 @@
 	<message key="manager.people.enrollUserAs">Inscrire l'utilisateur en tant que</message>
 	<message key="manager.people.invalidUser">Désolé, l'utilisateur demandé n'existe pas.</message>
 	<message key="manager.people.mergeUser">Fusionner l'utilisateur</message>
-	<message key="manager.people.mergeUsers.confirm">Êtes-vous certain de vouloir fusionner le compte ayant le nom d'utilisateur "{$oldUsername}" avec le compte ayant le nom d'utilisateur "{$newUsername}"? Le compte ayant le nom d'utilisateur "{$oldUsername}" n'existera plus par la suite. Cette action est irréversible.</message>
+	<message key="manager.people.mergeUsers.confirm">Êtes-vous certain de vouloir fusionner le(s) {$oldAccountCount} compte(s) avec le compte ayant le nom d'utilisateur "{$newUsername}"? Le(s) {$oldAccountCount} compte(s) seront supprimés. Cette action est irréversible.</message>
 	<message key="manager.people.mergeUsers">Fusionner les utilisateurs</message>
 	<message key="manager.people.mustChooseRole">Veuillez sélectionner un rôle en haut de la page avant de cliquer sur « Inscrire un utilisateur ».</message>
 	<message key="manager.people.mustProvideName">Veuillez d'abord fournir au moins un nom de famille pour l'utilisateur.</message>
@@ -183,8 +183,8 @@
 <p>Vous pouvez modifier ou supprimer un connecteur existant en cliquant sur l'icône d'engrenage juste à côté.</p>]]></message>
 	<message key="manager.setup.citationFilterLookup">Vérification des références</message>
 	<message key="manager.setup.citationFilterLookupDescription"><![CDATA[<p>Vous devez également activer et configurer les connections aux bases de données de références externes. Ça vous aide à trouver les erreurs dans les références d'auteurs ou à ajouter des informations supplémentaires (p. ex., identifiants DOI ou PubMed) nécessaires à la publication ou au dépôt numérique.</p>
-<p>Nous fournissions des connecteurs à plusieurs bases de données externes dans lesquelles vous pouvez chercher des références. Certaines de ces bases de données nécessite une inscription ou de l'information de configuration pour y accéder. Veuillez référer aux sites Web publiques de ces bases de données pour plus d'information sur comment s'inscrire. Vous pouvez ajouter une ou plusieurs bases de données en cliquant sur le bouton "Ajouter un élément " ci-dessous.</p>
-<p>Vous pouvez modifier ou supprimer un connection existant à une base de données externe en cliquant sur l'icône d'engrenage juste à côté.</p>
+<p>Nous fournissons des connecteurs à plusieurs bases de données externes dans lesquelles vous pouvez chercher des références. Certaines de ces bases de données nécessitent une inscription ou de l'information de configuration pour y accéder. Veuillez référer aux sites Web publiques de ces bases de données pour plus d'information sur comment s'inscrire. Vous pouvez ajouter une ou plusieurs bases de données en cliquant sur le bouton "Ajouter un élément " ci-dessous.</p>
+<p>Vous pouvez modifier ou supprimer une connection existante à une base de données externe en cliquant sur le bouton Ajouter un élément ci-dessous.</p>
 <p><strong>Note:</strong> en vue de compléter le processus de vérifications des références dans des délais raisonnables, la directive <tt>citation_checking_max_processes</tt> dans votre fichier de configuration doit être paramétré à une valeur raisonnable. Voir la section "General Settings" dans <tt>config.inc.php</tt> pour plus d'information.</p>]]></message>
 	<message key="manager.setup.citationOutput">Version de sortie de la référence</message>
 	<message key="manager.setup.citationOutputStyleDescription">Choisir le modèle de références qui est utilisé dans votre revue pour les soumissions d'auteur. L'Aide au balisage des références vous laisse comparer la version de la référence de l'auteur avec celle générée à partir du XML que vous générez afin que vous puissiez facilement identifier les erreurs :</message>
@@ -196,13 +196,13 @@
 	<message key="manager.setup.filter.lookup.grid.descriptionConfirm">Vous avez choisi d'ajouter la base de données {$filterDisplayName}. Veuillez cliquer sur "OK" pour confirmer.</message>
 	<message key="manager.setup.filter.lookup.grid.descriptionTemplate">Veuillez sélectionner une base de données de recherche.</message>
 	<message key="manager.setup.filter.lookup.grid.description.iSBNdb"><![CDATA[<p>Ce filtre se connecte à la base de données livre et ISBN <a href="http://isbndb.com/" target="_blank">ISBNdb.com</a>.</p>
-	<p>Une clé ISBNdb API est obligatoire. Pour plus d'information sur la génération de la clé, voir la <a href="http://isbndb.com/docs/api/30-keys.html" target="_blank">documentation en ligne</a>.</p>]]></message>
+	<p>Une clé ISBNdb API est obligatoire. Pour plus d'information sur la génération de la clé, voir la <a href="http://isbndb.com/api/v1/docs/keys" target="_blank">documentation en ligne</a>.</p>]]></message>
 	<message key="manager.setup.filter.lookup.grid.description.crossRef"><![CDATA[<p>Ce filtre se connecte à la base de données de références CrossRef en utilisant l'<a href="http://www.crossref.org/02publishers/openurl_info.html" target="_blank">interface de requête OpenURL</a> de CrossRef.</p> 
 	<p>Pour utiliser ce filtre, vous pouvez utiliser votre compte système CrossRef, ou s'inscrire à l'aide une adresse de courriel valide avec CrossRef <a href="http://www.crossref.org/requestaccount/" target="_blank">ici</a>.</p>]]></message>
 	<message key="manager.setup.filter.lookup.grid.description.pubMed"><![CDATA[<p>Ce filtre se connecte au moteur de recherche de base de données croisée <a href="http://www.ncbi.nlm.nih.gov/gquery/gquery.fcgi" target="_blank">Entrez</a> de PubMed.</p>
 	<p>Un courriel n'est pas obligatoire au sens strict du terme pour s'inscrire, mais peut être nécessaire si vous faites face à des problèmes de connection. Voir la section <a href="http://www.be-md.ncbi.nlm.nih.gov/bookshelf/br.fcgi?book=helpeutils&part=chapter2#chapter2.Usage_Guidelines_and_Requiremen" target="_blank">Usage Guidelines and Requirements</a> dans la documentation de Entrez pour plus d'information.</p>]]></message>
 	<message key="manager.setup.filter.lookup.grid.description.worldCat"><![CDATA[<p>Ce filtre se connecte aux services OCLC <a href="http://www.worldcat.org/affiliate/webservices/xisbn/app.jsp" target="_blank">xISBN</a> et <a href="http://www.worldcat.org/" target="_blank">Worldcat</a> (optionnel).</p>
-	<p>Si vous avez une <a href="http://www.worldcat.org/devnet/wiki/SearchAPIWhoCanUse" target="_blank">clé API</a> Worldcat, vous pouvez vous connecter à Worldcat en saisissant la clé ci-dessous.</p>]]></message>
+	<p>Si vous avez une <a href="http://oclc.org/developer/develop/web-services.html" target="_blank">clé API</a> Worldcat, vous pouvez vous connecter à Worldcat en saisissant la clé ci-dessous.</p>]]></message>
 	<message key="manager.setup.filter.parser.grid.description.paraCite"><![CDATA[<p>Ce filtre d'extraction utilise les modules Perl <a href="http://paracite.eprints.org/developers/" target="_blank">ParaTools</a> pour fournir la fonctionnalité <a href="http://paracite.eprints.org" target="_blank">ParaCite</a> d'analyse syntaxique des références. Afin que ça fonctionne correctement, vous devez avoir Perl installé, ainsi que les modules CPAN <a href="http://search.cpan.org/~mjewell/Biblio-Citation-Parser-1.10/" target="_blank">Biblio::Citation::Parser</a> et <a href="http://search.cpan.org/~sburke/Text-Unidecode-0.04/" target="_blank">Text::Unidecode</a>. Vous devez également configurer la directive <tt>perl</tt> dans votre fichier de configuration. Cette directive peut être trouvée dans la section External Commands de <tt>config.inc.php</tt>.</p>
 	<p>Vous pouvez également choisir quel module d'analyse syntaxique ParaTools vous devriez utiliser. Vous pouvez choisir entre le standard, <a href="http://search.cpan.org/~mjewell/Biblio-Citation-Parser-1.10/lib/Biblio/Citation/Parser/Jiao.pm" target="_blank">Jiao</a>, et les modules d'analyse syntaxique <a href="http://search.cpan.org/~mjewell/Biblio-Citation-Parser-1.10/lib/Biblio/Citation/Parser/Citebase.pm" target="_blank">Citebase</a>.</p>]]></message>
 	<message key="manager.setup.metaCitationsDescription">Activer la case à cocher suivante pour rendre disponible l'édition des références et renvois. Ceci permettra aux auteurs d'inclure des références brutes avec leurs soumissions. Les rédacteurs auront également accès à un assistant au balisage des références qui vérifie les références brutes par rapport à des bases de données externes, telles que WorldCat, ISBNdb, PubMed et autres, pour s'assurer de leur exactitude. Les références approuvées peuvent être exportées à l'intérieur des fichiers d'épreuves finales.</message>
@@ -217,4 +217,29 @@
 	<message key="manager.setup.filter.parser.grid.loadMessage">Veuillez patienter jusqu'à ce que la grille de configuration de l'analyseur syntaxique de références soit chargée...</message>
 	<message key="manager.setup.filter.parser.grid.title">Services d'extraction de références</message>
 	<message key="manager.setup.filter.pleaseSelect">Veuillez sélectionner...</message>
+	<message key="manager.announcements.datePublish">Publié/Paru</message>
+	<message key="manager.emails.addEmail">Ajouter un modèle de courriel</message>
+	<message key="manager.emails.data">Modèle message données??</message>
+	<message key="manager.emails.details">Modèle détails/Détails du modèle??</message>
+	<message key="manager.emails.disable.message">Vous êtes sur le point de désactiver ce modèle de courriel. Son utilisation dans d'éventuels processus système ne sera plus possible. Confirmez-vous l'opération?</message>
+	<message key="manager.emails.enable.message">Vous êtes sur le point d'activer ce courriel. Confirmez-vous l'opération?</message>
+	<message key="manager.emails.resetAll.message">Si vous réinitialisez l'ensemble des modèles, vous perdrez toutes les modifications aux modèles de courriels. Confirmez-vous cette opération?</message>
+	<message key="manager.emails.reset.message">Si vous réinitialisez ce modèle, toutes les données du message seront ramenées à leur valeur par défaut et les modifications seront annulées. Confirmez-vous cette opération?</message>
+	<message key="manager.masthead.title">Bloc générique</message>
+	<message key="manager.navigation">Navigation</message>
+	<message key="manager.reviewerSearch.advancedSearch.short">Recherche avancée</message>
+	<message key="manager.reviewerSearch.searchByName.short">Recherche par nom</message>
+	<message key="manager.reviewerSearch.form.instructions">Utilisez le formulaire ci-dessous pour établir les valeurs maximales des termes que vous souhaitez rechercher. Les moyennes calculées dans ces champs sont pré-inscrites sur le formulaire.</message>
+	<message key="manager.reviewerSearch.form.interests.instructions">Entrer les intérêts des évaluateurs en les séparant par des virgules...</message>
+	<message key="manager.setup.layout.blockManagement">Gestion de la barre latérale</message>
+	<message key="plugins.categories.metadata">Plugiciels de métadonnées</message>
+	<message key="plugins.categories.metadata.description">Les plugiciels de métadonnées permettent d'implanter de nouvelles normes de métadonnées.</message>
+	<message key="plugins.categories.citationLookup">Plugiciels…</message>
+	<message key="plugins.categories.citationLookup.description">Les plugiciels [Citation Database Connector] permettent la connexion à des banques de données de citations/références pour consultation, lorsqu'il y a modification des citations/références, par exemple??</message>
+	<message key="plugins.categories.citationOutput">Plugiciels d'extraction de citations/références</message>
+	<message key="plugins.categories.citationOutput.description">Les plugiciels [Citation Output] permettent d'implanter des normes de citation/référence. Ils remplacent les plugiciels de format de citation/référence.</message>
+	<message key="plugins.categories.citationParser">Plugiciels d'extraction de citations/références</message>
+	<message key="plugins.categories.citationParser.description">Les plugiciels d'extraction de citations/références permettent d'extraire des données locales à partir de citations/références brutes (ex. : auteur, titre, etc.).</message>
+	<message key="manager.statistics.city">Ville</message>
+	<message key="manager.statistics.region">Région</message>
 </locale>

@@ -2,17 +2,17 @@
 <!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
 
 <!--
-  * locale.xml
+  * plugins/blocks/notification/locale/no_NO/locale.xml
   *
-  * Copyright (c) 2003-2012 John Willinsky
+  * Copyright (c) 2013-2014 Simon Fraser University Library
+  * Copyright (c) 2003-2014 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
-  * Localization strings for the en_US (U.S. English) locale.
+  * Localization strings for the no_NO (Norwegian) locale.
   *
-  * $Id: locale.xml,v 1.2 2009/04/08 19:54:35 asmecher Exp $
   -->
  
-<locale name="en_US" full_name="U.S. English">
+<locale name="no_NO" full_name="Norwegian">
 	<message key="plugins.block.notification.displayName">Meldingsblokk</message>
 	<message key="plugins.block.notification.description">Denne programutvidelsen viser informasjon om systemgenererte meldinger.</message>
 </locale>

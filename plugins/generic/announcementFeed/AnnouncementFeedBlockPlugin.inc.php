@@ -3,7 +3,8 @@
 /**
  * @file plugins/generic/announcementFeed/AnnouncementFeedBlockPlugin.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class AnnouncementFeedBlockPlugin
@@ -12,17 +13,14 @@
  * @brief Class for block component of announcement feed plugin
  */
 
-// $Id$
-
-
 import('lib.pkp.classes.plugins.BlockPlugin');
 
 class AnnouncementFeedBlockPlugin extends BlockPlugin {
-    var $parentPluginName;
-    
-    function AnnouncementFeedBlockPlugin($parentPluginName) {
-        $this->parentPluginName = $parentPluginName;
-    }
+	var $parentPluginName;
+	
+	function AnnouncementFeedBlockPlugin($parentPluginName) {
+		$this->parentPluginName = $parentPluginName;
+	}
 	/**
 	 * Hide this plugin from the management interface (it's subsidiary)
 	 */

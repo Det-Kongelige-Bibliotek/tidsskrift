@@ -1,7 +1,8 @@
 {**
- * authorFees.tpl
+ * templates/sectionEditor/submission/authorFees.tpl
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Display of author fees and payment information
@@ -17,7 +18,7 @@
 	{if $submissionPayment}
 		{translate key="payment.paid"} {$submissionPayment->getTimestamp()|date_format:$datetimeFormatLong}
 	{else} 
-		<a class="action" href="{url op="waiveSubmissionFee" path=$submission->getArticleId() markAsPaid=true}">{translate key="payment.paymentReceived"}</a>&nbsp;|&nbsp;<a class="action" href="{url op="waiveSubmissionFee" path=$submission->getArticleId()}">{translate key="payment.waive"}</a>
+		<a class="action" href="{url op="waiveSubmissionFee" path=$submission->getId() markAsPaid=true}">{translate key="payment.paymentReceived"}</a>&nbsp;|&nbsp;<a class="action" href="{url op="waiveSubmissionFee" path=$submission->getId()}">{translate key="payment.waive"}</a>
 	{/if}
 		</td>
 	</tr>
@@ -29,7 +30,7 @@
 	{if $fastTrackPayment}
 		{translate key="payment.paid"} {$fastTrackPayment->getTimestamp()|date_format:$datetimeFormatLong}
 	{else}
-		<a class="action" href="{url op="waiveFastTrackFee" path=$submission->getArticleId() markAsPaid=true}">{translate key="payment.paymentReceived"}</a>&nbsp;|&nbsp;<a class="action" href="{url op="waiveFastTrackFee" path=$submission->getArticleId()}">{translate key="payment.waive"}</a>		
+		<a class="action" href="{url op="waiveFastTrackFee" path=$submission->getId() markAsPaid=true}">{translate key="payment.paymentReceived"}</a>&nbsp;|&nbsp;<a class="action" href="{url op="waiveFastTrackFee" path=$submission->getId()}">{translate key="payment.waive"}</a>		
 	{/if}
 		</td>
 	</tr>	
@@ -41,7 +42,7 @@
 	{if $publicationPayment}
 		{translate key="payment.paid"} {$publicationPayment->getTimestamp()|date_format:$datetimeFormatLong}
 	{else}
-		<a class="action" href="{url op="waivePublicationFee" path=$submission->getArticleId() markAsPaid=true}">{translate key="payment.paymentReceived"}</a>&nbsp;|&nbsp;<a class="action" href="{url op="waivePublicationFee" path=$submission->getArticleId()}">{translate key="payment.waive"}</a>		
+		<a class="action" href="{url op="waivePublicationFee" path=$submission->getId() markAsPaid=true}">{translate key="payment.paymentReceived"}</a>&nbsp;|&nbsp;<a class="action" href="{url op="waivePublicationFee" path=$submission->getId()}">{translate key="payment.waive"}</a>		
 	{/if}
 		</td>
 	</tr>

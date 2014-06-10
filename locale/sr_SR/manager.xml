@@ -2,9 +2,10 @@
 <!DOCTYPE locale SYSTEM "../../lib/pkp/dtd/locale.dtd">
 
 <!--
-  * ojs2-devel/locale/sr_SR/manager.xml
+  * locale/sr_SR/manager.xml
   *
-  * Copyright (c) 2003-2012 John Willinsky
+  * Copyright (c) 2013-2014 Simon Fraser University Library
+  * Copyright (c) 2003-2014 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings for the sr_SR (Srpski) locale.
@@ -205,7 +206,7 @@
 	<message key="manager.setup.authorGuidelines">Author Guidelines</message>
 	<message key="manager.setup.authorGuidelinesDescription"><![CDATA[Set out for authors the bibliographic and formatting standards used for items submitted to the journal (e.g., <em>Publication Manual of the American Psychological Association</em>, 5th edition, 2001). It is often helpful to provide examples of the common citation formats for journals and books to be used in submissions. Also identify the types of appropriate Supplementary Files (e.g., data-sets, research instruments, etc.) which authors should be encouraged to upload, in addition to their submission, to enhance readers' engagement with their work.]]></message>
 	<message key="manager.setup.competingInterests">Competing Interests</message>
-	<message key="manager.setup.competingInterests.description"><![CDATA[Biomedical journals typically require authors and reviewers to declare if they have any competing interests with regard to their research (see <a href="http://journals.plos.org/plosclinicaltrials/competing.php" target="_new">PLoS Policy</a>).]]></message>
+	<message key="manager.setup.competingInterests.description"><![CDATA[Biomedical journals typically require authors and reviewers to declare if they have any competing interests with regard to their research (see <a href="http://www.plosbiology.org/static/competing.action" target="_new">PLoS Policy</a>).]]></message>
 	<message key="manager.setup.competingInterests.guidelines">Guidelines for filing a Competing Interest statement</message>
 	<message key="manager.setup.competingInterests.requireAuthors">Require submitting Authors to file a Competing Interest (CI) statement with their submission.</message>
 	<message key="manager.setup.competingInterests.requireReviewers">Require Reviewers to file a CI statement with each peer review they submit.</message>
@@ -239,16 +240,6 @@
 	<message key="manager.setup.disciplineExamples">(E.g., History; Education; Sociology; Psychology; Cultural Studies; Law)</message>
 	<message key="manager.setup.disciplineProvideExamples">Provide examples of relevant academic disciplines for this journal</message>
 	<message key="manager.setup.displayCurrentIssue">Add the table of contents for the current issue (if available).</message>
-	<message key="manager.setup.doiPrefix">DOI Prefix</message>
-	<message key="manager.setup.doiPrefixDescription"><![CDATA[The DOI (Digital Object Identifier) Prefix is assigned by <a href="http://www.crossref.org" target="_new">CrossRef</a> and is in the format 10.xxxx (e.g. 10.1234).]]></message>
-	<message key="manager.setup.doiSuffix">DOI Suffix</message>
-	<message key="manager.setup.doiSuffixDefault">Use default pattern (%j.v%vi%i.%a).</message>
-	<message key="manager.setup.doiSuffixPattern">Use the pattern entered below to generate DOI suffixes.  Use %j for journal initials, %v for the volume number, %i for the issue number, %a for the OJS article ID, and %p for the page number.</message>
-	<message key="manager.setup.doiSuffixPattern.example">For example, vol%viss%ipp%p could create a DOI such as 10.1234/vol3iss2pp230</message>
-	<message key="manager.setup.doiSuffixDescription">A DOI suffix can take any form, but must be unique for each published item.</message>
-	<message key="manager.setup.doiSuffixCustomIdentifier">Use the "Custom Identifier" for published items as the DOI suffix (must be enabled in Step 4).</message>
-	<message key="manager.setup.doiReassign">Reassign DOIs</message>
-	<message key="manager.setup.doiReassign.description">If you change your DOI configuration, DOIs that have already been assigned will not be affected. Once the DOI configuration is saved, use this button to clear all existing DOIs so that the new settings will take effect with existing articles.</message>
 	<message key="manager.setup.editorDecision">Editor Decision</message>
 	<message key="manager.setup.editorialMembers">Go to Board Members and add Editorial Board and/or Review Board members. This can be done at any point in operating the journal.</message>
 	<message key="manager.setup.editorialProcess1">One or more editors handle the basic steps without designated roles.</message>
@@ -286,7 +277,6 @@
 	<message key="manager.setup.form.journalInitialsRequired">The journal initials are required.</message>
 	<message key="manager.setup.form.journalTitleRequired">The journal title is required.</message>
 	<message key="manager.setup.form.numReviewersPerSubmission">The number of reviewers per submission is required.</message>
-	<message key="manager.setup.form.doiPrefixPattern">The DOI pattern must be in the form 10.xxxx.</message>
 	<message key="manager.setup.form.supportEmailRequired">The support email is required.</message>
 	<message key="manager.setup.form.supportNameRequired">The support name is required.</message>
 	<message key="manager.setup.frequencyOfPublication">Starting Point and Frequency</message>
@@ -298,7 +288,6 @@
 	<message key="manager.setup.guidingSubmissions">Step 3. Guiding Submissions</message>
 	<message key="manager.setup.homepageImage">Homepage image</message>
 	<message key="manager.setup.homepageImageDescription">Add an image or graphic file to the middle of the page.</message>
-	<message key="manager.setup.includeCreativeCommons">For journals that offer immediate or delayed open access, include a Creative Commons license with all published work at the appropriate time.</message>
 	<message key="manager.setup.information">Information</message>
 	<message key="manager.setup.information.description">Brief descriptions of the journal for librarians and prospective authors and readers are available in the "Information" section of the sidebar.</message>
 	<message key="manager.setup.information.forAuthors">For Authors</message>
@@ -349,8 +338,8 @@
 	<message key="manager.setup.lists">Lists</message>
 	<message key="manager.setup.listsDescription">Enter the maximum number of items (for example, submissions, users, or editing assignments) that appear on each page of a list, and the number of pages links to display on each page.</message>
 	<message key="manager.setup.lockssEnable"><![CDATA[Enable LOCKSS to store and distribute journal content at participating libraries via a LOCKSS <a href="{$lockssUrl}" target="_blank">Publisher Manifest</a> page. A LOCKSS license will appear in About the Journal under Archiving:]]></message>
-	<message key="manager.setup.lockssLicenses"><![CDATA[See <a href="http://lockss.org/lockss/Publishers_and_Titles" target="_blank">other versions of a LOCKSS license</a>.]]></message>
-	<message key="manager.setup.lockssRegister"><![CDATA[Identify 6-10 libraries that will register and cache the journal. For example, turn to institutions where editors or Board members work and/or institutions already participating in LOCKSS. See <a href="http://lockss.org/lockss/Libraries" target="_blank">participating libraries</a>. Use the prepared invitations for (i) <a href="{$lockssExistingArchiveUrl}" target="_blank">libraries participating in LOCKSS</a> or (ii) <a href="{$lockssNewArchiveUrl}" target="_blank">libraries not yet participating in LOCKSS</a>.]]></message>
+	<message key="manager.setup.lockssLicenses"><![CDATA[See <a href="http://www.lockss.org/community/publishers-titles-gln/" target="_blank">other versions of a LOCKSS license</a>.]]></message>
+	<message key="manager.setup.lockssRegister"><![CDATA[Identify 6-10 libraries that will register and cache the journal. For example, turn to institutions where editors or Board members work and/or institutions already participating in LOCKSS. See <a href="http://www.lockss.org/community/" target="_blank">participating libraries</a>. Use the prepared invitations for (i) <a href="{$lockssExistingArchiveUrl}" target="_blank">libraries participating in LOCKSS</a> or (ii) <a href="{$lockssNewArchiveUrl}" target="_blank">libraries not yet participating in LOCKSS</a>.]]></message>
 	<message key="manager.setup.look">The Look</message>
 	<message key="manager.setup.look.description">Homepage header, content, journal header, footer, navigation bar, and style sheet.</message>
 	<message key="manager.setup.mailingAddressDescription">The journal's physical location and mailing address.</message>
@@ -464,8 +453,6 @@
 	<message key="manager.setup.subjectExamples">(E.g., Photosynthesis; Black Holes; Four-Color Map Problem; Bayesian Theory)</message>
 	<message key="manager.setup.subjectKeywordTopic">Keywords</message>
 	<message key="manager.setup.subjectProvideExamples">Provide examples of keywords or topics as a guide for authors</message>
-	<message key="manager.setup.submissionEmailLogging">Maintain a log of all emails sent in relation to a submission on its History page.</message>
-	<message key="manager.setup.submissionEventLogging">Maintain a log of all actions taken with a submission on its History page.</message>
 	<message key="manager.setup.submissionGuidelines">Submission guidelines</message>
 	<message key="manager.setup.submissionPreparationChecklist">Submission Preparation Checklist</message>
 	<message key="manager.setup.submissionPreparationChecklistDescription">On making a submission to the journal, authors are first asked to check each item on the Submission Preparation Checklist as completed, before proceeding. The checklist also appears in the Author Guidelines, under About the Journal. The list can be edited below, but all items on the list will require a checkmark before authors can proceed with their submission.</message>
@@ -524,19 +511,14 @@
 	<message key="manager.subscriptionPolicies.delayedOpenAccessDescription2">month(s) after an issue is published.</message>
 	<message key="manager.subscriptionPolicies.delayedOpenAccessDurationValid">Please select a valid duration length.</message>
 	<message key="manager.subscriptionPolicies.delayedOpenAccessPolicyDescription">The following Delayed Open Access Policy will be posted in About the Journal under Policies.</message>
-	<message key="manager.subscriptionPolicies.enableSubscriptionExpiryReminderBeforeMonthsValid">Please use the checkbox provided.</message>
 	<message key="manager.subscriptionPolicies.expiry">Subscription Expiry</message>
 	<message key="manager.subscriptionPolicies.expiryDescription">Upon subscription expiry, readers may be denied access to all subscription content or may continue to retain access to subscription content published prior to the subscription expiry date.</message>
 	<message key="manager.subscriptionPolicies.expiryFull">Full expiry</message>
 	<message key="manager.subscriptionPolicies.expiryFullDescription">Readers are denied access to all subscription content upon subscription expiry.</message>
 	<message key="manager.subscriptionPolicies.expiryPartial">Partial expiry</message>
 	<message key="manager.subscriptionPolicies.expiryPartialDescription">Readers are denied access to recently published subscription content, but retain access to subscription content published prior to the subscription expiry date.</message>
-	<message key="manager.subscriptionPolicies.expiryReminderAfterMonths1">Notify subscribers by email</message>
-	<message key="manager.subscriptionPolicies.expiryReminderAfterMonths2">month(s) after subscription expiry.</message>
 	<message key="manager.subscriptionPolicies.expiryReminderAfterWeeks1">Notify subscribers by email</message>
 	<message key="manager.subscriptionPolicies.expiryReminderAfterWeeks2">week(s) after subscription expiry.</message>
-	<message key="manager.subscriptionPolicies.expiryReminderBeforeMonths1">Notify subscribers by email</message>
-	<message key="manager.subscriptionPolicies.expiryReminderBeforeMonths2">month(s) before subscription expiry.</message>
 	<message key="manager.subscriptionPolicies.expiryReminderBeforeWeeks1">Notify subscribers by email</message>
 	<message key="manager.subscriptionPolicies.expiryReminderBeforeWeeks2">week(s) before subscription expiry.</message>
 	<message key="manager.subscriptionPolicies.expiryReminders">Subscription Expiry Reminders</message>

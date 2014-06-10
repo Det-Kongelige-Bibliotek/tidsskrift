@@ -5,9 +5,10 @@
  */
 
 /**
- * @file ControlledVocab.inc.php
+ * @file classes/controlledVocab/ControlledVocab.inc.php
  *
- * Copyright (c) 2000-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2000-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ControlledVocab
@@ -17,9 +18,14 @@
  * @brief Basic class describing an controlled vocab.
  */
 
-//$Id$
-
 class ControlledVocab extends DataObject {
+	/**
+	 * Constructor
+	 */
+	function ControlledVocab() {
+		parent::DataObject();
+	}
+
 	//
 	// Get/set methods
 	//

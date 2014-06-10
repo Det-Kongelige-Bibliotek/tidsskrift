@@ -1,9 +1,10 @@
 <?php
 
 /**
- * @file CustomThemeSettingsForm.inc.php
+ * @file plugins/themes/custom/CustomThemeSettingsForm.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class CustomThemeSettingsForm
@@ -11,9 +12,6 @@
  *
  * @brief Form for journal managers to modify custom theme plugin settings
  */
-
-// $Id$
-
 
 import('lib.pkp.classes.form.Form');
 
@@ -110,7 +108,8 @@ class CustomThemeSettingsForm extends Form {
 		$css .= "input.defaultButton {color: $customThemeForegroundColour;}\n";
 
 		import('lib.pkp.classes.file.FileManager');
-		FileManager::writeFile(dirname(__FILE__) . '/custom.css', $css);
+		$fileManager = new FileManager();
+		$fileManager->writeFile(dirname(__FILE__) . '/custom.css', $css);
 	}
 }
 

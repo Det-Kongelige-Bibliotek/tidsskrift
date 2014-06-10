@@ -1,17 +1,17 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE toc SYSTEM "../../../../lib/pkp/dtd/helpToc.dtd">
 
 <!--
   * 000005.xml
   *
-  * Copyright (c) 2003-2012 John Willinsky
+  * Copyright (c) 2013-2014 Simon Fraser University Library
+  * Copyright (c) 2003-2014 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Táboa de Contidos da Administración da Revista - Páxinas de Administración - Ferramentas de Lectura.
   *
   * Translated Gabriel Beceiro: gbeceiro@gmail.com
   *
-  * $Id$
   -->
 
 <toc id="journal/toc/000005" locale="gl_ES" title="Ferramentas de Lectura" parent_topic="journal/topic/000009">

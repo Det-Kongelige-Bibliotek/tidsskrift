@@ -1,9 +1,10 @@
 <?php
 
 /**
- * @file ExternalFeed.inc.php
+ * @file plugins/generic/externalFeed/ExternalFeed.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ExternalFeed
@@ -12,10 +13,8 @@
  * @brief Basic class describing an external feed.
  */
 
-// $Id$
-
 define('EXTERNAL_FEED_DISPLAY_BLOCK_NONE',		0);
-define('EXTERNAL_FEED_DISPLAY_BLOCK_HOMEPAGE',	1);
+define('EXTERNAL_FEED_DISPLAY_BLOCK_HOMEPAGE',		1);
 define('EXTERNAL_FEED_DISPLAY_BLOCK_ALL',		2);
 
 

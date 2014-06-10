@@ -3,7 +3,8 @@
 /**
  * @file classes/plugins/HookRegistry.inc.php
  *
- * Copyright (c) 2000-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2000-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class HookRegistry
@@ -11,8 +12,6 @@
  *
  * @brief Class for linking core functionality with plugins
  */
-
-// $Id$
 
 
 class HookRegistry {
@@ -28,11 +27,11 @@ class HookRegistry {
 	 * Set the hooks table for the given hook name to the supplied array
 	 * of callbacks.
 	 * @param $hookName string Name of hook to set
-	 * @param $hooks array Array of callbacks for this hook
+	 * @param $hooksToRegister array Array of callbacks for this hook
 	 */
-	function setHooks($hookName, $hooks) {
+	function setHooks($hookName, $hooksToRegister) {
 		$hooks =& HookRegistry::getHooks();
-		$hooks[$hookName] =& $hooks;
+		$hooks[$hookName] =& $hooksToRegister;
 	}
 
 	/**
@@ -70,6 +69,17 @@ class HookRegistry {
 	 * @return mixed
 	 */
 	function call($hookName, $args = null) {
+		// For testing only.
+		// The implementation is a bit quirky as this has to work when
+		// executed statically.
+		if (self::rememberCalledHooks(true)) {
+			// Remember the called hooks for testing.
+			$calledHooks =& HookRegistry::getCalledHooks();
+			$calledHooks[] = array(
+				$hookName, $args
+			);
+		}
+
 		$hooks =& HookRegistry::getHooks();
 		if (!isset($hooks[$hookName])) {
 			return false;
@@ -82,6 +92,49 @@ class HookRegistry {
 		}
 
 		return $result;
+	}
+
+
+	//
+	// Methods required for testing only.
+	//
+	/**
+	 * Set/query the flag that triggers storing of
+	 * called hooks.
+	 * @param $askOnly boolean When set to true, the flag will not
+	 *   be changed but only returned.
+	 * @param $updateTo boolean When $askOnly is set to 'true' then
+	 *   this parameter defines the value of the flag.
+	 * @return boolean The current value of the flag.
+	 */
+	function rememberCalledHooks($askOnly = false, $updateTo = true) {
+		static $rememberCalledHooks = false;
+		if (!$askOnly) {
+			$rememberCalledHooks = $updateTo;
+		}
+		return $rememberCalledHooks;
+	}
+
+	/**
+	 * Switch off the function to store hooks and delete all stored hooks.
+	 * Always call this after using otherwise we get a severe memory.
+	 * @param $leaveAlive boolean Set this to true if you only want to
+	 *   delete hooks stored so far but if you want to record future
+	 *   hook calls, too.
+	 */
+	function resetCalledHooks($leaveAlive = false) {
+		if (!$leaveAlive) HookRegistry::rememberCalledHooks(false, false);
+		$calledHooks =& HookRegistry::getCalledHooks();
+		$calledHooks = array();
+	}
+
+	/**
+	 * Return a reference to the stored hooks.
+	 * @return array
+	 */
+	function &getCalledHooks() {
+		static $calledHooks = array();
+		return $calledHooks;
 	}
 }
 

@@ -2,17 +2,17 @@
 <!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
 
 <!--
-  * locale.xml
+  * plugins/generic/thesis/locale/da_DK/locale.xml
   *
-  * Copyright (c) 2003-2012 John Willinsky
+  * Copyright (c) 2013-2014 Simon Fraser University Library
+  * Copyright (c) 2003-2014 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
-  * Thesis abstracts plugin localization strings for the da_DK (Dutch) locale.
+  * Thesis abstracts plugin localization strings for the da_DK (Danish) locale.
   *
-  * $Id$
   -->
  
-<locale name="da_DK" full_name="Dutch">
+<locale name="da_DK" full_name="Danish">
 
 	<!-- Thesis Abstract Management -->
 	<message key="plugins.generic.thesis.manager.settings">Indstillinger</message>
@@ -141,10 +141,10 @@
 	<message key="plugins.generic.thesis.university">Universitet</message>
 	<message key="plugins.generic.thesis.abstract">Resumé</message>
 	<message key="plugins.generic.thesis.fullText">Fuldtekst (eksternt site)</message>
-	<message key="plugins.generic.thesis.studentFullNameLast">{$efterNavn}, {$forNavn}{$mellemrum}{$mellemNavn}</message>
-	<message key="plugins.generic.thesis.studentFullName">{$forNavn} {$mellemNavn}{$mellemrum}{$efterNavn}</message>
-	<message key="plugins.generic.thesis.supervisorFullNameLast">{$efterNavn}, {$forNavn}{$mellemrum}{$mellemNavn}</message>
-	<message key="plugins.generic.thesis.supervisorFullName">{$forNavn} {$mellemNavn}{$mallemrum}{$efterNavn}</message>
+	<message key="plugins.generic.thesis.studentFullNameLast">{$lastName}, {$firstName}{$space}{$middleName}</message>
+	<message key="plugins.generic.thesis.studentFullName">{$firstName} {$middleName}{$space}{$lastName}</message>
+	<message key="plugins.generic.thesis.supervisorFullNameLast">{$lastName}, {$firstName}{$space}{$middleName}</message>
+	<message key="plugins.generic.thesis.supervisorFullName">{$firstName} {$middleName}{$space}{$lastName}</message>
 	<message key="plugins.generic.thesis.form.introduction">Ved indsendelse af den følgende formular, sendes der en e-mail til supervisor med forespørgsel om at bekræfte rigtigheden af de indsendte oplysninger. Så snart en sådan bekræftelse er modtaget af tidsskriftet, vil afhandlingsabstractet bliver publiceret online.</message>
 	<message key="plugins.generic.thesis.form.status">Status</message>
 	<message key="plugins.generic.thesis.form.statusValid">Vælg en gyldig status.</message>

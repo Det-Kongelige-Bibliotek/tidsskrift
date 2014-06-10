@@ -4,14 +4,14 @@
 <!--
   * locale/uk_UA/manager.xml
   *
-  * Copyright (c) 2000-2012 John Willinsky
+  * Copyright (c) 2013-2014 Simon Fraser University Library
+  * Copyright (c) 2000-2014 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings for the uk_UA (Ukrainian) locale.
   *
   * Translated by Denys Solovianenko, 2011
   * V. I. Vernadsky National Library of Ukraine
-  * $Id$
   -->
 
 <locale name="uk_UA" full_name = "Ukrainian">
@@ -169,13 +169,13 @@
 	<message key="manager.setup.filter.lookup.grid.descriptionConfirm">Ви вибрали додавання бази даних {$filterDisplayName}. Для підтвердження, будь ласка, натисніть 'OK'.</message>
 	<message key="manager.setup.filter.lookup.grid.descriptionTemplate">Будь ласка, виберіть базу даних для пошуку.</message>
 	<message key="manager.setup.filter.lookup.grid.description.iSBNdb"><![CDATA[<p>Цей фільтр забезпечує зв'язок з базою даних книжок та ISBN <a href="http://isbndb.com/" target="_blank">ISBNdb.com</a>.</p>
-	<p>Ключ ISBNdb API обов'язковий. Для отримання інформації щодо генерації ключа див. <a href="http://isbndb.com/docs/api/30-keys.html" target="_blank">онлайнову документацію</a>.</p>]]></message>
+	<p>Ключ ISBNdb API обов'язковий. Для отримання інформації щодо генерації ключа див. <a href="http://isbndb.com/api/v1/docs/keys" target="_blank">онлайнову документацію</a>.</p>]]></message>
 	<message key="manager.setup.filter.lookup.grid.description.crossRef"><![CDATA[<p>Цей фільтр забезпечує зв'язок з базою даних цитованості CrossRef через <a href="http://www.crossref.org/02publishers/openurl_info.html" target="_blank">інтерфейс запитів OpenURL</a> CrossRef.</p> 
 	<p>Для використання цього фільтру ви можете використовувати свій обліковий запис CrossRef або за <a href="http://www.crossref.org/requestaccount/" target="_blank">цим посиланням</a> зареєструватися у CrossRef з працездатною адресою e-mail.</p>]]></message>
 	<message key="manager.setup.filter.lookup.grid.description.pubMed"><![CDATA[<p>Цей фільтр забезпечує зв'язок з інструментом федеративного пошуку PubMed <a href="http://www.ncbi.nlm.nih.gov/gquery/gquery.fcgi" target="_blank">Entrez</a>.</p>
 	<p>Реєстраційний e-mail не є вкрай важливим, але він може знадобитись, якщо у вас виникнуть проблеми з'єднання. Для отримання більш детальної інформації щодо цієї теми див. розділ <a href="http://www.be-md.ncbi.nlm.nih.gov/bookshelf/br.fcgi?book=helpeutils&part=chapter2#chapter2.Usage_Guidelines_and_Requiremen" target="_blank">Вимоги та керівництва з використання</a> у документації Entrez.</p>]]></message>
 	<message key="manager.setup.filter.lookup.grid.description.worldCat"><![CDATA[<p>Цей фільтр забезпечує зв'язок зі службами OCLC <a href="http://www.worldcat.org/affiliate/webservices/xisbn/app.jsp" target="_blank">xISBN</a> та <a href="http://www.worldcat.org/" target="_blank">Worldcat</a> (за вибором).</p>
-	<p>Якщо ви маєте <a href="http://www.worldcat.org/devnet/wiki/SearchAPIWhoCanUse" target="_blank">ключ API</a> Worldcat, ви можете з'єднатися з Worldcat, ввівши ключ нижче.</p>]]></message>
+	<p>Якщо ви маєте <a href="http://oclc.org/developer/develop/web-services.html" target="_blank">ключ API</a> Worldcat, ви можете з'єднатися з Worldcat, ввівши ключ нижче.</p>]]></message>
 	<message key="manager.setup.filter.lookup.grid.loadMessage">Завантажується конфігурація бази даних цитованості. Будь ласка, зачекайте...</message>
 	<message key="manager.setup.filter.lookup.grid.title">Шлюзи баз даних цитованості</message>
 	<message key="manager.setup.filter.noMoreTemplates">Вже додані всі доступні трансформації. Для повернення до сторінки налаштувань, будь ласка, натисніть 'Скасувати'.</message>
@@ -219,4 +219,27 @@
 	<message key="plugins.categories.reports">Модулі звітів</message>
 	<message key="plugins.categories.themes.description">Модулі тем можуть використовуватись для зміни зовнішнього вигляду системи.</message>
 	<message key="plugins.categories.themes">Модулі тем</message>
+	<message key="manager.emails.addEmail">Додати шаблон листа</message>
+	<message key="manager.emails.details">Інформація шаблону</message>
+	<message key="manager.emails.resetAll.message">Якщо Ви перевантажите всі шаблони, всі зміни шаблонів листів будуть втрачені. Ви підтверджуєте цю дію?</message>
+	<message key="manager.emails.reset.message">Якщо Ви перевантажите цей шаблон, всі фрагменти тексту будуть повернені до стандартних значень, а всі зміни втрачені. Ви підтверджуєте цю дію?</message>
+	<message key="manager.navigation">Навігація</message>
+	<message key="manager.reviewerSearch.advancedSearch.short">Розширений пошук</message>
+	<message key="manager.reviewerSearch.form.interests.instructions">Вкажіть наукові інтереси, розділені комами...</message>
+	<message key="plugins.categories.metadata">Модулі метаданих</message>
+	<message key="plugins.categories.metadata.description">Модулі метаданих дозволяють використання додаткових стандартів метаданих.</message>
+	<message key="plugins.categories.citationLookup">Модулі шлюзів до баз даних цитованості</message>
+	<message key="plugins.categories.citationLookup.description">Модулі шлюзів до баз даних цитованості дозволяють зв'язок з базами даних цитованості для пошуку посилань, наприклад, під час редагування пристатейної бібліографії.</message>
+	<message key="manager.announcements.datePublish">Опубліковано</message>
+	<message key="manager.reviewerSearch.searchByName.short">Пошук за іменем</message>
+	<message key="manager.reviewerSearch.form.instructions">Користуйтеся формою нижче, щоб встановити максимальні значення для параметрів, за якими здійснюється пошук. За замовчуванням, форма заповнена вирахуваними середніми значеннями для кожного з полів.</message>
+	<message key="plugins.categories.citationOutput">Модулі відображення цитат</message>
+	<message key="plugins.categories.citationOutput.description">Модулі відображення цитат дозволяють відображати цитати за правилами різних бібліографічних стандартів. Ці модулі раніше називалися "Модулі форматів цитування".</message>
+	<message key="plugins.categories.citationParser">Модулі екстракції цитат</message>
+	<message key="plugins.categories.citationParser.description">Модулі екстракції цитат дозволяють видобувати з оригінальних цитат бібліографічну інформацію (наприклад, імена авторів, назви статей тощо).</message>
+	<message key="manager.emails.data">Дані шаблону повідомлення</message>
+	<message key="manager.emails.disable.message">Ви намагаєтеся відключити цей шаблон листа. Якщо система була налаштована на використання цього шаблону, вона не зможе надалі його використовувати. Ви підтверджуєте цю дію?</message>
+	<message key="manager.emails.enable.message">Ви намагаєтеся включити цей шаблон листа. Ви підтверджуєте цю дію?</message>
+	<message key="manager.masthead.title">Вихідні дані</message>
+	<message key="manager.setup.layout.blockManagement">Налаштування бічних панелей</message>
 </locale>

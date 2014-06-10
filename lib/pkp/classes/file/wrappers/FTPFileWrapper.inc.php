@@ -3,7 +3,8 @@
 /**
  * @file classes/file/wrappers/FTPFileWrapper.inc.php
  *
- * Copyright (c) 2000-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2000-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @package file.wrappers
@@ -13,8 +14,6 @@
  * (for when allow_url_fopen is disabled).
  *
  */
-
-// $Id$
 
 
 class FTPFileWrapper extends FileWrapper {
@@ -105,14 +104,14 @@ class FTPFileWrapper extends FileWrapper {
 	}
 
 	function _receiveLine(&$line) {
- 		do {
- 			$line = fgets($this->ctrl);
- 		} while($line !== false && ($tmp = substr(trim($line), 3, 1)) != ' ' && $tmp != '');
+		do {
+			$line = fgets($this->ctrl);
+		} while($line !== false && ($tmp = substr(trim($line), 3, 1)) != ' ' && $tmp != '');
 
- 		if ($line !== false) {
- 			return substr($line, 0, 3);
- 		}
- 		return false;
+		if ($line !== false) {
+			return substr($line, 0, 3);
+		}
+		return false;
 	}
 }
 

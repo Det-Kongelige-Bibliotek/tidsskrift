@@ -7,15 +7,14 @@
 /**
  * @file pages/editor/index.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @ingroup pages_editor
  * @brief Handle requests for editor functions.
  *
  */
-
-// $Id$
 
 switch ($op) {
 	//
@@ -42,6 +41,7 @@ switch ($op) {
 	case 'remindReviewer':
 	case 'thankReviewer':
 	case 'rateReviewer':
+	case 'reassignReviewer':
 	case 'confirmReviewForReviewer':
 	case 'uploadReviewForReviewer':
 	case 'enterReviewerRecommendation':
@@ -98,10 +98,8 @@ switch ($op) {
 	// Submission History
 	//
 	case 'submissionEventLog':
-	case 'submissionEventLogType':
 	case 'clearSubmissionEventLog':
 	case 'submissionEmailLog':
-	case 'submissionEmailLogType':
 	case 'clearSubmissionEmailLog':
 	case 'addSubmissionNote':
 	case 'removeSubmissionNote':
@@ -141,6 +139,7 @@ switch ($op) {
 	case 'waiveSubmissionFee':
 	case 'waiveFastTrackFee':
 	case 'waivePublicationFee':
+	case 'downloadLayoutTemplate':
 		define('HANDLER_CLASS', 'SubmissionEditHandler');
 		import('pages.sectionEditor.SubmissionEditHandler');
 		break;
@@ -150,7 +149,7 @@ switch ($op) {
 	case 'viewPeerReviewComments':
 	case 'postPeerReviewComment':
 	case 'viewEditorDecisionComments':
-	case 'blindCcReviewsToReviewers':
+	case 'bccEditorDecisionCommentToReviewers':
 	case 'postEditorDecisionComment':
 	case 'viewCopyeditComments':
 	case 'postCopyeditComment':
@@ -177,6 +176,16 @@ switch ($op) {
 	case 'editIssue':
 	case 'removeIssueCoverPage':
 	case 'removeStyleFile':
+	case 'issueGalleys':
+	case 'uploadIssueGalley':
+	case 'editIssueGalley':
+	case 'saveIssueGalley':
+	case 'orderIssueGalley':
+	case 'deleteIssueGalley':
+	case 'proofIssueGalley':
+	case 'proofIssueGalleyTop':
+	case 'proofIssueGalleyFile':
+	case 'downloadIssueFile':
 	case 'issueToc':
 	case 'updateIssueToc':
 	case 'setCurrentIssue':

@@ -2,7 +2,8 @@
 /**
  * @file classes/filter/GenericSequencerFilter.inc.php
  *
- * Copyright (c) 2000-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2000-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class GenericSequencerFilter
@@ -20,20 +21,25 @@ class GenericSequencerFilter extends CompositeFilter {
 	/**
 	 * Constructor
 	 */
-	function GenericSequencerFilter($displayName = null, $transformation = null) {
-		parent::CompositeFilter($displayName, $transformation);
+	function GenericSequencerFilter(&$filterGroup, $displayName = null) {
+		parent::CompositeFilter($filterGroup, $displayName);
 	}
 
+
 	//
-	// Implementing abstract template methods from Filter
+	// Implementing abstract template methods from PersistableFilter
 	//
 	/**
-	 * @see Filter::getClassName()
+	 * @see PersistableFilter::getClassName()
 	 */
 	function getClassName() {
 		return 'lib.pkp.classes.filter.GenericSequencerFilter';
 	}
 
+
+	//
+	// Implementing abstract template methods from Filter
+	//
 	/**
 	 * @see Filter::process()
 	 * @param $input mixed

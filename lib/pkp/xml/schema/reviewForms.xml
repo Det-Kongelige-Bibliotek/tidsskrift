@@ -4,12 +4,11 @@
 <!--
   * reviewForms.xml
   *
-  * Copyright (c) 2000-2012 John Willinsky
+  * Copyright (c) 2013-2014 Simon Fraser University Library
+  * Copyright (c) 2000-2014 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Review Form schema in XML.
-  *
-  * $Id$
   -->
 
 <schema version="0.2">
@@ -33,7 +32,7 @@
 		<field name="is_active" type="I1" />
 		<descr>Review forms.</descr>
 	</table>
-	
+
 	<!--
 	  *
 	  * TABLE review_form_settings
@@ -88,7 +87,7 @@
 			<col>review_form_id</col>
 		</index>
 	</table>
-	
+
 	<!--
 	  *
 	  * TABLE review_form_element_settings

@@ -4,12 +4,12 @@
 <!--
   * locale/da_DK/submission.xml
   *
-  * Copyright (c) 2000-2012 John Willinsky
+  * Copyright (c) 2013-2014 Simon Fraser University Library
+  * Copyright (c) 2000-2014 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings for the da_DK (Danish) locale.
   *
-  * $Id$
   -->
 
 <locale name="da_DK" full_name = "Danish">
@@ -344,7 +344,7 @@
 		<p>Citationsmarkeringsværktøjet vil forsøge at identificere og udtrække hver enkel reference fra forfatterens litteraturliste. Du kan systematisk kontrollere nøjagtigheden af hver enkel citationsudtrækning i forhold til en række eksterne databaser, redigere forkerte referenceoplysninger og tilføje ny information, godkende eller slette referencer samt tilføje nye referencer.</p>
 		<p>Alle endelige referencer i et indleveret manuskript skal godkendes, inden de kan eksporteres.</p></li>
 		<li><p><strong>Sådan eksporterer du referencer</strong></p>
- 		<p>Referencer kan eksporteres som XML eller tekst. XML-eksportmulighederne omfatter pt. <a href="http://dtd.nlm.nih.gov/publishing/">NLM Journal Publishing</a> 2.3 og 3.0 <a href="http://www.ncbi.nlm.nih.gov/pmc/pmcdoc/tagging-guidelines/article/tags.html#el-reflist">ref-list XML</a>. Ved at vælge et af disse alternativer får du en XML-kodet litteraturhenvisningsstump, som kan kopieres og indsættes i et NLM XML-satsskib.</p>
+		<p>Referencer kan eksporteres som XML eller tekst. XML-eksportmulighederne omfatter pt. <a href="http://dtd.nlm.nih.gov/publishing/">NLM Journal Publishing</a> 2.3 og 3.0 <a href="http://www.ncbi.nlm.nih.gov/pmc/pmcdoc/tagging-guidelines/article/tags.html#el-reflist">ref-list XML</a>. Ved at vælge et af disse alternativer får du en XML-kodet litteraturhenvisningsstump, som kan kopieres og indsættes i et NLM XML-satsskib.</p>
 		<p>Eksperimentelle eksportalternativer for tekst omfatter ABNT, APA, MLA samt Vancouver output styles. Disse alternativer giver et tekst-output, som kan kopieres og indsættes i en tekstbaseret artikelsatsskib (for eksempel i Microsoft Word eller OpenOffice, Adobe InDesign etc.). Hver reference indeholder et indlejret link til en automatisk søgning efter den pågældende reference i Google Scholar.</p></li>
 	</ul>]]></message>
 	<message key="submission.citations.editor.loadMessage">Vent, til citationsredigeringsværktøjet er indlæst.</message>
@@ -367,11 +367,22 @@
 	<message key="submission.currentAgencies">Aktuelle bureauer</message>
 	<message key="submission.indexingInformation">Indekserer information</message>
 	<message key="submission.uploadSuccessful">Din fil er blevet uploadet.</message>
-	<message key="submission.uploadSuccessfulContinue">Din fil er blevet uploadet. Klik på 'Fortsæt' for at redigere filens metadata.</message>
 	<message key="submission.loadMessage">Vent, mens din fil bliver uploadet til serveren.</message>
 	<message key="submission.artworkFileDetails">Illustrations-filoplysninger</message>
 	<message key="submission.fileDetails">Filoplysninger</message>
 	<message key="submission.nameRequired">Dette element skal have et navn.</message>
 	<message key="submission.date.mmdd">MM-DD</message>
 	<message key="submission.date.yyyymmdd">ÅÅÅÅ-MM-DD</message>
+	<message key="submission.addFile">Upload fil</message>
+	<message key="submission.citations.editor.citationlist.approved">Godkendt</message>
+	<message key="submission.citations.editor.citationlist.notApproved">Ikke godkendt</message>
+	<message key="submission.comments.addReviews">Tilføj bedømmelse til e-mail</message>
+	<message key="submission.copyedited">Manuskriptredigering</message>
+	<message key="submission.layout.galleyRemoteURL">Ekstern URL</message>
+	<message key="submission.layout.galleyRemoteURLValid">Indsæt en gyldig ekstern URL (medtag http://).</message>
+	<message key="submission.reviewed">Bedømt</message>
+	<message key="submission.supportingAgencies">Støtteinstanser</message>
+	<message key="submission.createRemote">Opret ekstern</message>
+	<message key="submission.form.name">Giv denne fil et sigendenavn</message>
+	<message key="submission.form.replaceExisting">Erstat en eksisterende fil?</message>
 </locale>

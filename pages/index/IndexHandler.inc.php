@@ -1,9 +1,10 @@
 <?php
 
 /**
- * @file IndexHandler.inc.php
+ * @file pages/index/IndexHandler.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class IndexHandler
@@ -11,9 +12,6 @@
  *
  * @brief Handle site index requests.
  */
-
-// $Id$
-
 
 import('classes.handler.Handler');
 
@@ -58,11 +56,8 @@ class IndexHandler extends Handler {
 			if ($displayCurrentIssue && isset($issue)) {
 				import('pages.issue.IssueHandler');
 				// The current issue TOC/cover page should be displayed below the custom home page.
-				IssueHandler::setupIssueTemplate($issue);
+				IssueHandler::_setupIssueTemplate($request, $issue);
 			}
-
-			// Display creative commons logo/licence if enabled
-			$templateMgr->assign('displayCreativeCommons', $journal->getSetting('includeCreativeCommons'));
 
 			$enableAnnouncements = $journal->getSetting('enableAnnouncements');
 			if ($enableAnnouncements) {
@@ -79,14 +74,37 @@ class IndexHandler extends Handler {
 		} else {
 			$site =& Request::getSite();
 
-			if ($site->getRedirect() && ($journal = $journalDao->getJournal($site->getRedirect())) != null) {
+			if ($site->getRedirect() && ($journal = $journalDao->getById($site->getRedirect())) != null) {
 				$request->redirect($journal->getPath());
 			}
 
 			$templateMgr->assign('intro', $site->getLocalizedIntro());
 			$templateMgr->assign('journalFilesPath', $request->getBaseUrl() . '/' . Config::getVar('files', 'public_files_dir') . '/journals/');
-			$journals =& $journalDao->getEnabledJournals();
+
+			// If we're using paging, fetch the parameters
+			$usePaging = $site->getSetting('usePaging');
+			if ($usePaging) $rangeInfo =& $this->getRangeInfo('journals');
+			else $rangeInfo = null;
+			$templateMgr->assign('usePaging', $usePaging);
+
+			// Fetch the alpha list parameters
+			$searchInitial = Request::getUserVar('searchInitial');
+			$templateMgr->assign('searchInitial', $searchInitial);
+			$templateMgr->assign('useAlphalist', $site->getSetting('useAlphalist'));
+
+			$journals =& $journalDao->getJournals(
+				true,
+				$rangeInfo,
+				$searchInitial?JOURNAL_FIELD_TITLE:JOURNAL_FIELD_SEQUENCE,
+				$searchInitial?JOURNAL_FIELD_TITLE:null,
+				$searchInitial?'startsWith':null,
+				$searchInitial
+			);
 			$templateMgr->assign_by_ref('journals', $journals);
+			$templateMgr->assign_by_ref('site', $site);
+
+			$templateMgr->assign('alphaList', explode(' ', __('common.alphaList')));
+
 			$templateMgr->setCacheability(CACHEABILITY_PUBLIC);
 			$templateMgr->display('index/site.tpl');
 		}

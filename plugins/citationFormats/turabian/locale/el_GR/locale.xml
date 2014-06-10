@@ -2,9 +2,10 @@
 <!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
 
 <!--
-  * locale.xml
+  * plugins/citationFormats/turabian/locale/el_GR/locale.xml
   *
-  * Copyright (c) 2003-2012 John Willinsky
+  * Copyright (c) 2013-2014 Simon Fraser University Library
+  * Copyright (c) 2003-2014 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings for this citation plugin in Greek.
@@ -16,11 +17,10 @@
   * Kiriazis Vasilis (vaskir@lis.upatras.gr),
   * Papaxristopoulos Leonidas (leonidasp@lis.upatras.gr)
   *
-  * $Id$
   -->
  
 <locale name="el_GR" full_name="Greek">	
-	<message key="plugins.citationFormats.turabian.displayName">Plugin σχήματος παραπομπής Turabian</message>
+	<message key="plugins.citationFormats.turabian.displayName">Πρόσθετο σχήματος παραπομπής Turabian</message>
 	<message key="plugins.citationFormats.turabian.citationFormatName">Turabian</message>
-	<message key="plugins.citationFormats.turabian.description">Το plugin αυτό υλοποιεί το σχήμα παραπομπής Turabian.</message>
+	<message key="plugins.citationFormats.turabian.description">Το πρόσθετο αυτό υλοποιεί το σχήμα παραπομπής Turabian.</message>
 </locale>

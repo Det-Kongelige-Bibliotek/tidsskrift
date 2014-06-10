@@ -1,17 +1,17 @@
 {**
- * submission.tpl
+ * templates/reviewer/submission.tpl
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Show the reviewer administration page.
  *
  * FIXME: At "Notify The Editor", fix the date.
  *
- * $Id$
  *}
 {strip}
-{assign var="articleId" value=$submission->getArticleId()}
+{assign var="articleId" value=$submission->getId()}
 {assign var="reviewId" value=$reviewAssignment->getId()}
 {translate|assign:"pageTitleTranslated" key="submission.page.review" id=$articleId}
 {assign var="pageCrumbTitle" value="submission.review"}
@@ -22,7 +22,7 @@
 {literal}
 <!--
 function confirmSubmissionCheck() {
-	if (document.recommendation.recommendation.value=='') {
+	if (document.getElementById('recommendation').recommendation.value=='') {
 		alert('{/literal}{translate|escape:"javascript" key="reviewer.article.mustSelectDecision"}{literal}');
 		return false;
 	}
@@ -127,14 +127,12 @@ function confirmSubmissionCheck() {
 			{url|assign:"declineUrl" op="confirmReview" reviewId=$reviewId declineReview=1}
 
 			{if !$submission->getCancelled()}
-				{translate key="reviewer.article.canDoReview"} {icon name="mail" url=$acceptUrl}
+				<a href="{$acceptUrl}">{translate key="reviewer.article.canDoReview"}</a> {icon name="mail" url=$acceptUrl}
 				&nbsp;&nbsp;&nbsp;&nbsp;
-				{translate key="reviewer.article.cannotDoReview"} {icon name="mail" url=$declineUrl}
+				<a href="{$declineUrl}">{translate key="reviewer.article.cannotDoReview"}</a> {icon name="mail" url=$declineUrl}
 			{else}
-				{url|assign:"url" op="confirmReview" reviewId=$reviewId}
 				{translate key="reviewer.article.canDoReview"} {icon name="mail" disabled="disabled" url=$acceptUrl}
 				&nbsp;&nbsp;&nbsp;&nbsp;
-				{url|assign:"url" op="confirmReview" reviewId=$reviewId declineReview=1}
 				{translate key="reviewer.article.cannotDoReview"} {icon name="mail" disabled="disabled" url=$declineUrl}
 			{/if}
 		{else}
@@ -233,11 +231,14 @@ function confirmSubmissionCheck() {
 	<tr valign="top">
 		<td>&nbsp;</td>
 		<td>
-			{translate key="submission.reviewForm"} 
 			{if $confirmedStatus and not $declined}
-				<a href="{url op="editReviewFormResponse" path=$reviewId|to_array:$reviewAssignment->getReviewFormId()}" class="icon">{icon name="comment"}</a>
+				<a href="{url op="editReviewFormResponse" path=$reviewId|to_array:$reviewAssignment->getReviewFormId()}" class="icon">
+					{translate key="submission.reviewForm"}
+					{icon name="comment"}
+				</a>
 			{else}
-				 {icon name="comment" disabled="disabled"}
+				{translate key="submission.reviewForm"}
+				{icon name="comment" disabled="disabled"}
 			{/if}
 		</td>
 	</tr>
@@ -252,11 +253,14 @@ function confirmSubmissionCheck() {
 	<tr valign="top">
 		<td>&nbsp;</td>
 		<td>
-			{translate key="submission.logType.review"} 
 			{if $confirmedStatus and not $declined}
-				<a href="javascript:openComments('{url op="viewPeerReviewComments" path=$articleId|to_array:$reviewId}');" class="icon">{icon name="comment"}</a>
+				<a href="javascript:openComments('{url op="viewPeerReviewComments" path=$articleId|to_array:$reviewId}');" class="icon">
+					{translate key="submission.logType.review"}
+					{icon name="comment"}
+				</a>
 			{else}
-				 {icon name="comment" disabled="disabled"}
+				{translate key="submission.logType.review"}
+				{icon name="comment" disabled="disabled"}
 			{/if}
 		</td>
 	</tr>
@@ -333,15 +337,15 @@ function confirmSubmissionCheck() {
 					<strong>{translate key=$reviewerRecommendationOptions.$recommendation}</strong>&nbsp;&nbsp;
 					{$submission->getDateCompleted()|date_format:$dateFormatShort}
 				{else}
-					<form name="recommendation" method="post" action="{url op="recordRecommendation"}">
+					<form id="recommendation" method="post" action="{url op="recordRecommendation"}">
 					<input type="hidden" name="reviewId" value="{$reviewId|escape}" />
 					<select name="recommendation" {if not $confirmedStatus or $declined or $submission->getCancelled() or (!$reviewFormResponseExists and !$reviewAssignment->getMostRecentPeerReviewComment() and !$uploadedFileExists)}disabled="disabled"{/if} class="selectMenu">
 						{html_options_translate options=$reviewerRecommendationOptions selected=''}
 					</select>&nbsp;&nbsp;&nbsp;&nbsp;
 					<input type="submit" name="submit" onclick="return confirmSubmissionCheck()" class="button" value="{translate key="reviewer.article.submitReview"}" {if not $confirmedStatus or $declined or $submission->getCancelled() or (!$reviewFormResponseExists and !$reviewAssignment->getMostRecentPeerReviewComment() and !$uploadedFileExists)}disabled="disabled"{/if} />
-					</form>					
+					</form>
 				{/if}
-				</td>		
+				</td>
 			</tr>
 		</table>
 	</td>

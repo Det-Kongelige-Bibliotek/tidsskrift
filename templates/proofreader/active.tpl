@@ -1,19 +1,19 @@
 {**
- * active.tpl
+ * templates/proofreader/active.tpl
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Show proofreader's active submissions.
  *
- * $Id$
  *}
 <div id="submissions">
 <table class="listing" width="100%">
 	<tr><td colspan="6" class="headseparator">&nbsp;</td></tr>
 	<tr class="heading" valign="bottom">
 		<td width="5%">{sort_heading key="common.id" sort="id"}</td>
-		<td width="5%"><span class="disabled">{translate key="submission.date.mmdd"}</span><br />{sort_heading key="common.assign" sort="assignDate"}</td>
+		<td width="5%"><span class="disabled">{translate key="submission.date.mmdd"}</span><br />{sort_heading key="common.assigned" sort="assignDate"}</td>
 		<td width="5%">{sort_heading key="submissions.sec" sort="section"}</td>
 		<td width="30%">{sort_heading key="article.authors" sort="authors"}</td>
 		<td width="40%">{sort_heading key="article.title" sort="title"}</td>
@@ -22,7 +22,7 @@
 	<tr><td colspan="6" class="headseparator">&nbsp;</td></tr>
 
 {iterate from=submissions item=submission}
-	{assign var="articleId" value=$submission->getArticleId()}
+	{assign var="articleId" value=$submission->getId()}
 	{assign var="proofreaderSignoff" value=$submission->getSignoff('SIGNOFF_PROOFREADING_PROOFREADER')}
 	{assign var="authorSignoff" value=$submission->getSignoff('SIGNOFF_PROOFREADING_AUTHOR')}
 

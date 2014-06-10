@@ -3,7 +3,8 @@
 /**
  * @file classes/plugins/CachedPlugin.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class CachedPlugin
@@ -53,7 +54,7 @@ class LazyLoadPlugin extends Plugin {
 		// as plug-in name. Legacy plug-ins will override this method so
 		// this implementation is backwards compatible.
 		// NB: strtolower is required for PHP4 compatibility.
-		return String::strtolower(get_class($this));
+		return strtolower_codesafe(get_class($this));
 	}
 
 	/*

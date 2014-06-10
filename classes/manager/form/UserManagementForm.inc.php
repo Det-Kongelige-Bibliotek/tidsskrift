@@ -3,7 +3,8 @@
 /**
  * @file classes/manager/form/UserManagementForm.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class UserManagementForm
@@ -11,9 +12,6 @@
  *
  * @brief Form for journal managers to edit user profiles.
  */
-
-// $Id$
-
 
 import('lib.pkp.classes.form.Form');
 
@@ -68,7 +66,7 @@ class UserManagementForm extends Form {
 		$templateMgr->assign('source', Request::getUserVar('source'));
 		$templateMgr->assign('userId', $this->userId);
 		if (isset($this->userId)) {
-			$user =& $userDao->getUser($this->userId);
+			$user =& $userDao->getById($this->userId);
 			$templateMgr->assign('username', $user->getUsername());
 			$helpTopicId = 'journal.users.index';
 		} else {
@@ -142,7 +140,7 @@ class UserManagementForm extends Form {
 	function initData(&$args, &$request) {
 		if (isset($this->userId)) {
 			$userDao =& DAORegistry::getDAO('UserDAO');
-			$user =& $userDao->getUser($this->userId);
+			$user =& $userDao->getById($this->userId);
 
 			import('lib.pkp.classes.user.InterestManager');
 			$interestManager = new InterestManager();
@@ -160,6 +158,7 @@ class UserManagementForm extends Form {
 					'gender' => $user->getGender(),
 					'affiliation' => $user->getAffiliation(null), // Localized
 					'email' => $user->getEmail(),
+					'orcid' => $user->getData('orcid'),
 					'userUrl' => $user->getUrl(),
 					'phone' => $user->getPhone(),
 					'fax' => $user->getFax(),
@@ -205,6 +204,7 @@ class UserManagementForm extends Form {
 			'signature',
 			'affiliation',
 			'email',
+			'orcid',
 			'userUrl',
 			'phone',
 			'fax',
@@ -244,6 +244,11 @@ class UserManagementForm extends Form {
 		return $userDao->getLocaleFieldNames();
 	}
 
+	function getAdditionalFieldNames() {
+		$userDao =& DAORegistry::getDAO('UserDAO');
+		return $userDao->getAdditionalFieldNames();
+	}
+
 	/**
 	 * Register a new user.
 	 */
@@ -252,7 +257,7 @@ class UserManagementForm extends Form {
 		$journal =& Request::getJournal();
 
 		if (isset($this->userId)) {
-			$user =& $userDao->getUser($this->userId);
+			$user =& $userDao->getById($this->userId);
 		}
 
 		if (!isset($user)) {
@@ -268,6 +273,7 @@ class UserManagementForm extends Form {
 		$user->setAffiliation($this->getData('affiliation'), null); // Localized
 		$user->setSignature($this->getData('signature'), null); // Localized
 		$user->setEmail($this->getData('email'));
+		$user->setData('orcid', $this->getData('orcid'));
 		$user->setUrl($this->getData('userUrl'));
 		$user->setPhone($this->getData('phone'));
 		$user->setFax($this->getData('fax'));

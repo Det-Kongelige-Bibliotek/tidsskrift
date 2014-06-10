@@ -4,7 +4,8 @@
 <!--
   * locale/sr_SR/submission.xml
   *
-  * Copyright (c) 2000-2012 John Willinsky
+  * Copyright (c) 2013-2014 Simon Fraser University Library
+  * Copyright (c) 2000-2014 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings for the sr_SR (Serbian) locale.
@@ -210,7 +211,7 @@
 		<p>The Citation Markup Assistant will attempt to identify and extract individual citations from the author's list of references. You can systematically check each citation extraction attempt for accuracy against a number of external databases; edit incorrect citation information and add new information; approve or delete citations; and add new citations.</p>
 		<p>All final citations for a submission must be approved before they can be exported.</p></li>
 		<li><p><strong>Exporting Citations</strong></p>
- 		<p>Citations can be exported as XML or text. XML export options currently include <a href="http://dtd.nlm.nih.gov/publishing/">NLM Journal Publishing</a> 2.3 and 3.0 <a href="http://www.ncbi.nlm.nih.gov/pmc/pmcdoc/tagging-guidelines/article/tags.html#el-reflist">ref-list XML</a>. Selecting one of these options outputs an XML-encoded ref-list snippet that can be copied and pasted into an NLM XML galley.</p>
+		<p>Citations can be exported as XML or text. XML export options currently include <a href="http://dtd.nlm.nih.gov/publishing/">NLM Journal Publishing</a> 2.3 and 3.0 <a href="http://www.ncbi.nlm.nih.gov/pmc/pmcdoc/tagging-guidelines/article/tags.html#el-reflist">ref-list XML</a>. Selecting one of these options outputs an XML-encoded ref-list snippet that can be copied and pasted into an NLM XML galley.</p>
 		<p>Experimental text export options include ABNT, APA, MLA and Vancouver citation output styles. These options provide a text output that can be copied and pasted into a text-based article galley (for example into Microsoft Word or OpenOffice; Adobe InDesign; etc.). Each citation includes an embedded link to automatically search for that citation in Google Scholar.</p></li>
 	</ul>]]></message>
 	<message key="submission.citations.editor.loadMessage">Please wait for the citation markup assistant to load.</message>
@@ -377,11 +378,20 @@
 	<message key="submission.viewMetadata">View Metadata</message>
 	<message key="submission.views">Views</message>
 	<message key="submission.uploadSuccessful">Your file has been uploaded.</message>
-	<message key="submission.uploadSuccessfulContinue">Your file has been uploaded.  Press continue to edit the file's metadata.</message>
 	<message key="submission.loadMessage">Please wait while your file is uploaded to the server.</message>
 	<message key="submission.artworkFileDetails">Artwork File Details</message>
 	<message key="submission.fileDetails">File Details</message>
 	<message key="submission.nameRequired">A name is required for this item.</message>
 	<message key="submission.date.mmdd">MM-DD</message>
 	<message key="submission.date.yyyymmdd">YYYY-MM-DD</message>
+	<message key="submission.addFile">Dodaj fajl</message>
+	<message key="submission.citations.editor.citationlist.approved">Odobreno</message>
+	<message key="submission.citations.editor.citationlist.notApproved">Nije odobreno</message>
+	<message key="submission.comments.addReviews">Dodaj recenzije u imejl</message>
+	<message key="submission.layout.galleyRemoteURL">Udaljeni URL</message>
+	<message key="submission.layout.galleyRemoteURLValid">Molimo dodajte ispravan URL (uključujući http://).</message>
+	<message key="submission.reviewed">Recenzirano</message>
+	<message key="submission.createRemote">Napravi udaljeno</message>
+	<message key="submission.form.name">Dajte fajlu ime od pomoći</message>
+	<message key="submission.form.replaceExisting">Zameniti postojeći fajl?</message>
 </locale>

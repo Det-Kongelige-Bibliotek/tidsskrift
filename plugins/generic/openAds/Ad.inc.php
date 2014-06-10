@@ -3,6 +3,7 @@
 /**
  * @file plugins/generic/openAds/Ad.inc.php
  *
+ * Copyright (c) 2013-2014 Simon Fraser University Library
  * Copyright (c) 2003-2009 Siavash Miri and Alec Smecher
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
@@ -11,8 +12,6 @@
  *
  * @brief Abstract an OpenAds ad.
  */
-
-// $Id: CounterPlugin.inc.php,v 1.0 2006/10/20 12:28pm
 
 define('AD_TYPE_CONTENT', 1);
 define('AD_TYPE_SIDEBAR', 2);

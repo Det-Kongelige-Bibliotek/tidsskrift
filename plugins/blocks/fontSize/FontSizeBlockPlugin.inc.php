@@ -1,9 +1,10 @@
 <?php
 
 /**
- * @file FontSizeBlockPlugin.inc.php
+ * @file plugins/blocks/fontSize/FontSizeBlockPlugin.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class FontSizeBlockPlugin
@@ -12,8 +13,6 @@
  * @brief Class for font size block plugin
  *
  */
-
-// $Id$
 
 import('lib.pkp.classes.plugins.BlockPlugin');
 

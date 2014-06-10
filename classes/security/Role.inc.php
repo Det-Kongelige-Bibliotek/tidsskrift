@@ -3,7 +3,8 @@
 /**
  * @file classes/security/Role.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class Role
@@ -12,9 +13,6 @@
  *
  * @brief Describes user roles within the system and the associated permissions.
  */
-
-// $Id$
-
 
 /** ID codes for all user roles */
 define('ROLE_ID_SITE_ADMIN',		0x00000001);

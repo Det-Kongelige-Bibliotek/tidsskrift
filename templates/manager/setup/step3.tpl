@@ -1,7 +1,8 @@
 {**
- * step3.tpl
+ * templates/manager/setup/step3.tpl
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Step 3 of journal setup.
@@ -9,7 +10,7 @@
 {assign var="pageTitle" value="manager.setup.guidingSubmissions"}
 {include file="manager/setup/setupHeader.tpl"}
 
-<form name="setupForm" method="post" action="{url op="saveSetup" path="3"}">
+<form id="setupForm" method="post" action="{url op="saveSetup" path="3"}">
 {include file="common/formErrors.tpl"}
 
 {if count($formLocales) > 1}
@@ -69,9 +70,10 @@
 
 <div class="separator"></div>
 
-<div id="authorCopyrightNotice">
-<h3>3.2 {translate key="manager.setup.authorCopyrightNotice"}</h3>
+<div id="permissions">
+<h3>3.2 {translate key="submission.permissions"}</h3>
 
+<h4>{translate key="manager.setup.authorCopyrightNotice"}</h4>
 {url|assign:"sampleCopyrightWordingUrl" page="information" op="sampleCopyrightWording"}
 <p>{translate key="manager.setup.authorCopyrightNoticeDescription" sampleCopyrightWordingUrl=$sampleCopyrightWordingUrl}</p>
 
@@ -79,22 +81,66 @@
 
 <table width="100%" class="data">
 	<tr valign="top">
-		<td width="5%" class="label">
-			<input type="checkbox" name="copyrightNoticeAgree" id="copyrightNoticeAgree" value="1"{if $copyrightNoticeAgree} checked="checked"{/if} />
+		<td width="20%" class="label" rowspan="3">
+			{translate key="submission.copyrightHolder"}
 		</td>
-		<td width="95%" class="value"><label for="copyrightNoticeAgree">{translate key="manager.setup.authorCopyrightNoticeAgree"}</label>
+		<td width="80%" class="data">
+			<input type="radio" value="author" name="copyrightHolderType" {if $copyrightHolderType=="author"}checked="checked" {/if}id="copyrightHolderType-author" />&nbsp;<label for="copyrightHolderType-author">{translate key="user.role.author"}</label>
 		</td>
 	</tr>
 	<tr valign="top">
-		<td class="label">
-			<input type="checkbox" name="includeCreativeCommons" id="includeCreativeCommons" value="1"{if $includeCreativeCommons} checked="checked"{/if} />
+		<td class="data">
+			<input type="radio" value="journal" name="copyrightHolderType" {if $copyrightHolderType=="journal"}checked="checked" {/if}id="copyrightHolderType-journal" />&nbsp;<label for="copyrightHolderType-journal">{translate key="journal.journal"}</label> ({$currentJournal->getLocalizedTitle()|escape})
 		</td>
+	</tr>
+	<tr valign="top">
+		<td class="data">
+			<input type="radio" value="other" name="copyrightHolderType" {if $copyrightHolderType=="other"}checked="checked" {/if}id="copyrightHolderType-other" />&nbsp;<label for="copyrightHolderType-other">{translate key="common.other"}</label>&nbsp;&nbsp;<input type="text" name="copyrightHolderOther[{$formLocale|escape}]" id="copyrightHolderOther" value="{$copyrightHolderOther[$formLocale]|escape}" />
+		</td>
+	</tr>
+	<tr valign="top">
+		<td class="label">{translate key="manager.setup.permissions.priorAgreement"}</td>
+		<td class="label">
+			<input type="checkbox" name="copyrightNoticeAgree" id="copyrightNoticeAgree" value="1"{if $copyrightNoticeAgree} checked="checked"{/if} />&nbsp;<label for="copyrightNoticeAgree">{translate key="manager.setup.authorCopyrightNoticeAgree"}</label>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td class="label">{translate key="manager.setup.permissions.display"}</td>
 		<td class="value">
-			<label for="includeCreativeCommons">{translate key="manager.setup.includeCreativeCommons"}</label>
+			<input type="checkbox" name="includeCopyrightStatement" id="includeCopyrightStatement" value="1"{if $includeCopyrightStatement} checked="checked"{/if} />&nbsp;<label for="includeCopyrightStatement">{translate key="manager.setup.includeCopyrightStatement"}</label>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td class="label">{fieldLabel name=licenseURL key="submission.licenseURL"}</td>
+		<td class="value">
+			<select name="licenseURLSelect" id="licenseURLSelect" onchange="document.getElementById('licenseURL').value=document.getElementById('licenseURLSelect').options[document.getElementById('licenseURLSelect').selectedIndex].value; document.getElementById('licenseURL').readOnly=(document.getElementById('licenseURL').value==''?false:true);">
+				{assign var=foundCc value=0}
+				{foreach from=$ccLicenseOptions key=ccUrl item=ccNameKey}
+					<option {if $licenseURL == $ccUrl}selected="selected" {/if}value="{$ccUrl|escape}">{$ccNameKey|translate}</option>
+					{if $licenseURL == $ccUrl}
+						{assign var=foundCc value=1}
+					{/if}
+				{/foreach}
+				<option {if !$foundCc}selected="selected" {/if}value="">Other</option>
+			</select>
+			<br/>
+			<input type="text" name="licenseURL" id="licenseURL" value="{$licenseURL|escape}" {if $foundCc}readonly="readonly" {/if}size="40" maxlength="255" class="textField" />
+			<br/>
+			{translate key="manager.setup.licenseURLDescription"}
+		</td>
+	</tr>
+	<tr valign="top">
+		<td class="label">{translate key="manager.setup.permissions.display"}</td>
+		<td class="value">
+			<input type="checkbox" name="includeLicense" id="includeLicense" value="1"{if $includeLicense} checked="checked"{/if} />&nbsp;<label for="includeLicense">{translate key="manager.setup.includeLicense"}</label>
 		</td>
 	</tr>
 </table>
+
+<p>{translate key="manager.setup.resetPermissions.description"}</p>
+<p><input type="button" value="{translate key="manager.setup.resetPermissions"}" class="button" onclick="confirmAction('{url op="resetPermissions"}', '{translate|escape:"jsparam" key="manager.setup.confirmResetLicense"}')" /></p>
 </div>
+
 <div class="separator"></div>
 
 <div id="competingInterests">
@@ -150,11 +196,11 @@
 			<span class="instruct">{translate key="manager.setup.disciplineExamples"}</span>
 		</td>
 	</tr>
-	
+
 	<tr>
 		<td class="separator" colspan="2"><br />&nbsp;</td>
 	</tr>
-	
+
 	<tr valign="top">
 		<td width="5%" class="label" valign="bottom"><input type="checkbox" name="metaSubjectClass" id="metaSubjectClass" value="1"{if $metaSubjectClass} checked="checked"{/if} /></td>
 		<td width="95%" class="value">
@@ -171,17 +217,17 @@
 				</tr>
 				<tr valign="top">
 					<td width="10%">{fieldLabel name="metaSubjectClassUrl" key="common.url"}</td>
-					<td width="90%"><input type="text" name="metaSubjectClassUrl[{$formLocale|escape}]" id="metaSubjectClassUrl" value="{if $metaSubjectClassUrl[$formLocale]}{$metaSubjectClassUrl[$formLocale]|escape}{else}http://{/if}" size="40" maxlength="255" class="textField" /></td>
+					<td width="90%"><input type="text" name="metaSubjectClassUrl[{$formLocale|escape}]" id="metaSubjectClassUrl" value="{$metaSubjectClassUrl[$formLocale]|escape}" size="40" maxlength="255" class="textField" /></td>
 				</tr>
 			</table>
 			<span class="instruct">{translate key="manager.setup.subjectClassificationExamples"}</span>
 		</td>
 	</tr>
-	
+
 	<tr>
 		<td class="separator" colspan="2"><br />&nbsp;</td>
 	</tr>
-	
+
 	<tr valign="top">
 		<td width="5%" class="label" valign="bottom"><input type="checkbox" name="metaSubject" id="metaSubject" value="1"{if $metaSubject} checked="checked"{/if} /></td>
 		<td width="95%" class="value">
@@ -198,11 +244,11 @@
 			<span class="instruct">{translate key="manager.setup.subjectExamples"}</span>
 		</td>
 	</tr>
-	
+
 	<tr>
 		<td class="separator" colspan="2"><br />&nbsp;</td>
 	</tr>
-	
+
 	<tr valign="top">
 		<td width="5%" class="label" valign="bottom"><input type="checkbox" name="metaCoverage" id="metaCoverage" value="1"{if $metaCoverage} checked="checked"{/if} /></td>
 		<td width="95%" class="value">
@@ -249,11 +295,11 @@
 			<span class="instruct">{translate key="manager.setup.coverageResearchSampleExamples"}</span>
 		</td>
 	</tr>
-	
+
 	<tr>
 		<td class="separator" colspan="2"><br />&nbsp;</td>
 	</tr>
-	
+
 	<tr valign="top">
 		<td width="5%" class="label" valign="bottom"><input type="checkbox" name="metaType" id="metaType" value="1"{if $metaType} checked="checked"{/if} /></td>
 		<td width="95%" class="value">
@@ -279,7 +325,7 @@
 <h3>3.5 {translate key="manager.setup.registerJournalForIndexing"}</h3>
 
 {url|assign:"oaiUrl" page="oai"}
-<p>{translate key="manager.setup.registerJournalForIndexingDescription" oaiUrl=$oaiUrl}</p>
+<p>{translate key="manager.setup.registerJournalForIndexingDescription" oaiUrl=$oaiUrl siteUrl=$baseUrl}</p>
 </div>
 
 <div class="separator"></div>
@@ -327,18 +373,18 @@
 			</td>
 		</tr>
 	</table>
-	
+
 	<div id="citationFilterSetupToggle" {if !$metaCitations}style="visible: none"{/if}>
 		<h4>{translate key="manager.setup.citationFilterParser"}</h4>
 		<p>{translate key="manager.setup.citationFilterParserDescription"}</p>
 		{load_url_in_div id="parserFilterGridContainer" loadMessageId="manager.setup.filter.parser.grid.loadMessage" url="$parserFilterGridUrl"}
-		
+
 		<h4>{translate key="manager.setup.citationFilterLookup"}</h4>
 		<p>{translate key="manager.setup.citationFilterLookupDescription"}</p>
 		{load_url_in_div id="lookupFilterGridContainer" loadMessageId="manager.setup.filter.lookup.grid.loadMessage" url="$lookupFilterGridUrl"}
 		<h4>{translate key="manager.setup.citationOutput"}</h4>
 		<p>{translate key="manager.setup.citationOutputStyleDescription"}</p>
-		{fbvSelect id="metaCitationOutputFilterSelect" name="metaCitationOutputFilterId"
+		{fbvElement type="select" id="metaCitationOutputFilterSelect" name="metaCitationOutputFilterId"
 				from=$metaCitationOutputFilters translate=false selected=$metaCitationOutputFilterId|escape
 				defaultValue="-1" defaultLabel="manager.setup.filter.pleaseSelect"|translate}
 	</div>
@@ -347,7 +393,7 @@
 			// jQuerify DOM elements
 			$metaCitationsCheckbox = $('#metaCitations');
 			$metaCitationsSetupBox = $('#citationFilterSetupToggle');
-			
+
 			// Set the initial state
 			initialCheckboxState = $metaCitationsCheckbox.attr('checked');
 			if (initialCheckboxState) {
@@ -355,7 +401,7 @@
 			} else {
 				$metaCitationsSetupBox.css('display', 'none');
 			}
-			
+
 			// Toggle the settings box.
 			// NB: Has to be click() rather than change() to work in IE.
 			$metaCitationsCheckbox.click(function(){
@@ -365,7 +411,7 @@
 					$metaCitationsSetupBox.toggle(300);
 				}
 			});
-		});	
+		});
 	</script>{/literal}
 {/if}
 </div>
@@ -379,4 +425,3 @@
 </form>
 
 {include file="common/footer.tpl"}
-

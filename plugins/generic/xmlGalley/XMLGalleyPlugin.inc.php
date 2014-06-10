@@ -1,9 +1,10 @@
 <?php
 
 /**
- * @file XMLGalleyPlugin.inc.php
+ * @file plugins/generic/xmlGalley/XMLGalleyPlugin.inc.php
  *
- * Copyright (c) 2003-2012 John Willinsky
+ * Copyright (c) 2013-2014 Simon Fraser University Library
+ * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class XMLGalleyPlugin
@@ -11,9 +12,6 @@
  *
  * @brief XML Galley Plugin
  */
-
-// $Id$
-
 
 import('lib.pkp.classes.plugins.GenericPlugin');
 
@@ -108,7 +106,7 @@ class XMLGalleyPlugin extends GenericPlugin {
 		// probably based on the current page/context, ie. editor pages
 
 		// If the galley is an XML file, then convert it from an HTML Galley to an XML Galley
-		if ($galley->getFileType() == "text/xml") {
+		if ($galley->getFileType() == "text/xml" || $galley->getFileType() == "application/xml") {
 			$galley = $this->_returnXMLGalleyFromArticleGalley($galley);
 			return true;
 		}
@@ -131,7 +129,6 @@ class XMLGalleyPlugin extends GenericPlugin {
 		$articleXMLGalley->setFileId($galley->getFileId());
 		$articleXMLGalley->setLabel($galley->getLabel());
 		$articleXMLGalley->setSequence($galley->getSequence());
-		$articleXMLGalley->setViews($galley->getViews());
 		$articleXMLGalley->setFileName($galley->getFileName());
 		$articleXMLGalley->setOriginalFileName($galley->getOriginalFileName());
 		$articleXMLGalley->setFileType($galley->getFileType());
@@ -141,6 +138,7 @@ class XMLGalleyPlugin extends GenericPlugin {
 		$articleXMLGalley->setLocale($galley->getLocale());
 
 		$articleXMLGalley->setType('public');
+		$articleXMLGalley->setFileStage($galley->getFileStage());
 
 		// Copy CSS and image file references from source galley
 		if ($galley->isHTMLGalley()) {
@@ -198,15 +196,16 @@ class XMLGalleyPlugin extends GenericPlugin {
 		return parent::getManagementVerbs($verbs);
 	}
 
-	/*
- 	 * Execute a management verb on this plugin
- 	 * @param $verb string
- 	 * @param $args array
-	 * @param $message string Location for the plugin to put a result msg
- 	 * @return boolean
- 	 */
-	function manage($verb, $args, &$message) {
-		if (!parent::manage($verb, $args, $message)) return false;
+	/**
+	 * Execute a management verb on this plugin
+	 * @param $verb string
+	 * @param $args array
+	 * @param $message string Result status message
+	 * @param $messageParams array Parameters for the message key
+	 * @return boolean
+	 */
+	function manage($verb, $args, &$message, &$messageParams) {
+		if (!parent::manage($verb, $args, $message, $messageParams)) return false;
 
 		$journal =& Request::getJournal();
 
@@ -244,7 +243,7 @@ class XMLGalleyPlugin extends GenericPlugin {
 				}
 
 			case 'settings':
-				AppLocale::requireComponents(array(LOCALE_COMPONENT_APPLICATION_COMMON,  LOCALE_COMPONENT_PKP_MANAGER));
+				AppLocale::requireComponents(LOCALE_COMPONENT_APPLICATION_COMMON,  LOCALE_COMPONENT_PKP_MANAGER);
 				// if we are updating XSLT settings or switching XSL sheets
 				if (Request::getUserVar('save')) {
 					$form->readInputData();
@@ -267,9 +266,9 @@ class XMLGalleyPlugin extends GenericPlugin {
 						// check type and extension -- should be text/xml and xsl, respectively
 						$type = $fileManager->getUploadedFileType('customXSL');
 						$fileName = $fileManager->getUploadedFileName('customXSL');
-						$extension = strtolower($fileManager->getExtension($fileName));
+						$extension = strtolower_codesafe($fileManager->getExtension($fileName));
 
-						if (($type == 'text/xml' || $type == 'text/xml' || $type == 'application/xml' || $type == 'application/xslt+xml')
+						if (($type == 'text/xml' || $type == 'text/xsl' || $type == 'application/xml' || $type == 'application/xslt+xml')
 							&& $extension == 'xsl') {
 
 							// if there is an existing XSL file, delete it from the journal files folder

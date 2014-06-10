@@ -2,17 +2,17 @@
 <!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
 
 <!--
-  * locale.xml
+  * plugins/generic/coins/locale/da_DK/locale.xml
   *
-  * Copyright (c) 2003-2012 John Willinsky
+  * Copyright (c) 2013-2014 Simon Fraser University Library
+  * Copyright (c) 2003-2014 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
-  * COinS plugin localization strings for the da_DK (Dutch) locale.
+  * COinS plugin localization strings for the da_DK (Danish) locale.
   *
-  * $Id$
   -->
  
-<locale name="da_DK" full_name="Dutch">
+<locale name="da_DK" full_name="Danish">
 	<message key="plugins.generic.coins.displayName">COinS Plugin</message>
 	<message key="plugins.generic.coins.description">COinS plugin tilføjer en OpenURL descriptor til artikelsider (abstract og HTML), som f.eks. kan bruges til at trække information til citeringsværktøjer.</message>
 </locale>
