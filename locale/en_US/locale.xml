@@ -31,6 +31,8 @@
 	<!-- KB text for Cookie link -->
 	<message key="cookie.link.text">Cookie and privacy policy</message>
 	<message key="cookie.link.uri">http://www.kb.dk/en/kb/webstedet/cookiepolitik.html</message>
+	<!-- KB - message added to about Open Journal Systems -->
+	<message key="common.about">About</message>
 	<message key="common.journal">Journal</message>
 
 	<!-- Journal Management -->
