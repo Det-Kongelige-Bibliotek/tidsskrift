@@ -20,7 +20,6 @@
 {if $intro}<div id="intro">{$intro|nl2br}</div>{/if}
 
 <a name="journals"></a>
-
 {if $useAlphalist}
 	<p>{foreach from=$alphaList item=letter}<a href="{url searchInitial=$letter sort="title"}">{if $letter == $searchInitial}<strong>{$letter|escape}</strong>{else}{$letter|escape}{/if}</a> {/foreach}<a href="{url}">{if $searchInitial==''}<strong>{translate key="common.all"}</strong>{else}{translate key="common.all"}{/if}</a></p>
 {/if}
@@ -36,14 +35,17 @@
 		</div>
 	{/if}
 	{if $site->getSetting('showTitle')}
-		<h3>{$journal->getLocalizedTitle()|escape}</h3>
+		<h3><a href="{url journal=$journal->getPath()}" class="action textLink">{$journal->getLocalizedTitle()|escape}</a></h3>
 	{/if}
 	{if $site->getSetting('showDescription')}
 		{if $journal->getLocalizedDescription()}
-			<p>{$journal->getLocalizedDescription()|nl2br}</p>
+			<p><a href="{url journal=$journal->getPath()}" class="action textLink">{$journal->getLocalizedDescription()|nl2br}</a></p>
 		{/if}
 	{/if}
+	<!-- KB hide action links from view -->
+	<!--
 	<p><a href="{url journal=$journal->getPath()}" class="action">{translate key="site.journalView"}</a> | <a href="{url journal=$journal->getPath() page="issue" op="current"}" class="action">{translate key="site.journalCurrent"}</a> | <a href="{url journal=$journal->getPath() page="user" op="register"}" class="action">{translate key="site.journalRegister"}</a></p>
+	-->
 {/iterate}
 {if $journals->wasEmpty()}
 	{translate key="site.noJournals"}
