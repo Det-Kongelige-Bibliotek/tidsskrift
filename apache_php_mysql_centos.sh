@@ -12,6 +12,10 @@ sed -i 's/DocumentRoot "\/var\/www\/html"/DocumentRoot "\/vagrant"/g' /etc/httpd
 echo "exposing mysql server to host machine"
 sed -i 's/symbolic-links=0/symbolic-links=0\nbind-address=0.0.0.0/g' /etc/my.cnf
 
+echo "configuring php for development mode"
+cp /usr/share/doc/php-common-*/php.ini-production /etc/php.ini
+sed -i 's/;date.timezone =/date.timezone = Europe\/Copenhagen/g' /etc/php.ini
+
 echo "Ensure apache and mysql start on startup"
 chkconfig httpd on
 chkconfig mysqld on
