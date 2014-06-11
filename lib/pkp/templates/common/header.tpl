@@ -156,6 +156,9 @@
 		{/if}
 		{if $rightSidebarCode}
 			<div id="rightSidebar">
+				<div class="cookie">
+					<a href="{translate key="cookie.link.uri"}" target="_blank">{translate key="cookie.link.text"}</a>
+				</div>
 				{$rightSidebarCode}
 			</div>
 		{/if}

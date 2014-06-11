@@ -28,6 +28,9 @@
 	<!-- review froms start -->
 
 	<!-- common -->
+	<!-- KB text for Cookie link -->
+	<message key="cookie.link.text">Cookie and privacy policy</message>
+	<message key="cookie.link.uri">http://www.kb.dk/en/kb/webstedet/cookiepolitik.html</message>
 	<message key="common.journal">Journal</message>
 
 	<!-- Journal Management -->

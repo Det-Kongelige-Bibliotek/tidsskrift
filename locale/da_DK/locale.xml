@@ -35,6 +35,9 @@
 	-->
 
 	<!-- Common Messages -->
+	<!-- KB tekst for cookie politik -->
+    <message key="cookie.link.text">Cookie- og  privatlivpolitik</message>
+    <message key="cookie.link.uri">http://www.kb.dk/da/kb/webstedet/cookiepolitik.html</message>
 	<message key="common.openJournalSystems">Open Journal Systems</message>
 	<message key="common.confirmComplete">Er du sikker på, at du vil markere denne opgave som fuldført? Du kan muligvis ikke foretage ændringer senere.</message>
 	<message key="common.payment">Betaling</message>
