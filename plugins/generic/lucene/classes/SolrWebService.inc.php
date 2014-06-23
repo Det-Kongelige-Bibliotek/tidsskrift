@@ -1143,7 +1143,8 @@ class SolrWebService extends XmlWebService {
 				'plugins.generic.lucene.message.indexingIncomplete',
 				array('numProcessed' => $numProcessed, 'numDeleted' => $numDeleted, 'batchCount' => $batchCount)
 			);
-			return null;
+			//KB - we don't want to crash out every time a document fails to import
+			echo $this->_serviceMessage;
 		}
 
 		// Now that we are as sure as we can that the counterparty received
