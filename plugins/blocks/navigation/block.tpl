@@ -9,6 +9,8 @@
  *
  *}
 {if !$currentJournal || $currentJournal->getSetting('publishingMode') != $smarty.const.PUBLISHING_MODE_NONE}
+<!-- KB - hide search on front page -->
+{if $currentJournal}
 <div class="block" id="sidebarNavigation">
 	<span class="blockTitle">{translate key="plugins.block.navigation.journalContent"}</span>
 
@@ -56,4 +58,5 @@
 	</ul>
 	{/if}
 </div>
+{/if}
 {/if}
