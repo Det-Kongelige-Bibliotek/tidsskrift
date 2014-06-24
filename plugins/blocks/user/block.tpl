@@ -9,7 +9,7 @@
  *
  *}
 <div class="block" id="sidebarUser">
-	{if !$implicitAuth}
+	{if !$implicitAuth && $currentJournal}
 		<span class="blockTitle">{translate key="navigation.user"}</span>
 	{/if}
 
