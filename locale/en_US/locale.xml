@@ -96,7 +96,7 @@
 	<!-- Common Error Messages -->
 
 	<!-- Navigation -->
-	<message key="navigation.journalHelp">Journal Help</message>
+	<message key="navigation.journalHelp">Help</message>
 	<message key="navigation.archives">Archives</message>
 	<message key="navigation.current">Current</message>
 	<message key="navigation.otherJournals">Other Journals</message>
