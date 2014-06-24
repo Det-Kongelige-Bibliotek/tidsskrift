@@ -30,24 +30,27 @@
 		{if $implicitAuth}
 			<a href="{url page="login" op="implicitAuthLogin"}">Journals Login</a>
 		{else}
-			<form method="post" action="{$userBlockLoginUrl}">
-				<table>
-					<tr>
-						<td><label for="sidebar-username">{translate key="user.username"}</label></td>
-						<td><input type="text" id="sidebar-username" name="username" value="" size="12" maxlength="32" class="textField" /></td>
-					</tr>
-					<tr>
-						<td><label for="sidebar-password">{translate key="user.password"}</label></td>
-						<td><input type="password" id="sidebar-password" name="password" value="{$password|escape}" size="12" maxlength="32" class="textField" /></td>
-					</tr>
-					<tr>
-						<td colspan="2"><input type="checkbox" id="remember" name="remember" value="1" /> <label for="remember">{translate key="plugins.block.user.rememberMe"}</label></td>
-					</tr>
-					<tr>
-						<td colspan="2"><input type="submit" value="{translate key="user.login"}" class="button" /></td>
-					</tr>
-				</table>
-			</form>
+		<!-- KB - hide login on frontpage -->
+			{if $currentJournal}
+				<form method="post" action="{$userBlockLoginUrl}">
+					<table>
+						<tr>
+							<td><label for="sidebar-username">{translate key="user.username"}</label></td>
+							<td><input type="text" id="sidebar-username" name="username" value="" size="12" maxlength="32" class="textField" /></td>
+						</tr>
+						<tr>
+							<td><label for="sidebar-password">{translate key="user.password"}</label></td>
+							<td><input type="password" id="sidebar-password" name="password" value="{$password|escape}" size="12" maxlength="32" class="textField" /></td>
+						</tr>
+						<tr>
+							<td colspan="2"><input type="checkbox" id="remember" name="remember" value="1" /> <label for="remember">{translate key="plugins.block.user.rememberMe"}</label></td>
+						</tr>
+						<tr>
+							<td colspan="2"><input type="submit" value="{translate key="user.login"}" class="button" /></td>
+						</tr>
+					</table>
+				</form>
+			{/if}
 		{/if}
 	{/if}
 </div>
