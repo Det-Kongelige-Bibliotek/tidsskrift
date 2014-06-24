@@ -54,7 +54,7 @@
 	<!-- Common Error Messages -->
 		
 	<!-- Navigation -->
-	<message key="navigation.journalHelp">Hjælp til tidsskrift</message>
+	<message key="navigation.journalHelp">Hjælp</message>
 	<message key="navigation.archives">Arkiver</message>
 	<message key="navigation.current">Nyeste</message>
 	<message key="navigation.otherJournals">Andre tidsskrifter</message>
