@@ -9,7 +9,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # standard centos box
   config.vm.box = "box-cutter/centos64-i386"
   # application dependencies
-  config.vm.provision :shell, path: 'apache_php_mysql_centos.sh'
+  # due to problems with symlinks we are not doing this step
+  # config.vm.provision :shell, path: 'apache_php_mysql_centos.sh'
   # application installer
   config.vm.provision :shell, path: 'install_ojs.sh'
   config.vm.network :forwarded_port, host: 4567, guest: 80
