@@ -30,6 +30,9 @@ class WebService {
 	/** @var integer */
 	var $_lastResponseStatus;
 
+	/** @var boolean **/	
+	var $_debugMode;
+
 	//
 	// Setters and Getters
 	//
@@ -68,6 +71,7 @@ class WebService {
 	 */
 	function &call(&$webServiceRequest) {
 		assert(is_a($webServiceRequest, 'WebServiceRequest'));
+		$this->_debugMode = Config::getVar('database', 'debug');
 
 		switch($webServiceRequest->getMethod()) {
 			case 'POST':
@@ -147,7 +151,7 @@ class WebService {
 		}
 
 		$this->_lastResponseStatus = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
+		if ($this->_debugMode) $this->_debugCurlOutput($ch);
 		curl_close($ch);
 		return $result;
 	}
@@ -196,6 +200,7 @@ class WebService {
 		}
 
 		$this->_lastResponseStatus = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		if ($this->_debugMode) $this->_debugCurlOutput($ch);
 
 		curl_close($ch);
 		return $result;
@@ -299,6 +304,16 @@ class WebService {
 			$headers[] = $headerLine;
 		}
 		return $headers;
+	}
+	
+	/**
+	 * Dump a string representation of a curl request in the browser
+	 * for debugging purposes.
+	 *
+	 * @param $ch A cURL handle returned by curl_init().
+	 */
+	function _debugCurlOutput($ch) {
+		echo "<hr/>" . "REQUEST INFO <br/>" . var_export(curl_getinfo($ch), true) . "<hr/>";
 	}
 }
 
