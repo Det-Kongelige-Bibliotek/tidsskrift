@@ -1184,16 +1184,27 @@ class SolrWebService extends XmlWebService {
 			// Make a POST request with all articles in this batch.
 			$url = $this->_getDihUrl() . '?command=full-import&clean=false';
 			$result = $this->_makeRequest($url, $articleXml, 'POST');
-			if (is_null($result)) return null;
+			if (is_null($result)) {
+				$this->debugIndexingError($url, $articleXml);
+				return null;
+			}
 
 			// Retrieve the number of successfully indexed articles.
 			$numProcessed = $this->_getDocumentsProcessed($result);
+			if ($numProcessed != $batchCount) $this->debugIndexingError($url, $articleXml);
 			return $numProcessed;
 		} else {
 			// Nothing to update.
 			return 0;
 		}
 	}
+	
+	function debugIndexingError($url, $articleXml) {
+		echo "\nDANGER! ERROR PROCESSING XML\n";
+		echo "request sent to $url\n";
+		echo $articleXml;
+	}
+
 
 	/**
 	 * Retrieve the XML for a batch of articles to be updated.
