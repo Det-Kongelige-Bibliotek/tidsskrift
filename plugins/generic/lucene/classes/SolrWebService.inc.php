@@ -1199,6 +1199,9 @@ class SolrWebService extends XmlWebService {
 		}
 	}
 	
+	/**
+	* KB - debug function
+	*/
 	function debugIndexingError($url, $articleXml) {
 		echo "\nDANGER! ERROR PROCESSING XML\n";
 		echo "request sent to $url\n";
