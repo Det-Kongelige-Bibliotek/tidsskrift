@@ -1246,7 +1246,7 @@ class SolrWebService extends XmlWebService {
 			$journal =& $this->_getJournal($article->getJournalId());
 
 			// Check the publication state and subscription state of the article.
-			if ($this->_isArticleAccessAuthorized($article)) {
+			if ($this->_articleCanBeIndexed($article)) {
 				// Mark the article for update.
 				$this->_addArticleXml($articleDoc, $article, $journal);
 			} else {
@@ -1265,6 +1265,27 @@ class SolrWebService extends XmlWebService {
 
 		// Return XML.
 		return XMLCustomWriter::getXml($articleDoc);
+	}
+
+	/**
+	* KB Hack - allow articles to be indexed for search
+	* Even if they're not open access yet
+	**/
+	function _articleCanBeIndexed($article) {
+		if (!is_a($article, 'PublishedArticle')) return false;
+
+		// Get the article's journal.
+		$journal =& $this->_getJournal($article->getJournalId());
+		if (!is_a($journal, 'Journal')) return false;
+
+		// Get the article's issue.
+		$issue =& $this->_getIssue($article->getIssueId(), $journal->getId());
+		if (!is_a($issue, 'Issue')) return false;
+
+		// Only index published articles.
+		if (!$issue->getPublished() || $article->getStatus() != STATUS_PUBLISHED) return false;
+
+		return true;
 	}
 
 	/**
