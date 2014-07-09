@@ -1289,7 +1289,12 @@ class SolrWebService extends XmlWebService {
 
 		// Add ID information.
 		XMLCustomWriter::setAttribute($articleNode, 'id', $article->getId());
-		XMLCustomWriter::setAttribute($articleNode, 'sectionId', $article->getSectionId());
+		
+		// KB - we use this hack to prevent Solr errors for articles with blank section Ids
+		$sectionId = $article->getSectionId();
+		if (!is_numeric($sectionId)) $sectionId = 0;
+		XMLCustomWriter::setAttribute($articleNode, 'sectionId', $sectionId);
+
 		XMLCustomWriter::setAttribute($articleNode, 'journalId', $article->getJournalId());
 		XMLCustomWriter::setAttribute($articleNode, 'instId', $this->_instId);
 
