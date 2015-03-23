@@ -12,7 +12,7 @@ header('Content-Type: application/json');
 //ensure we have a valid parameter before continuing
 $eissn = $_GET['eissn'];
 if (!validIssn($eissn)) {
-  echo "INVALID ISSN";
+  echo "ERROR: INVALID ISSN";
   exit();
 }
 // if the issn is ok, we can continue
@@ -41,7 +41,7 @@ $stmt->bind_result($path);
 $stmt->fetch();
 
 if (!$path) {
-  echo "ISSN NOT FOUND";
+  echo "ERROR: ISSN NOT FOUND";
   exit();
 }
 echo $path;
