@@ -4,8 +4,8 @@
 <!--
   * locale/no_NO/manager.xml
   *
-  * Copyright (c) 2013-2014 Simon Fraser University Library
-  * Copyright (c) 2000-2014 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2000-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings for the no_NO (Norwegian) locale.
@@ -32,6 +32,8 @@
 	<message key="manager.announcements.form.descriptionShortInstructions">En kort beskrivelse som vil bli vist sammen med oppslagets tittel.</message>
 	<message key="manager.announcements.form.descriptionShortRequired">En kort oppslagsbeskrivelse er påkrevet.</message>
 	<message key="manager.announcements.form.descriptionShort">Kort beskrivelse</message>
+	<message key="manager.announcements.form.notificationToggle">Send varsel</message>
+	<message key="manager.announcements.form.notificationToggleInstructions">Opprett en ny melding ved å spare denne kunngjøringen.</message>
 	<message key="manager.announcements.form.saveAndCreateAnother">Lagre og opprett en til</message>
 	<message key="manager.announcements.form.titleRequired">En oppslagtittel er påkrevet.</message>
 	<message key="manager.announcements.form.title">Tittel</message>

@@ -4,8 +4,8 @@
 <!--
   * plugins/reports/timedView/locale/tr_TR/locale.xml
   *
-  * Copyright (c) 2013-2014 Simon Fraser University Library
-  * Copyright (c) 2003-2014 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings.
@@ -28,4 +28,5 @@
 	<message key="plugins.reports.timedView.report.galleyViews">Toplam Dizgi Görüntüleme</message>
 	<message key="plugins.reports.timedView.description">This plugin implements a CSV report describing readership for each article, filtered by a user-defined timespan.</message>
 	<message key="plugins.reports.timedView.form.useTimedViewRecords">Check to use statistics retrieved by the old Timed View plugin. If you want to generate a timed view report with new statistics data, leave this field unchecked.</message>
+	<message key="plugins.reports.timedView.form.largeSetOfDataIssue">When selecting a long time period with a large set of statistics data, this report might take a while to be ready. If it takes too much time, the connection might time out and you will not receive the report file. If this happens, try again with a smaller time period.</message>
 </locale>

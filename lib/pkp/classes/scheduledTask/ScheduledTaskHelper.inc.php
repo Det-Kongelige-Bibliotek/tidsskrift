@@ -3,8 +3,8 @@
 /**
  * @file classes/scheduledTask/ScheduledTaskHelper.inc.php
  *
- * Copyright (c) 2013-2014 Simon Fraser University Library
- * Copyright (c) 2000-2014 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2000-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ScheduledTaskHelper
@@ -13,8 +13,47 @@
  * @brief Helper class for common scheduled tasks operations.
  */
 
+define('SCHEDULED_TASK_MESSAGE_TYPE_COMPLETED', 'common.completed');
+define('SCHEDULED_TASK_MESSAGE_TYPE_ERROR', 'common.error');
+define('SCHEDULED_TASK_MESSAGE_TYPE_WARNING', 'common.warning');
+define('SCHEDULED_TASK_MESSAGE_TYPE_NOTICE', 'common.notice');
+define('SCHEDULED_TASK_EXECUTION_LOG_DIR', 'scheduledTaskLogs');
 
 class ScheduledTaskHelper {
+
+	/** @var string Contact email. */
+	var $_contactEmail;
+
+	/** @var string Contact name. */
+	var $_contactName;
+
+	/**
+	 * Constructor.
+	 * @param $email string (optional)
+	 * @param $contactName string (optional)
+	 */
+	function ScheduledTaskHelper($email = '', $contactName = '') {
+		if (!$email || !$contactName) {
+			$siteDao =& DAORegistry::getDAO('SiteDAO'); /* @var $siteDao SiteDAO */
+			$site =& $siteDao->getSite(); /* @var $site Site */
+			$email = $site->getLocalizedContactEmail();
+			$contactName = $site->getLocalizedContactName();
+		}
+
+		$this->_contactEmail = $email;
+		$this->_contactName = $contactName;
+
+	}
+
+	/**
+	 * Get mail object.
+	 * @return Mail
+	 */
+	function getMail() {
+		// Instantiate a mail object.
+		import('lib.pkp.classes.mail.Mail');
+		return new Mail();
+	}
 
 	/**
 	 * Get the arguments for a task from the parsed XML.
@@ -84,6 +123,96 @@ class ScheduledTaskHelper {
 		}
 
 		return $isValid;
+	}
+
+	/**
+	 * Notifies site administrator about the
+	 * task execution result.
+	 * @param $id int Task id.
+	 * @param $name string Task name.
+	 * @param $result boolean Whether or not the task
+	 * execution was successful.
+	 * @param $executionLogFile string Task execution log file path.
+	 */
+	function notifyExecutionResult($id, $name, $result, $executionLogFile = '') {
+		$reportErrorOnly = Config::getVar('general', 'scheduled_tasks_report_error_only', true);
+
+		if (!$result || !$reportErrorOnly) {
+			$message = $this->getMessage($executionLogFile);
+			
+			if ($result) {
+				// Success.
+				$type = SCHEDULED_TASK_MESSAGE_TYPE_COMPLETED;
+			} else {
+				// Error.
+				$type = SCHEDULED_TASK_MESSAGE_TYPE_ERROR;
+			}
+
+			$subject = $name . ' - ' . $id . ' - ' . __($type);
+			return $this->_sendEmail($message, $subject);
+		}
+
+		return false;
+	}
+
+	/**
+	 * Get execution log email message.
+	 * @param $executionLogFile string
+	 * @return string
+	 */
+	function getMessage($executionLogFile) {
+		if (!$executionLogFile) {
+			return __('admin.scheduledTask.noLog');
+		}
+		
+		$application =& Application::getApplication();
+		$request =& $application->getRequest();
+		$router =& $request->getRouter();
+		$downloadLogUrl = $router->url($request, 'index', 'admin', 'downloadScheduledTaskLogFile', null, array('file' => basename($executionLogFile)));
+		return __('admin.scheduledTask.downloadLog', array('url' => $downloadLogUrl));
+	}
+
+	//
+	// Static methods.
+	//
+	/**
+	 * Clear tasks execution log files.
+	 */
+	function clearExecutionLogs() {
+		import('lib.pkp.classes.file.PrivateFileManager');
+		$fileMgr = new PrivateFileManager();
+	
+		$fileMgr->rmtree($fileMgr->getBasePath() . DIRECTORY_SEPARATOR . SCHEDULED_TASK_EXECUTION_LOG_DIR);	
+	}
+
+	/**
+	 * Download execution log file.
+	 * @param $file string
+	 */
+	function downloadExecutionLog($file) {
+		import('lib.pkp.classes.file.PrivateFileManager');
+		$fileMgr = new PrivateFileManager();
+
+		$fileMgr->downloadFile($fileMgr->getBasePath() . DIRECTORY_SEPARATOR . SCHEDULED_TASK_EXECUTION_LOG_DIR . DIRECTORY_SEPARATOR . $file);	
+	}
+
+
+	//
+	// Private helper methods.
+	//
+	/**
+	 * Send email to the site administrator.
+	 * @param $message string
+	 * @param $subject string
+	 * @return boolean
+	 */
+	function _sendEmail($message, $subject) {
+		$mail = $this->getMail();
+		$mail->addRecipient($this->_contactEmail, $this->_contactName);
+		$mail->setSubject($subject);
+		$mail->setBody($message);
+
+		return $mail->send();
 	}
 
 	/**

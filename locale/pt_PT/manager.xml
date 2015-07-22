@@ -4,8 +4,8 @@
 <!--
   * locale/pt_PT/manager.xml
   *
-  * Copyright (c) 2013-2014 Simon Fraser University Library
-  * Copyright (c) 2003-2014 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings for the pt_PT (Português) locale.
@@ -731,4 +731,11 @@
 	<message key="manager.subscriptions.form.dateRemindedAfter">Enviado Lembrete de Pós-Expiração</message>
 	<message key="manager.setup.categories">Categorias</message>
 	<message key="manager.setup.categories.description">Seleccionar as categorias mais adequadas da lista exibida em cima. Os leitores poderão procurar por categoria a partir da configuração concluída da revista.</message>
+	<message key="manager.setup.confirmResetLicenseChanged">Alterou as informações sobre licença e direitos de autor em Setup Journal. Por favor, guarde estas alterações antes de redefinir as permissões.</message>
+	<message key="manager.setup.copyrightYearBasis">Definir ano de copyright do artigo</message>
+	<message key="manager.setup.copyrightYearBasis.Article">Ano padrão será definido a partir da data da publicação do artigo, tal como em "publicar-as-you-go".</message>
+	<message key="manager.setup.copyrightYearBasis.Issue">Ano padrão será definido a partir da data de publicação do número.</message>
+	<message key="manager.statistics.reports.objectNotFound">Não foi encontrado o objecto na base de dados.</message>
+	<message key="manager.setup.emailHeader">Cabeçalho do e-mail</message>
+	<message key="manager.setup.emailHeaderDescription">Os emails automáticos enviados pelo sistema em nome da revista começa com o seguinte cabeçalho. Estes emails serão dirigidos ao Contacto Principal, assim é importante clarificar que o Contacto Principal não é necessariamente o responsável pelo conteúdo da mensagem, a qual poderá ser enviada em nome de outra pessoa.</message>
 </locale>

@@ -3,8 +3,8 @@
 /**
  * @file classes/submission/editor/EditorAction.inc.php
  *
- * Copyright (c) 2013-2014 Simon Fraser University Library
- * Copyright (c) 2003-2014 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class EditorAction
@@ -31,7 +31,7 @@ class EditorAction extends SectionEditorAction {
 	 */
 	function assignEditor($articleId, $sectionEditorId, $isEditor, $send, $request) {
 		$editorSubmissionDao =& DAORegistry::getDAO('EditorSubmissionDAO');
-		$editAssignmentDao =& DAORegistry::getDAO('EditAssignmentDAO');
+		$editAssignmentDao =& DAORegistry::getDAO('EditAssignmentDAO'); /* @var $editAssignmentDao EditAssignmentDAO */
 		$userDao =& DAORegistry::getDAO('UserDAO');
 
 		$user =& $request->getUser();
@@ -40,6 +40,12 @@ class EditorAction extends SectionEditorAction {
 		$editorSubmission =& $editorSubmissionDao->getEditorSubmission($articleId);
 		$sectionEditor =& $userDao->getById($sectionEditorId);
 		if (!isset($sectionEditor)) return true;
+
+		foreach ($editorSubmission->getEditAssignments() as $assignment) {
+			if ($assignment->getEditorId() == $sectionEditorId) {
+				return true;
+			}
+		}
 
 		import('classes.mail.ArticleMailTemplate');
 		$email = new ArticleMailTemplate($editorSubmission, 'EDITOR_ASSIGN');
@@ -50,7 +56,7 @@ class EditorAction extends SectionEditorAction {
 				$email->send($request);
 			}
 
-			$editAssignment = new EditAssignment();
+			$editAssignment = $editAssignmentDao->newDataObject();
 			$editAssignment->setArticleId($articleId);
 			$editAssignment->setCanEdit(1);
 			$editAssignment->setCanReview(1);

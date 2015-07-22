@@ -7,8 +7,8 @@
 /**
  * @file classes/file/FileManager.inc.php
  *
- * Copyright (c) 2013-2014 Simon Fraser University Library
- * Copyright (c) 2000-2014 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2000-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class FileManager
@@ -89,7 +89,7 @@ class FileManager {
 	 */
 	function getUploadedFileType($fileName) {
 		if (isset($_FILES[$fileName])) {
-			$type = String::mime_content_type($_FILES[$fileName]['tmp_name']);
+			$type = String::mime_content_type($_FILES[$fileName]['tmp_name'], array_pop(explode('.', $_FILES[$fileName]['name'])));
 			if (!empty($type)) return $type;
 			return $_FILES[$fileName]['type'];
 		}

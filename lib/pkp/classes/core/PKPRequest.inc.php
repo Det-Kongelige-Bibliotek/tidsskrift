@@ -3,8 +3,8 @@
 /**
  * @file classes/core/PKPRequest.inc.php
  *
- * Copyright (c) 2013-2014 Simon Fraser University Library
- * Copyright (c) 2000-2014 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2000-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PKPRequest
@@ -105,8 +105,10 @@ class PKPRequest {
 	function redirectSSL() {
 		$_this =& PKPRequest::_checkThis();
 
-		$url = 'https://' . $_this->getServerHost() . $_this->getRequestPath();
-		$queryString = $_this->getQueryString();
+		// Note that we are intentionally skipping PKP processing of REQUEST_URI and QUERY_STRING for a protocol redirect
+		// This processing is deferred to the redirected (target) URI
+		$url = 'https://' . $_this->getServerHost() . $_SERVER['REQUEST_URI'];
+		$queryString = $_SERVER['QUERY_STRING'];
 		if (!empty($queryString)) $url .= "?$queryString";
 		$_this->redirectUrl($url);
 	}
@@ -117,8 +119,10 @@ class PKPRequest {
 	function redirectNonSSL() {
 		$_this =& PKPRequest::_checkThis();
 
-		$url = 'http://' . $_this->getServerHost() . $_this->getRequestPath();
-		$queryString = $_this->getQueryString();
+		// Note that we are intentionally skipping PKP processing of REQUEST_URI and QUERY_STRING for a protocol redirect
+		// This processing is deferred to the redirected (target) URI
+		$url = 'http://' . $_this->getServerHost() . $_SERVER['REQUEST_URI'];
+		$queryString = $_SERVER['QUERY_STRING'];
 		if (!empty($queryString)) $url .= "?$queryString";
 		$_this->redirectUrl($url);
 	}
@@ -140,8 +144,8 @@ class PKPRequest {
 		$_this =& PKPRequest::_checkThis();
 
 		if (!isset($_this->_baseUrl)) {
-			$serverHost = $_this->getServerHost(null);
-			if ($serverHost !== null) {
+			$serverHost = $_this->getServerHost(false);
+			if ($serverHost !== false) {
 				// Auto-detection worked.
 				$_this->_baseUrl = $_this->getProtocol() . '://' . $_this->getServerHost() . $_this->getBasePath();
 			} else {
@@ -314,21 +318,33 @@ class PKPRequest {
 	}
 
 	/**
-	 * Get the server hostname in the request. May optionally include the
-	 * port number if non-standard.
+	 * Get the server hostname in the request.
+	 * @param $default string Default hostname (defaults to localhost)
+	 * @param $includePort boolean Whether to include non-standard port number; default true
 	 * @return string
 	 */
-	function getServerHost($default = 'localhost') {
+	function getServerHost($default = null, $includePort = true) {
+		if ($default === null) $default = 'localhost';
+
 		$_this =& PKPRequest::_checkThis();
 
 		if (!isset($_this->_serverHost)) {
 			$_this->_serverHost = isset($_SERVER['HTTP_X_FORWARDED_HOST']) ? $_SERVER['HTTP_X_FORWARDED_HOST']
 				: (isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST']
 				: (isset($_SERVER['HOSTNAME']) ? $_SERVER['HOSTNAME']
-				: $default));
-			HookRegistry::call('Request::getServerHost', array(&$_this->_serverHost));
+				: null));
+
+			HookRegistry::call('Request::getServerHost', array(&$_this->_serverHost, &$default, &$includePort));
 		}
-		return $_this->_serverHost;
+
+		$host = $_this->_serverHost === null ? $default : $_this->_serverHost;
+
+		if (!$includePort) {
+			// Strip the port number, if one is included. (#3912)
+			return preg_replace("/:\d*$/", '', $host);
+		}
+
+		return $host;
 	}
 
 	/**
@@ -383,9 +399,10 @@ class PKPRequest {
 	function getRemoteAddr() {
 		PKPRequest::_checkThis();
 
-		static $ipaddr;
-		if (!isset($ipaddr)) {
+		$ipaddr =& Registry::get('remoteIpAddr'); // Reference required.
+		if (is_null($ipaddr)) {
 			if (isset($_SERVER['HTTP_X_FORWARDED_FOR']) &&
+				Config::getVar('general', 'trust_x_forwarded_for', true) &&
 				preg_match_all('/([0-9.a-fA-F:]+)/', $_SERVER['HTTP_X_FORWARDED_FOR'], $matches)) {
 			} else if (isset($_SERVER['REMOTE_ADDR']) &&
 				preg_match_all('/([0-9.a-fA-F:]+)/', $_SERVER['REMOTE_ADDR'], $matches)) {

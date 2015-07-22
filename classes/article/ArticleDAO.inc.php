@@ -3,8 +3,8 @@
 /**
  * @file classes/article/ArticleDAO.inc.php
  *
- * Copyright (c) 2013-2014 Simon Fraser University Library
- * Copyright (c) 2003-2014 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ArticleDAO
@@ -49,7 +49,7 @@ class ArticleDAO extends DAO {
 	 * @return array
 	 */
 	function getLocaleFieldNames() {
-		return array(
+		return parent::getLocaleFieldNames() + array(
 			'title', 'cleanTitle', 'abstract', 'coverPageAltText', 'showCoverPage', 'hideCoverPageToc', 'hideCoverPageAbstract', 'originalFileName', 'fileName', 'width', 'height',
 			'discipline', 'subjectClass', 'subject', 'coverageGeo', 'coverageChron', 'coverageSample', 'type', 'sponsor',
 			'copyrightHolder'
@@ -172,7 +172,7 @@ class ArticleDAO extends DAO {
 				LEFT JOIN section_settings sal ON (s.section_id = sal.section_id AND sal.setting_name = ? AND sal.locale = ?) ';
 		if (is_null($settingValue)) {
 			$sql .= 'LEFT JOIN article_settings ast ON a.article_id = ast.article_id AND ast.setting_name = ?
-				WHERE	(ast.setting_value IS NULL OR ast.setting_value = "")';
+				WHERE	(ast.setting_value IS NULL OR ast.setting_value = \'\')';
 		} else {
 			$params[] = $settingValue;
 			$sql .= 'INNER JOIN article_settings ast ON a.article_id = ast.article_id
@@ -273,13 +273,6 @@ class ArticleDAO extends DAO {
 
 		$article->setId($this->getInsertArticleId());
 		$this->updateLocaleFields($article);
-
-		// Insert authors for this article
-		$authors =& $article->getAuthors();
-		for ($i=0, $count=count($authors); $i < $count; $i++) {
-			$authors[$i]->setSubmissionId($article->getId());
-			$this->authorDao->insertAuthor($authors[$i]);
-		}
 
 		return $article->getId();
 	}
@@ -712,10 +705,10 @@ class ArticleDAO extends DAO {
 	}
 
 	/**
-	 * Delete the attached licenses of all articles in a journal.
+	 * Delete and re-initialize the attached licenses of all articles in a journal.
 	 * @param $journalId int
 	 */
-	function deletePermissions($journalId) {
+	function resetPermissions($journalId) {
 		$journalId = (int) $journalId;
 		$articles =& $this->getArticlesByJournalId($journalId);
 		while ($article =& $articles->next()) {
@@ -728,6 +721,9 @@ class ArticleDAO extends DAO {
 					(int) $article->getId()
 				)
 			);
+			$article = $this->getArticle($article->getId());
+			$article->initializePermissions();
+			$this->updateLocaleFields($article);
 			unset($article);
 		}
 		$this->flushCache();
@@ -755,6 +751,25 @@ class ArticleDAO extends DAO {
 			);
 			unset($article);
 		}
+		$this->flushCache();
+	}
+
+	/**
+	 * Delete the public ID of an article.
+	 * @param $articleId int
+	 * @param $pubIdType string One of the NLM pub-id-type values or
+	 * 'other::something' if not part of the official NLM list
+	 * (see <http://dtd.nlm.nih.gov/publishing/tag-library/n-4zh0.html>).
+	 */
+	function deletePubId($articleId, $pubIdType) {
+		$settingName = 'pub-id::'.$pubIdType;
+		$this->update(
+			'DELETE FROM article_settings WHERE setting_name = ? AND article_id = ?',
+			array(
+				$settingName,
+				(int)$articleId
+			)
+		);
 		$this->flushCache();
 	}
 

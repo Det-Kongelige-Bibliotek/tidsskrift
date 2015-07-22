@@ -4,8 +4,8 @@
 <!--
   * plugins/themes/custom/locale/da_DK/locale.xml
   *
-  * Copyright (c) 2013-2014 Simon Fraser University Library
-  * Copyright (c) 2003-2014 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings for the da_DK (Danish) locale.
@@ -22,4 +22,6 @@
 	<message key="plugins.theme.custom.link">Link</message>
 	<message key="plugins.theme.custom.background">Baggrund</message>
 	<message key="plugins.theme.custom.foreground">Forgrund</message>
+	<message key="plugins.theme.custom.notWritablePlugin">NOTE: The journal-based stylesheet option is automatically enabled because this plugin's stylesheet file, "{$stylesheetFileLocation}", is not currently writable.</message>
+	<message key="plugins.theme.custom.perJournal">Journal-based Stylesheet</message>
 </locale>

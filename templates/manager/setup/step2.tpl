@@ -1,8 +1,8 @@
 {**
  * templates/manager/setup/step2.tpl
  *
- * Copyright (c) 2013-2014 Simon Fraser University Library
- * Copyright (c) 2003-2014 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Step 2 of journal setup.
@@ -212,11 +212,11 @@
 <div id="journalArchiving">
 <h3>2.6 {translate key="manager.setup.journalArchiving"}</h3>
 
-<p>{translate key="manager.setup.lockssDescription"}</p>
+<p>{translate key="manager.setup.preservationDescription"}</p>
 
-{url|assign:"lockssExistingArchiveUrl" page="manager" op="email" template="LOCKSS_EXISTING_ARCHIVE"}
-{url|assign:"lockssNewArchiveUrl" page="manager" op="email" template="LOCKSS_NEW_ARCHIVE"}
-<p>{translate key="manager.setup.lockssRegister" lockssExistingArchiveUrl=$lockssExistingArchiveUrl lockssNewArchiveUrl=$lockssNewArchiveUrl}</p>
+{call_hook name="Templates::Manager::Setup::JournalArchiving"}
+
+<p>{translate key="manager.setup.lockssDescription" lockssExistingArchiveUrl=$lockssExistingArchiveUrl lockssNewArchiveUrl=$lockssNewArchiveUrl}</p>
 
 {url|assign:"lockssUrl" page="gateway" op="lockss"}
 <p><input type="checkbox" name="enableLockss" id="enableLockss" value="1"{if $enableLockss} checked="checked"{/if} /> <label for="enableLockss">{translate key="manager.setup.lockssEnable" lockssUrl=$lockssUrl}</label></p>

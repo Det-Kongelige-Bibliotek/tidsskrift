@@ -4,8 +4,8 @@
 <!--
   * @file plugins/generic/booksForReview/locale/ru_RU/emailTemplates.xml
   *
-  * Copyright (c) 2013-2014 Simon Fraser University Library
-  * Copyright (c) 2003-2014 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Books for review email template localized default text for the ru_RU (Russian) locale.
@@ -16,7 +16,7 @@
 		<subject>Книга на рецензию: напоминание о сроке</subject>
 		<body>{$authorName}!
 
-Это напоминание о том, что Вам необходимо предоставить рецензию на книгу «{$bookForReviewTitle}» до {$bookForReviewDueDate}.
+Напоминаем вам о том, что Вы должны предоставить рецензию на книгу «{$bookForReviewTitle}» до {$bookForReviewDueDate}.
 
 Чтобы отправить Вашу рецензию, зайдите на веб-сайт журнала под своей учетной записью и отправьте рецензию как обычную статью. Для Вашего удобства ниже приведен адрес (URL) для отправки.
 
@@ -33,7 +33,7 @@
 		<subject>Книга на рецензию: срок прошел</subject>
 		<body>{$authorName}!
 
-Это напоминание о том, что Вы должны были предоставить рецензию на книгу «{$bookForReviewTitle}» до {$bookForReviewDueDate}, но мы все еще ее не получили.
+Напоминаем Вам о том, что Вы должны были предоставить рецензию на книгу «{$bookForReviewTitle}» до {$bookForReviewDueDate}, но мы все еще ее не получили.
 
 Чтобы отправить Вашу рецензию, зайдите на веб-сайт журнала под своей учетной записью и отправьте рецензию как обычную статью. Для Вашего удобства ниже приведен адрес (URL) для отправки.
 

@@ -7,8 +7,8 @@
 ;
 ; config.TEMPLATE.inc.php
 ;
-; Copyright (c) 2013-2014 Simon Fraser University Library
-; Copyright (c) 2003-2014 John Willinsky
+; Copyright (c) 2013-2015 Simon Fraser University Library
+; Copyright (c) 2003-2015 John Willinsky
 ; Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
 ;
 ; OJS Configuration settings.
@@ -49,6 +49,12 @@ session_lifetime = 30
 ; execute periodically
 scheduled_tasks = Off
 
+; Scheduled tasks will send email about processing
+; only in case of errors. Set to off to receive
+; all other kind of notification, including success,
+; warnings and notices.
+scheduled_tasks_report_error_only = On
+
 ; Short and long date formats
 date_format_trunc = "%m-%d"
 date_format_short = "%Y-%m-%d"
@@ -59,7 +65,7 @@ time_format = "%I:%M %p"
 
 ; Use URL parameters instead of CGI PATH_INFO. This is useful for
 ; broken server setups that don't support the PATH_INFO environment
-; variable.
+; variable. Use of this mode is recommended as a last resort.
 disable_path_info = Off
 
 ; Use fopen(...) for URL-based reads. Modern versions of dspace
@@ -83,6 +89,11 @@ allow_url_fopen = Off
 ; rewrite directive to be enabled in your .htaccess or httpd.conf.
 ; See FAQ for more details.
 restful_urls = Off
+
+; Allow the X_FORWARDED_FOR header to override the REMOTE_ADDR as the source IP
+; Set this to "On" if you are behind a reverse proxy and you control the X_FORWARDED_FOR
+; Warning: This defaults to "On" if unset for backwards compatibility.
+trust_x_forwarded_for = Off
 
 ; Allow javascript files to be served through a content delivery network (set to off to use local files)
 enable_cdn = On
@@ -289,6 +300,11 @@ allowed_html = "<a href|target> <em> <strong> <cite> <code> <ul> <ol> <li> <dl> 
 
 ; Default envelope sender to use if none is specified elsewhere
 ; default_envelope_sender = my_address@my_host.com
+
+; Force the default envelope sender (if present)
+; This is useful if setting up a site-wide noreply address
+; The reply-to field will be set with the reply-to or from address.
+; force_default_envelope_sender = Off
 
 ; Enable attachments in the various "Send Email" pages.
 ; (Disabling here will not disable attachments on features that

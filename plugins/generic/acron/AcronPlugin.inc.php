@@ -3,8 +3,8 @@
 /**
  * @file plugins/generic/acron/AcronPlugin.inc.php
  *
- * Copyright (c) 2013-2014 Simon Fraser University Library
- * Copyright (c) 2000-2014 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2000-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class AcronPlugin
@@ -33,10 +33,14 @@ class AcronPlugin extends GenericPlugin {
 	 */
 	function register($category, $path) {
 		$success = parent::register($category, $path);
+		HookRegistry::register('Installer::postInstall', array(&$this, 'callbackPostInstall'));
+
 		if (!Config::getVar('general', 'installed') || defined('RUNNING_UPGRADE')) return $success;
 		if ($success) {
 			$this->addLocaleData();
 			HookRegistry::register('LoadHandler',array(&$this, 'callbackLoadHandler'));
+			// Need to reload cron tab on possible enable or disable generic plugin actions.
+			HookRegistry::register('PluginHandler::plugin',array(&$this, 'callbackManage'));
 		}
 		return $success;
 	}
@@ -114,7 +118,23 @@ class AcronPlugin extends GenericPlugin {
 	}
 
 	/**
-	 * @see PKPPageRouter::loadHandler()
+	 * Post install hook to flag cron tab reload on every install/upgrade.
+	 * @param $hookName string
+	 * @param $args array
+	 * @return boolean
+	 * @see Installer::postInstall() for the hook call.
+	 */
+	function callbackPostInstall($hookName, $args) {
+		$this->_parseCrontab();
+		return false;
+	}
+
+	/**
+	 * Load handler hook to check for tasks to run.
+	 * @param $hookName string
+	 * @param $args array
+	 * @return boolean
+	 * @see PKPPageRouter::loadHandler() for the hook call.
 	 */
 	function callbackLoadHandler($hookName, $args) {
 		$tasksToRun = $this->_getTasksToRun();
@@ -142,6 +162,39 @@ class AcronPlugin extends GenericPlugin {
 	}
 
 	/**
+	 * Syncronize crontab with lazy load plugins management.
+	 * @param $hookName string
+	 * @param $args array
+	 * @return boolean
+	 * @see PluginHandler::plugin() for the hook call.
+	 */
+	function callbackManage($hookName, $args) {
+		$verb = $args[0];
+		$plugin =& $args[4]; /* @var $plugin LazyLoadPlugin */
+
+		// Only interested in plugins that can be enabled/disabled.
+		if (!is_a($plugin, 'LazyLoadPlugin')) return false;
+
+		// Only interested in enable/disable actions.
+		if ($verb !== 'enable' && $verb !== 'disable') return false;
+
+		// Check if the plugin wants to add its own
+		// scheduled task into the cron tab.
+		$hooks = HookRegistry::getHooks();
+		$hookName = 'AcronPlugin::parseCronTab';
+		if (!isset($hooks[$hookName])) return false;
+
+		foreach($hooks[$hookName] as $index => $callback) {
+			if ($callback[0] == $plugin) {
+				$this->_parseCrontab();
+				break;
+			}
+		}
+
+		return false;
+	}
+
+	/**
 	 * Shutdown callback.
 	 */
 	function shutdownFunction() {
@@ -160,13 +213,14 @@ class AcronPlugin extends GenericPlugin {
 
 		ob_end_flush();
 		flush();
+		
+		set_time_limit(0);
 
 		// Fix the current working directory. See
 		// http://www.php.net/manual/en/function.register-shutdown-function.php#92657
 		chdir($this->_workingDir);
 
 		$taskDao =& DAORegistry::getDao('ScheduledTaskDAO');
-
 		foreach($this->_tasksToRun as $task) {
 			// Strip off the package name(s) to get the base class name
 			$className = $task['className'];
@@ -220,7 +274,7 @@ class AcronPlugin extends GenericPlugin {
 
 		$taskFilesPath = array();
 
-		// Load all plugins so any plugin can register a crontab
+		// Load all plugins so any plugin can register a crontab.
 		PluginRegistry::loadAllPlugins();
 
 		// Let plugins register their scheduled tasks too.
@@ -245,13 +299,26 @@ class AcronPlugin extends GenericPlugin {
 
 				$args = ScheduledTaskHelper::getTaskArgs($task);
 
-				// Tasks without a frequency defined  will run on every request.
+				// Tasks without a frequency defined, or defined to zero, will run on every request.
 				// To avoid that happening (may cause performance problems) we
 				// setup a default period of time.
 				$minHoursRunPeriod = 24;
+				$setDefaultFrequency = true;
+				if ($frequency) {
+					$frequencyAttributes = $frequency->getAttributes();
+					if (is_array($frequencyAttributes)) {
+						foreach($frequencyAttributes as $key => $value) {
+							if ($value != 0) {
+								$setDefaultFrequency = false;
+								break;
+							}
+						}
+					}
+				}
+
 				$tasks[] = array(
 					'className' => $task->getAttribute('class'),
-					'frequency' => $frequency ? $frequency->getAttributes() : $minHoursRunPeriod,
+					'frequency' => $setDefaultFrequency ? array('hour' => $minHoursRunPeriod) : $frequencyAttributes,
 					'args' => $args
 				);
 			}
@@ -282,7 +349,7 @@ class AcronPlugin extends GenericPlugin {
 			}
 
 			foreach($scheduledTasks as $task) {
-				// We don't allow tasks without frequency, see _parseCronTab().
+				// We don't allow tasks without frequency, see _parseCrontab().
 				$frequency = new XMLNode();
 				$frequency->setAttribute(key($task['frequency']), current($task['frequency']));
 				$canExecute = ScheduledTaskHelper::checkFrequency($task['className'], $frequency);

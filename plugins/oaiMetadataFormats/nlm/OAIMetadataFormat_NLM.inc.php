@@ -7,8 +7,8 @@
 /**
  * @file plugins/oaiMetadataFormats/nlm/OAIMetadataFormat_NLM.inc.php
  *
- * Copyright (c) 2013-2014 Simon Fraser University Library
- * Copyright (c) 2003-2014 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class OAIMetadataFormat_NLM
@@ -55,7 +55,8 @@ class OAIMetadataFormat_NLM extends OAIMetadataFormat {
 		$abbreviation = $journal->getLocalizedSetting('abbreviation');
 		$printIssn = $journal->getSetting('printIssn');
 		$onlineIssn = $journal->getSetting('onlineIssn');
-		$primaryLocale = $journal->getPrimaryLocale();
+		$primaryLocale = ($article->getLanguage() != '') ? $article->getLanguage() : $journal->getPrimaryLocale();
+
 		$publisherInstitution = $journal->getSetting('publisherInstitution');
 		$datePublished = $article->getDatePublished();
 		if (!$datePublished) $datePublished = $issue->getDatePublished();

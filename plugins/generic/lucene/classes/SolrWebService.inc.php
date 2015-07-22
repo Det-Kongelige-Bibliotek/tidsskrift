@@ -3,8 +3,8 @@
 /**
  * @file plugins/generic/lucene/classes/SolrWebService.inc.php
  *
- * Copyright (c) 2013-2014 Simon Fraser University Library
- * Copyright (c) 2003-2014 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class SolrWebService
@@ -923,7 +923,7 @@ class SolrWebService extends XmlWebService {
 	 * @return DOMXPath An XPath object with the response loaded. Null if an error occurred.
 	 *  See _serviceMessage for more details about the error.
 	 */
-	function &_makeRequest($url, $params, $method = 'GET') {
+	function &_makeRequest($url, $params = array(), $method = 'GET') {
 		$webServiceRequest = new WebServiceRequest($url, $params, $method);
 		if ($method == 'POST') {
 			$webServiceRequest->setHeader('Content-Type', 'text/xml; charset=utf-8');
@@ -1216,6 +1216,8 @@ class SolrWebService extends XmlWebService {
 	 *  in the list.
 	 * @param $totalCount integer The overall number of changed articles
 	 *  (not only the current batch).
+	 * @param $numDeleted integer Variable to receive the number of deleted
+	 *  articles.
 	 *
 	 * @return string The XML ready to be consumed by the Solr data
 	 *  import service.

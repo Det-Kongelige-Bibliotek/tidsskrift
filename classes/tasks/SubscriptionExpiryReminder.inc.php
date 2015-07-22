@@ -3,8 +3,8 @@
 /**
  * @file classes/tasks/SubscriptionExpiryReminder.inc.php
  *
- * Copyright (c) 2013-2014 Simon Fraser University Library
- * Copyright (c) 2003-2014 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class SubscriptionExpiryReminder
@@ -23,7 +23,14 @@ class SubscriptionExpiryReminder extends ScheduledTask {
 	 * Constructor.
 	 */
 	function SubscriptionExpiryReminder() {
-		$this->ScheduledTask();
+		parent::ScheduledTask();
+	}
+
+	/**
+	 * @see ScheduledTask::getName()
+	 */
+	function getName() {
+		return __('admin.scheduledTask.subscriptionExpiryReminder');
 	}
 
 	function sendReminder ($subscription, $journal, $emailKey) {
@@ -47,7 +54,7 @@ class SubscriptionExpiryReminder extends ScheduledTask {
 		$subscriptionContactSignature = $subscriptionName;
 
 		AppLocale::requireComponents(LOCALE_COMPONENT_PKP_USER, LOCALE_COMPONENT_APPLICATION_COMMON);
-		
+
 		if ($subscriptionMailingAddress != '') {
 			$subscriptionContactSignature .= "\n" . $subscriptionMailingAddress;
 		}
@@ -66,12 +73,12 @@ class SubscriptionExpiryReminder extends ScheduledTask {
 			'subscriptionType' => $subscriptionType->getSummaryString(),
 			'expiryDate' => $subscription->getDateEnd(),
 			'username' => $user->getUsername(),
-			'subscriptionContactSignature' => $subscriptionContactSignature 
+			'subscriptionContactSignature' => $subscriptionContactSignature
 		);
 
 		import('classes.mail.MailTemplate');
 		$mail = new MailTemplate($emailKey, $journal->getPrimaryLocale());
-		$mail->setFrom($subscriptionEmail, $subscriptionName);
+		$mail->setReplyTo($subscriptionEmail, $subscriptionName);
 		$mail->addRecipient($user->getEmail(), $user->getFullName());
 		$mail->setSubject($mail->getSubject($journal->getPrimaryLocale()));
 		$mail->setBody($mail->getBody($journal->getPrimaryLocale()));
@@ -93,8 +100,8 @@ class SubscriptionExpiryReminder extends ScheduledTask {
 				// Retrieve all subscriptions that match expiry date
 				$individualSubscriptionDao =& DAORegistry::getDAO('IndividualSubscriptionDAO');
 				$institutionalSubscriptionDao =& DAORegistry::getDAO('InstitutionalSubscriptionDAO');
-				$individualSubscriptions =& $individualSubscriptionDao->getSubscriptionsToRemind($expiryTime, $journal->getId(), SUBSCRIPTION_REMINDER_FIELD_BEFORE_EXPIRY); 
-				$institutionalSubscriptions =& $institutionalSubscriptionDao->getSubscriptionsToRemind($expiryTime, $journal->getId(), SUBSCRIPTION_REMINDER_FIELD_BEFORE_EXPIRY); 
+				$individualSubscriptions =& $individualSubscriptionDao->getSubscriptionsToRemind($expiryTime, $journal->getId(), SUBSCRIPTION_REMINDER_FIELD_BEFORE_EXPIRY);
+				$institutionalSubscriptions =& $institutionalSubscriptionDao->getSubscriptionsToRemind($expiryTime, $journal->getId(), SUBSCRIPTION_REMINDER_FIELD_BEFORE_EXPIRY);
 
 				while (!$individualSubscriptions->eof()) {
 					$subscription =& $individualSubscriptions->next();
@@ -118,8 +125,8 @@ class SubscriptionExpiryReminder extends ScheduledTask {
 				// Retrieve all subscriptions that match expiry date
 				$individualSubscriptionDao =& DAORegistry::getDAO('IndividualSubscriptionDAO');
 				$institutionalSubscriptionDao =& DAORegistry::getDAO('InstitutionalSubscriptionDAO');
-				$individualSubscriptions =& $individualSubscriptionDao->getSubscriptionsToRemind($expiryTime, $journal->getId(), SUBSCRIPTION_REMINDER_FIELD_AFTER_EXPIRY); 
-				$institutionalSubscriptions =& $institutionalSubscriptionDao->getSubscriptionsToRemind($expiryTime, $journal->getId(), SUBSCRIPTION_REMINDER_FIELD_AFTER_EXPIRY); 
+				$individualSubscriptions =& $individualSubscriptionDao->getSubscriptionsToRemind($expiryTime, $journal->getId(), SUBSCRIPTION_REMINDER_FIELD_AFTER_EXPIRY);
+				$institutionalSubscriptions =& $institutionalSubscriptionDao->getSubscriptionsToRemind($expiryTime, $journal->getId(), SUBSCRIPTION_REMINDER_FIELD_AFTER_EXPIRY);
 
 				while (!$individualSubscriptions->eof()) {
 					$subscription =& $individualSubscriptions->next();
@@ -138,7 +145,10 @@ class SubscriptionExpiryReminder extends ScheduledTask {
 		}
 	}
 
-	function execute() {
+	/**
+	 * @see ScheduledTask::executeActions()
+	 */
+	function executeActions() {
 		$journalDao =& DAORegistry::getDAO('JournalDAO');
 		$journals =& $journalDao->getJournals(true);
 
@@ -149,6 +159,8 @@ class SubscriptionExpiryReminder extends ScheduledTask {
 			$this->sendJournalReminders($journal);
 			unset($journal);
 		}
+
+		return true;
 	}
 }
 

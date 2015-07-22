@@ -2,8 +2,8 @@
 <!DOCTYPE locale SYSTEM "../../lib/pkp/dtd/locale.dtd">
 
 <!--
-  * Copyright (c) 2013-2014 Simon Fraser University Library
-  * Copyright (c) 2003-2014 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Plik językowy dla pl_PL
@@ -24,6 +24,7 @@
 	<message key="admin.languages.downloadFailed">Pobieranie plików lokalizacyjnych nie udało się. Komunikat błędu znajduje się poniżej.</message>
 	<message key="admin.languages.localeInstalled">Język "{$locale}" został zainstalowany.</message>
 	<message key="admin.languages.download">Pobierz tłumaczenie</message>
+	<message key="admin.languages.reloadDefaultEmailTemplates">Odśwież domyślne szablony e-mail</message>
 	<message key="admin.languages.download.cannotOpen">Nie można otworzyć pliku opisu dostępnych języków ze strony PKP.</message>
 	<message key="admin.languages.download.cannotModifyRegistry">Błąd, nie można dodać nowego języka do lokalnego rejestru.</message>
 	<message key="admin.auth.ojs">Baza danych użytkowników OJS</message>

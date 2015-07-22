@@ -4,8 +4,8 @@
 <!--
   * plugins/generic/googleAnalytics/locale/ru_RU/locale.xml
   *
-  * Copyright (c) 2013-2014 Simon Fraser University Library
-  * Copyright (c) 2003-2014 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings for the ru_RU (Russian) locale.
@@ -29,6 +29,7 @@
 	<message key="plugins.generic.googleAnalytics.manager.settings.trackingCodeRequired">Пожалуйста, выберите код отслеживания, который вы хотите использовать.</message>
 	<message key="plugins.generic.googleAnalytics.manager.settings.urchin">Старый код отслеживания (urchin.js)</message>
 	<message key="plugins.generic.googleAnalytics.manager.settings.ga">Новый код отслеживания (ga.js)</message>
+	<message key="plugins.generic.googleAnalytics.manager.settings.analytics">Новый код отслеживания для универсальной аналитики (analytics.js)</message>
 	<message key="plugins.generic.googleAnalytics.authorAccount">Номер учетной записи Google Analytics</message>
 	<message key="plugins.generic.googleAnalytics.authorAccount.description">Чтобы отслеживать читателй опубликованной статьи с помощью Google Analytics, введите здесь номер учетной записи (например, UA-xxxxxx-x).</message>
 	<message key="plugins.generic.googleAnalytics.authorAccountInvalid">Один или несколько введенных номеров учетных записей Google Analytics, принадлежащих авторам материала, являются неправильными.</message>

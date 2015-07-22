@@ -1,8 +1,8 @@
 {**
  * templates/install/install.tpl
  *
- * Copyright (c) 2013-2014 Simon Fraser University Library
- * Copyright (c) 2000-2014 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2000-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Installation form.
@@ -182,11 +182,15 @@ function doSubmit() {
 	</tr>
 	<tr valign="top">
 		<td class="label">{fieldLabel name="adminPassword" key="user.password"}</td>
-		<td class="value"><input type="password" name="adminPassword" id="adminPassword" value="{$adminPassword|escape}" size="20" maxlength="32" class="textField" /></td>
+		<td class="value"><input type="password" name="adminPassword" id="adminPassword" value="{$adminPassword|escape}" size="20" class="textField" /></td>
+	</tr>
+	<tr valign="top">
+		<td></td>
+		<td><span class="instruct">{translate key="user.register.passwordLengthRestriction" length=$passwordLength}</span></td>
 	</tr>
 	<tr valign="top">
 		<td class="label">{fieldLabel name="adminPassword2" key="user.repeatPassword"}</td>
-		<td class="value"><input type="password" name="adminPassword2" id="adminPassword2" value="{$adminPassword2|escape}" size="20" maxlength="32" class="textField" /></td>
+		<td class="value"><input type="password" name="adminPassword2" id="adminPassword2" value="{$adminPassword2|escape}" size="20" class="textField" /></td>
 	</tr>
 	<tr valign="top">
 		<td width="20%" class="label">{fieldLabel name="adminEmail" key="user.email"}</td>

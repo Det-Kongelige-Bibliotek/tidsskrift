@@ -3,12 +3,12 @@
 /**
  * @defgroup tasks
  */
- 
+
 /**
  * @file classes/tasks/OpenAccessNotification.inc.php
  *
- * Copyright (c) 2013-2014 Simon Fraser University Library
- * Copyright (c) 2003-2014 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class OpenAccessNotification
@@ -25,7 +25,14 @@ class OpenAccessNotification extends ScheduledTask {
 	 * Constructor.
 	 */
 	function OpenAccessNotification() {
-		$this->ScheduledTask();
+		parent::ScheduledTask();
+	}
+
+	/**
+	 * @see ScheduledTask::getName()
+	 */
+	function getName() {
+		return __('admin.scheduledTask.openAccessNotification');
 	}
 
 	function sendNotification ($users, $journal, $issue) {
@@ -35,7 +42,7 @@ class OpenAccessNotification extends ScheduledTask {
 			$email = new MailTemplate('OPEN_ACCESS_NOTIFY', $journal->getPrimaryLocale());
 
 			$email->setSubject($email->getSubject($journal->getPrimaryLocale()));
-			$email->setFrom($journal->getSetting('contactEmail'), $journal->getSetting('contactName'));
+			$email->setReplyTo(null);
 			$email->addRecipient($journal->getSetting('contactEmail'), $journal->getSetting('contactName'));
 
 			$paramArray = array(
@@ -98,7 +105,10 @@ class OpenAccessNotification extends ScheduledTask {
 		}
 	}
 
-	function execute() {
+	/**
+	 * @see ScheduledTask::executeActions()
+	 */
+	function executeActions() {
 		$journalDao =& DAORegistry::getDAO('JournalDAO');
 		$journals =& $journalDao->getJournals(true);
 
@@ -111,7 +121,7 @@ class OpenAccessNotification extends ScheduledTask {
 		while (!$journals->eof()) {
 			$journal =& $journals->next();
 
-			// Send notifications based on current date			
+			// Send notifications based on current date
 			$this->sendNotifications($journal, $todayDate);
 			unset($journal);
 		}
@@ -137,7 +147,7 @@ class OpenAccessNotification extends ScheduledTask {
 			while (!$journals->eof()) {
 				$journal =& $journals->next();
 
-				// Send reminders for simulated 31st day of short month		
+				// Send reminders for simulated 31st day of short month
 				$this->sendNotifications($journal, $curDate);
 				unset($journal);
 			}
@@ -156,7 +166,7 @@ class OpenAccessNotification extends ScheduledTask {
 			while (!$journals->eof()) {
 				$journal =& $journals->next();
 
-				// Send reminders for simulated 30th day of February		
+				// Send reminders for simulated 30th day of February
 				$this->sendNotifications($journal, $curDate);
 				unset($journal);
 			}
@@ -171,12 +181,14 @@ class OpenAccessNotification extends ScheduledTask {
 				while (!$journals->eof()) {
 					$journal =& $journals->next();
 
-					// Send reminders for simulated 29th day of February		
+					// Send reminders for simulated 29th day of February
 					$this->sendNotifications($journal, $curDate);
 					unset($journal);
 				}
 			}
 		}
+
+		return true;
 	}
 }
 

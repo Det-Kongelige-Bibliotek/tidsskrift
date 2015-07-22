@@ -3,8 +3,8 @@
 /**
  * @file plugins/importexport/datacite/classes/DataciteExportDom.inc.php
  *
- * Copyright (c) 2013-2014 Simon Fraser University Library
- * Copyright (c) 2003-2014 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class DataciteExportDom
@@ -167,7 +167,7 @@ class DataciteExportDom extends DOIExportDom {
 		if (!empty($articleFile)) XMLCustomWriter::appendChild($rootElement, $this->_formatsElement($articleFile));
 
 		// Rights
-		$rightsURL = $article->getLicenseURL();
+		$rightsURL = $article?$article->getLicenseURL():$journal->getSetting('licenseURL');
 		$rightsListElement =& XMLCustomWriter::createElement($this->getDoc(), 'rightsList');
 		$rightsElement = $this->createElementWithText('rights', strip_tags(Application::getCCLicenseBadge($rightsURL)), array('rightsURI' => $rightsURL));
 		XMLCustomWriter::appendChild($rightsListElement, $rightsElement);

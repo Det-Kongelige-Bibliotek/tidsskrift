@@ -1,8 +1,8 @@
 {**
  * templates/user/loginChangePassword.tpl
  *
- * Copyright (c) 2013-2014 Simon Fraser University Library
- * Copyright (c) 2000-2014 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2000-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Form to change a user's password in order to login.
@@ -31,10 +31,10 @@
 {/if}
 {include file="common/formErrors.tpl"}
 
-<p><span class="instruct">{translate key="user.login.changePasswordInstructions"}</span></p>
+<p><span class="instruct">{if !$confirmHash}{translate key="user.login.changePasswordInstructions"}{else}{translate key="user.login.changePasswordInstructionsOneStep"}{/if}</span></p>
 
 	{fbvFormArea id="loginFields"}
-		{fbvFormSection label="user.login" for="username"}
+		{fbvFormSection label="user.username" for="username"}
 			{fbvElement type="text" required=true id="username" value=$username|escape maxlength="32" size=$fbvStyles.size.MEDIUM}
 		{/fbvFormSection}
 		{if !$confirmHash}

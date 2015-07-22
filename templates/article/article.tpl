@@ -1,20 +1,20 @@
 {**
  * templates/article/article.tpl
  *
- * Copyright (c) 2013-2014 Simon Fraser University Library
- * Copyright (c) 2003-2014 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Article View.
  *}
+{strip}
 {if $galley}
 	{assign var=pubObject value=$galley}
 {else}
 	{assign var=pubObject value=$article}
 {/if}
-
-
 {include file="article/header.tpl"}
+{/strip}
 
 {if $galley}
 	{if $galley->isHTMLGalley()}
@@ -127,4 +127,3 @@
 {include file="article/comments.tpl"}
 
 {include file="article/footer.tpl"}
-

@@ -3,8 +3,8 @@
 /**
  * @file classes/submission/author/AuthorSubmissionDAO.inc.php
  *
- * Copyright (c) 2013-2014 Simon Fraser University Library
- * Copyright (c) 2003-2014 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class AuthorSubmissionDAO
@@ -161,6 +161,8 @@ class AuthorSubmissionDAO extends DAO {
 
 	/**
 	 * Get all author submissions for an author.
+	 * FIXME: Beware of bug #8872 WRT this function. There is currently
+	 * no author search form so the search options here are dead code.
 	 * @param $authorId int
 	 * @return DAOResultFactory continaing AuthorSubmissions
 	 */

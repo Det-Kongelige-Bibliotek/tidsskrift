@@ -3,8 +3,8 @@
 /**
  * @file plugins/reports/articles/ArticleReportPlugin.inc.php
  *
- * Copyright (c) 2013-2014 Simon Fraser University Library
- * Copyright (c) 2003-2014 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  * 
  * @class ArticleReportPlugin
@@ -50,7 +50,7 @@ class ArticleReportPlugin extends ReportPlugin {
 		return __('plugins.reports.articles.description');
 	}
 
-	function display(&$args) {
+	function display($args, $request) {
 		$journal =& Request::getJournal();
 
 		header('content-type: text/comma-separated-values');
@@ -173,7 +173,7 @@ class ArticleReportPlugin extends ReportPlugin {
 			$returner['mname' . $seq] = isset($author['mname']) ? $author['mname'] : '';
 			$returner['lname' . $seq] = isset($author['lname']) ? $author['lname'] : '';
 			$returner['email' . $seq] = isset($author['email']) ? $author['email'] : '';
-			$returner['affiliation'] = isset($author['affiliation']) ? $author['affiliation'] : '';
+			$returner['affiliation' . $seq] = isset($author['affiliation']) ? $author['affiliation'] : '';
 			$returner['country' . $seq] = isset($author['country']) ? $author['country'] : '';
 			$returner['url' . $seq] = isset($author['url']) ? $author['url'] : '';
 			$returner['biography' . $seq] = isset($author['biography']) ? $author['biography'] : '';

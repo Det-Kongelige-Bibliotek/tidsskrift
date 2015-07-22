@@ -3,8 +3,8 @@
 /**
  * @file plugins/importexport/native/NativeExportDom.inc.php
  *
- * Copyright (c) 2013-2014 Simon Fraser University Library
- * Copyright (c) 2003-2014 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class NativeExportDom
@@ -290,6 +290,19 @@ class NativeExportDom {
 			$accessNode =& XMLCustomWriter::createElement($doc, 'open_access');
 			XMLCustomWriter::appendChild($root, $accessNode);
 		}
+
+		/* --- Permissions --- */
+		$permissionsNode =& XMLCustomWriter::createElement($doc, 'permissions');
+		XMLCustomWriter::appendChild($root, $permissionsNode);
+		XMLCustomWriter::createChildWithText($doc, $permissionsNode, 'license_url', $article->getLicenseURL(), false);
+		foreach ($article->getCopyrightHolder(null) as $locale => $copyrightHolder) {
+			$copyrightHolderNode =& XMLCustomWriter::createChildWithText($doc, $permissionsNode, 'copyright_holder', $copyrightHolder, false);
+			if ($copyrightHolderNode) {
+				XMLCustomWriter::setAttribute($copyrightHolderNode, 'locale', $locale);
+			}
+			unset($copyrightHolderNode);
+		}
+		XMLCustomWriter::createChildWithText($doc, $permissionsNode, 'copyright_year', $article->getCopyrightYear(), false);
 
 		/* --- */
 

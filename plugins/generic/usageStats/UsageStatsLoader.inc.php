@@ -3,8 +3,8 @@
 /**
  * @file plugins/generic/usageStats/UsageStatsLoader.php
  *
- * Copyright (c) 2013-2014 Simon Fraser University Library
- * Copyright (c) 2003-2014 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class UsageStatsLoader
@@ -68,54 +68,60 @@ class UsageStatsLoader extends FileLoader {
 
 		parent::FileLoader($args);
 
-		// Load the metric type constant.
-		PluginRegistry::loadCategory('reports');
+		if ($plugin->getEnabled()) {
+			// Load the metric type constant.
+			PluginRegistry::loadCategory('reports');
 
-		$geoLocationTool =& StatisticsHelper::getGeoLocationTool();
-		$this->_geoLocationTool =& $geoLocationTool;
+			$geoLocationTool =& StatisticsHelper::getGeoLocationTool();
+			$this->_geoLocationTool =& $geoLocationTool;
 
-		$plugin->import('UsageStatsTemporaryRecordDAO');
-		$statsDao = new UsageStatsTemporaryRecordDAO();
-		DAORegistry::registerDAO('UsageStatsTemporaryRecordDAO', $statsDao);
+			$plugin->import('UsageStatsTemporaryRecordDAO');
+			$statsDao = new UsageStatsTemporaryRecordDAO();
+			DAORegistry::registerDAO('UsageStatsTemporaryRecordDAO', $statsDao);
 
-		$this->_counterRobotsListFile = $this->_getCounterRobotListFile();
+			$this->_counterRobotsListFile = $this->_getCounterRobotListFile();
 
-		$journalDao =& DAORegistry::getDAO('JournalDAO'); /* @var $journalDao JournalDAO */
-		$journalFactory =& $journalDao->getJournals(); /* @var $journalFactory DAOResultFactory */
-		$journalsByPath = array();
-		while ($journal =& $journalFactory->next()) { /* @var $journal Journal */
-			$journalsByPath[$journal->getPath()] =& $journal;
-		}
-		$this->_journalsByPath = $journalsByPath;
-
-		$this->checkFolderStructure(true);
-
-		if ($this->_autoStage) {
-			// Copy all log files to stage directory, except the current day one.
-			$fileMgr = new FileManager();
-			$logsDirFiles =  glob($plugin->getUsageEventLogsPath() . DIRECTORY_SEPARATOR . '*');
-			$processingDirFiles = glob($this->getProcessingPath() . DIRECTORY_SEPARATOR . '*');
-
-			if (is_array($logsDirFiles) && is_array($processingDirFiles)) {
-				// It's possible that the processing directory have files that
-				// were being processed but the php process was stopped before
-				// finishing the processing. Just copy them to the stage directory too.
-				$dirFiles = array_merge($logsDirFiles, $processingDirFiles);
-				foreach ($dirFiles as $filePath) {
-					// Make sure it's a file.
-					if ($fileMgr->fileExists($filePath)) {
-						// Avoid current day file.
-						$filename = pathinfo($filePath, PATHINFO_BASENAME);
-						$currentDayFilename = $plugin->getUsageEventCurrentDayLogName();
-						if ($filename == $currentDayFilename) continue;
-
-						if ($fileMgr->copyFile($filePath, $this->getStagePath() . DIRECTORY_SEPARATOR . $filename)) {
-							$fileMgr->deleteFile($filePath);
-						}
-					}
-				}
+			$journalDao =& DAORegistry::getDAO('JournalDAO'); /* @var $journalDao JournalDAO */
+			$journalFactory =& $journalDao->getJournals(); /* @var $journalFactory DAOResultFactory */
+			$journalsByPath = array();
+			while ($journal =& $journalFactory->next()) { /* @var $journal Journal */
+				$journalsByPath[$journal->getPath()] =& $journal;
 			}
+			$this->_journalsByPath = $journalsByPath;
+
+			$this->checkFolderStructure(true);
 		}
+	}
+
+	/**
+	 * @see FileLoader::getName()
+	 */
+	function getName() {
+		return __('plugins.generic.usageStats.usageStatsLoaderName');
+	}
+
+	/**
+	 * @see FileLoader::executeActions()
+	 */
+	function executeActions() {
+		$plugin =& $this->_plugin;
+		if (!$plugin->getEnabled()) {
+			$this->addExecutionLogEntry(__('plugins.generic.usageStats.pluginDisabled'), SCHEDULED_TASK_MESSAGE_TYPE_WARNING);
+			return true;
+		}
+		// It's possible that the processing directory has files that
+		// were being processed but the php process was stopped before
+		// finishing the processing, or there may be a concurrent process running.
+		// Warn the user if this is the case.
+		$processingDirFiles = glob($this->getProcessingPath() . DIRECTORY_SEPARATOR . '*');
+		$processingDirError = is_array($processingDirFiles) && count($processingDirFiles);
+		if ($processingDirError) {
+			$this->addExecutionLogEntry(__('plugins.generic.usageStats.processingPathNotEmpty', array('directory' => $this->getProcessingPath())), SCHEDULED_TASK_MESSAGE_TYPE_ERROR);
+		}
+
+		if ($this->_autoStage) $this->autoStage();
+
+		return (parent::executeActions() && !$processingDirError);
 	}
 
 	/**
@@ -126,6 +132,14 @@ class UsageStatsLoader extends FileLoader {
 		$geoTool = $this->_geoLocationTool;
 		if (!$fhandle) {
 			$errorMsg = __('plugins.generic.usageStats.openFileFailed', array('file' => $filePath));
+			return false;
+		}
+		if (!$this->_counterRobotsListFile) {
+			$errorMsg = __('plugins.generic.usageStats.noCounterBotList', array('botlist' => $this->_counterRobotsListFile, 'file' => $filePath));
+			return false;
+		} elseif (!file_exists($this->_counterRobotsListFile)) {
+			$errorMsg = __('plugins.generic.usageStats.failedCounterBotList', array('botlist' => $this->_counterRobotsListFile, 'file' => $filePath));
+			return false;
 		}
 
 		$loadId = basename($filePath);
@@ -147,6 +161,7 @@ class UsageStatsLoader extends FileLoader {
 			if (!$this->_isLogEntryValid($entryData, $lineNumber)) {
 				$errorMsg = __('plugins.generic.usageStats.invalidLogEntry',
 					array('file' => $filePath, 'lineNumber' => $lineNumber));
+				return false;
 			}
 
 			// Avoid internal apache requests.
@@ -163,10 +178,10 @@ class UsageStatsLoader extends FileLoader {
 			// Avoid bots.
 			if (Core::isUserAgentBot($entryData['userAgent'], $this->_counterRobotsListFile)) continue;
 
-			list($assocId, $assocType) = $this->_getAssocFromUrl($entryData['url']);
+			list($assocId, $assocType) = $this->_getAssocFromUrl($entryData['url'], $filePath, $lineNumber);
 			if(!$assocId || !$assocType) continue;
 
-			list($countryCode, $cityName, $region) = $geoTool->getGeoLocation($entryData['ip']);
+			list($countryCode, $cityName, $region) = $geoTool ? $geoTool->getGeoLocation($entryData['ip']) : array(null, null, null);
 			$day = date('Ymd', $entryData['date']);
 
 			$type = $this->_getFileType($assocType, $assocId);
@@ -205,13 +220,58 @@ class UsageStatsLoader extends FileLoader {
 		}
 
 		fclose($fhandle);
-		$loadResult = $this->_loadData($loadId);
+		$loadResult = $this->_loadData($loadId, $errorMsg);
 		$statsDao->deleteByLoadId($loadId);
 
 		if (!$loadResult) {
+			// Improve the error message.
+			$errorMsg = __('plugins.generic.usageStats.loadDataError',
+				array('file' => $filePath, 'error' => $errorMsg));
 			return FILE_LOADER_RETURN_TO_STAGING;
 		} else {
 			return true;
+		}
+	}
+
+	//
+	// Protected methods.
+	//
+	/**
+	 * Auto stage usage stats log files, also moving files that
+	 * might be in processing folder to stage folder.
+	 */ 
+	function autoStage() {
+		$plugin = $this->_plugin;
+
+		// Copy all log files to stage directory, except the current day one.
+		$fileMgr = new FileManager();
+		$logFiles = array();
+		$logsDirFiles =  glob($plugin->getUsageEventLogsPath() . DIRECTORY_SEPARATOR . '*');
+
+		// It's possible that the processing directory has files that
+		// were being processed but the php process was stopped before
+		// finishing the processing. Just copy them to the stage directory too.
+		$processingDirFiles = glob($this->getProcessingPath() . DIRECTORY_SEPARATOR . '*');
+
+		if (is_array($logsDirFiles)) {
+			$logFiles = array_merge($logFiles, $logsDirFiles);
+		}
+
+		if (is_array($processingDirFiles)) {
+			$logFiles = array_merge($logFiles, $processingDirFiles);
+		}
+
+		foreach ($logFiles as $filePath) {
+			// Make sure it's a file.
+			if ($fileMgr->fileExists($filePath)) {
+				// Avoid current day file.
+				$filename = pathinfo($filePath, PATHINFO_BASENAME);
+				$currentDayFilename = $plugin->getUsageEventCurrentDayLogName();
+				if ($filename == $currentDayFilename) continue;
+				if ($fileMgr->copyFile($filePath, $this->getStagePath() . DIRECTORY_SEPARATOR . $filename)) {
+					$fileMgr->deleteFile($filePath);
+				}
+			}
 		}
 	}
 
@@ -299,18 +359,32 @@ class UsageStatsLoader extends FileLoader {
 	 * Get the assoc type and id of the object that
 	 * is accessed through the passed url.
 	 * @param $url string
+	 * @param $filePath string
+	 * @param $lineNumber int
 	 * @return array
 	 */
-	function _getAssocFromUrl($url) {
+	function _getAssocFromUrl($url, $filePath, $lineNumber) {
 		// Check the passed url.
 		$assocId = $assocType = $journalId = false;
 		$expectedPageAndOp = $this->_getExpectedPageAndOp();
 
 		$pathInfoDisabled = Config::getVar('general', 'disable_path_info');
-		$contextPaths = Core::getContextPaths($url, !$pathInfoDisabled);
-		$page = Core::getPage($url, !$pathInfoDisabled);
-		$operation = Core::getOp($url, !$pathInfoDisabled);
-		$args = Core::getArgs($url, !$pathInfoDisabled);
+
+		// Apache and ojs log files comes with complete or partial
+		// base url, remove it so system can retrieve path, page,
+		// operation and args.
+		$url = Core::removeBaseUrl($url);
+		if ($url) {
+			$contextPaths = Core::getContextPaths($url, !$pathInfoDisabled);
+			$page = Core::getPage($url, !$pathInfoDisabled);
+			$operation = Core::getOp($url, !$pathInfoDisabled);
+			$args = Core::getArgs($url, !$pathInfoDisabled);
+		} else {
+			// Could not remove the base url, can't go on.
+			$this->addExecutionLogEntry(__('plugins.generic.usageStats.removeUrlError',
+				array('file' => $filePath, 'lineNumber' => $lineNumber)), SCHEDULED_TASK_MESSAGE_TYPE_WARNING);
+			return array(false, false);
+		}
 
 		// See bug #8698#.
 		if (is_array($contextPaths) && !$page && $operation == 'index') {
@@ -571,10 +645,11 @@ class UsageStatsLoader extends FileLoader {
 	 * the passed load id to the metrics table.
 	 * @param $loadId string The current load id.
 	 * file path.
+	 * @param $errorMsg string
 	 * @return boolean Whether or not the process
 	 * was successful.
 	 */
-	function _loadData($loadId) {
+	function _loadData($loadId, &$errorMsg) {
 		$statsDao =& DAORegistry::getDAO('UsageStatsTemporaryRecordDAO'); /* @var $statsDao UsageStatsTemporaryRecordDAO */
 		$metricsDao =& DAORegistry::getDAO('MetricsDAO'); /* @var $metricsDao MetricsDAO */
 		$metricsDao->purgeLoadBatch($loadId);
@@ -582,7 +657,9 @@ class UsageStatsLoader extends FileLoader {
 		while ($record =& $statsDao->getNextByLoadId($loadId)) {
 			$record['metric_type'] = OJS_METRIC_TYPE_COUNTER;
 			$errorMsg = null;
-			$metricsDao->insertRecord($record, $errorMsg);
+			if (!$metricsDao->insertRecord($record, $errorMsg)) {
+				return false;
+			}
 		}
 
 		return true;
@@ -598,7 +675,7 @@ class UsageStatsLoader extends FileLoader {
 
 		// We only expect one file inside the directory.
 		$fileCount = 0;
-		foreach (glob($dir . DIRECTORY_SEPARATOR . "*.*") as $file) {
+		foreach (glob($dir . DIRECTORY_SEPARATOR . '*') as $file) {
 			$fileCount++;
 		}
 		if (!$file || $fileCount !== 1) {

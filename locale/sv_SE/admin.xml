@@ -4,8 +4,8 @@
 <!--
   * locale/sv_SE/admin.xml
   *
-  * Copyright (c) 2013-2014 Simon Fraser University Library
-  * Copyright (c) 2000-2014 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2000-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings for the sv_SE (Swedish) locale.
@@ -25,6 +25,7 @@
 	<message key="admin.languages.downloadFailed">Nedladdnigen av språket misslyckades. Se felmeddelanden nedan för information.</message>
 	<message key="admin.languages.localeInstalled">"{$locale}" Språket har installerats. </message>
 	<message key="admin.languages.download">Ladda ner språk</message>
+	<message key="admin.languages.reloadDefaultEmailTemplates">Ladda standard e-mallar</message>
 	<message key="admin.languages.download.cannotOpen">Kan ej öppna språkbeskrivning från PKP:s hemsida.</message>
 	<message key="admin.languages.download.cannotModifyRegistry">Kan ej lägga till nya språk till språkregistreringsfilen, ex. "registry/locales.xml".</message>
 	<message key="admin.auth.ojs">OJS Användardatabas</message>

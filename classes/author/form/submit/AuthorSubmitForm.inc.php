@@ -7,8 +7,8 @@
 /**
  * @file classes/author/form/submit/AuthorSubmitForm.inc.php
  *
- * Copyright (c) 2013-2014 Simon Fraser University Library
- * Copyright (c) 2003-2014 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class AuthorSubmitForm
@@ -109,11 +109,11 @@ class AuthorSubmitForm extends Form {
 		$journal =& $this->request->getJournal();
 
 		$sectionEditorsDao =& DAORegistry::getDAO('SectionEditorsDAO');
-		$editAssignmentDao =& DAORegistry::getDAO('EditAssignmentDAO');
+		$editAssignmentDao =& DAORegistry::getDAO('EditAssignmentDAO'); /* @var $editAssignmentDao EditAssignmentDAO */
 		$sectionEditors =& $sectionEditorsDao->getEditorsBySectionId($journal->getId(), $sectionId);
 
 		foreach ($sectionEditors as $sectionEditorEntry) {
-			$editAssignment = new EditAssignment();
+			$editAssignment = $editAssignmentDao->newDataObject();
 			$editAssignment->setArticleId($article->getId());
 			$editAssignment->setEditorId($sectionEditorEntry['user']->getId());
 			$editAssignment->setCanReview($sectionEditorEntry['canReview']);

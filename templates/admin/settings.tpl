@@ -1,8 +1,8 @@
 {**
  * templates/admin/settings.tpl
  *
- * Copyright (c) 2013-2014 Simon Fraser University Library
- * Copyright (c) 2003-2014 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Site settings form.
@@ -141,6 +141,13 @@
 			{fieldLabel name="showTitle" key="admin.settings.journalsList.showTitle"}<br />
 			<input type="checkbox" name="showDescription" id="showDescription" value="1"{if $showDescription} checked="checked"{/if} />
 			{fieldLabel name="showDescription" key="admin.settings.journalsList.showDescription"}<br />
+		</td>
+	</tr>
+	<tr valign="top">
+	<td class="label">{translate key="admin.settings.security"}</td>
+		<td colspan="2" class="value">
+			<input type="checkbox" name="preventManagerPluginManagement" id="preventManagerPluginManagement" value="1"{if $preventManagerPluginManagement} checked="checked"{/if} />
+			{fieldLabel name="preventManagerPluginManagement" key="admin.settings.security.plugins"}<br />
 		</td>
 	</tr>
 </table>

@@ -3,8 +3,8 @@
 /**
  * @file plugins/generic/alm/SettingsForm.inc.php
  *
- * Copyright (c) 2013-2014 Simon Fraser University Library
- * Copyright (c) 2003-2014 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class SettingsForm
@@ -34,8 +34,6 @@ class SettingsForm extends Form {
 		$this->plugin =& $plugin;
 
 		parent::Form($plugin->getTemplatePath() . 'settingsForm.tpl');
-		$this->addCheck(new FormValidator($this, 'apiKey', 'string', __('plugins.generic.alm.apiKeyRequired')));
-		$this->addCheck(new FormValidator($this, 'depositUrl', 'string', __('plugins.generic.alm.depositUrlRequired')));
 		$this->addCheck(new FormValidatorPost($this));
 	}
 
@@ -47,15 +45,15 @@ class SettingsForm extends Form {
 		$plugin =& $this->plugin;
 
 		$this->setData('apiKey', $plugin->getSetting($journalId, 'apiKey'));
+		$this->setData('depositArticles', $plugin->getSetting(CONTEXT_ID_NONE, 'depositArticles'));
 		$this->setData('depositUrl', $plugin->getSetting(CONTEXT_ID_NONE, 'depositUrl'));
-
 	}
 
 	/**
 	 * Assign form data to user-submitted data.
 	 */
 	function readInputData() {
-		$this->readUserVars(array('apiKey', 'depositUrl'));
+		$this->readUserVars(array('apiKey', 'depositArticles', 'depositUrl'));
 	}
 
 	/**
@@ -66,6 +64,7 @@ class SettingsForm extends Form {
 		$journalId = $this->journalId;
 
 		$plugin->updateSetting($journalId, 'apiKey', $this->getData('apiKey'));
+		$plugin->updateSetting(CONTEXT_ID_NONE, 'depositArticles', $this->getData('depositArticles'));
 		$plugin->updateSetting(CONTEXT_ID_NONE, 'depositUrl', $this->getData('depositUrl'));
 	}
 }

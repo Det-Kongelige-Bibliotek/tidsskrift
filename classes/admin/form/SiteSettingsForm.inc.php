@@ -3,8 +3,8 @@
 /**
  * @file classes/admin/form/SiteSettingsForm.inc.php
  *
- * Copyright (c) 2013-2014 Simon Fraser University Library
- * Copyright (c) 2003-2014 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class SiteSettingsForm
@@ -61,13 +61,14 @@ class SiteSettingsForm extends PKPSiteSettingsForm {
 		$this->_data['useAlphalist'] = $site->getSetting('useAlphalist');
 		$this->_data['usePaging'] = $site->getSetting('usePaging');
 		$this->_data['defaultMetricType'] = $site->getSetting('defaultMetricType');
+		$this->_data['preventManagerPluginManagement'] = $site->getSetting('preventManagerPluginManagement');
 	}
 
 	/**
 	 * Assign user-submitted data to form.
 	 */
 	function readInputData() {
-		$this->readUserVars(array('useAlphalist', 'usePaging', 'defaultMetricType'));
+		$this->readUserVars(array('useAlphalist', 'usePaging', 'defaultMetricType', 'preventManagerPluginManagement'));
 		return parent::readInputData();
 	}
 
@@ -81,6 +82,7 @@ class SiteSettingsForm extends PKPSiteSettingsForm {
 		$siteSettingsDao->updateSetting('useAlphalist', (boolean) $this->getData('useAlphalist'), 'bool');
 		$siteSettingsDao->updateSetting('usePaging', (boolean) $this->getData('usePaging'), 'bool');
 		$siteSettingsDao->updateSetting('defaultMetricType', $this->getData('defaultMetricType'), 'string');
+		$siteSettingsDao->updateSetting('preventManagerPluginManagement', (boolean) $this->getData('preventManagerPluginManagement'), 'bool');
 	}
 }
 

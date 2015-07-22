@@ -3,8 +3,8 @@
 /**
  * @file pages/manager/SetupHandler.inc.php
  *
- * Copyright (c) 2013-2014 Simon Fraser University Library
- * Copyright (c) 2003-2014 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class SetupHandler
@@ -395,7 +395,7 @@ class SetupHandler extends ManagerHandler {
 		$journal =& $router->getContext($request);
 
 		$articleDao =& DAORegistry::getDAO('ArticleDAO');
-		$articleDao->deletePermissions($journal->getId());
+		$articleDao->resetPermissions($journal->getId());
 
 		$request->redirect(null, null, 'setup', array('3'));
 	}

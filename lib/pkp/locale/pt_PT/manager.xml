@@ -4,8 +4,8 @@
 <!--
   * locale/pt_PT/manager.xml
   *
-  * Copyright (c) 2013-2014 Simon Fraser University Library
-  * Copyright (c) 2000-2014 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2000-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings for the pt_PT (Português) locale.
@@ -32,6 +32,8 @@
 	<message key="manager.announcements.form.descriptionShortInstructions">Um texto introdutório a ser exibido com o título da notícia.</message>
 	<message key="manager.announcements.form.descriptionShortRequired">A introdução da notícia é obrigatória.</message>
 	<message key="manager.announcements.form.descriptionShort">Introdução</message>
+	<message key="manager.announcements.form.notificationToggle">Enviar notificação</message>
+	<message key="manager.announcements.form.notificationToggleInstructions">Criar uma nova notificação ao salvar este anúncio.</message>
 	<message key="manager.announcements.form.saveAndCreateAnother">Guardar e Criar Outra</message>
 	<message key="manager.announcements.form.titleRequired">O título da notícia é obrigatório.</message>
 	<message key="manager.announcements.form.title">Título</message>

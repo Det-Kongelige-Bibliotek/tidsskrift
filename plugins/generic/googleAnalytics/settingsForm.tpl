@@ -1,8 +1,8 @@
 {**
  * plugins/generic/googleAnalytics/settingsForm.tpl
  *
- * Copyright (c) 2013-2014 Simon Fraser University Library
- * Copyright (c) 2003-2014 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Google Analytics plugin settings
@@ -26,9 +26,9 @@
 	<tr valign="top">
 		<td width="20%" class="label">{fieldLabel name="googleAnalyticsSiteId" required="true" key="plugins.generic.googleAnalytics.manager.settings.googleAnalyticsSiteId"}</td>
 		<td width="80%" class="value"><input type="text" name="googleAnalyticsSiteId" id="googleAnalyticsSiteId" value="{$googleAnalyticsSiteId|escape}" size="15" maxlength="25" class="textField" />
-		<br />
-		<span class="instruct">{translate key="plugins.generic.googleAnalytics.manager.settings.googleAnalyticsSiteIdInstructions"}</span>
-	</td>
+			<br />
+			<span class="instruct">{translate key="plugins.generic.googleAnalytics.manager.settings.googleAnalyticsSiteIdInstructions"}</span>
+		</td>
 	</tr>
 	<tr valign="top">
 		<td width="20%" class="label">{fieldLabel name="trackingCode-urchin" required="true" key="plugins.generic.googleAnalytics.manager.settings.trackingCode"}</td>
@@ -37,6 +37,10 @@
 	<tr valign="top">
 		<td width="20%" class="label">&nbsp;</td>
 		<td width="80%" class="value"><input type="radio" name="trackingCode" id="trackingCode-ga" value="ga" {if $trackingCode eq "ga"}checked="checked" {/if}/> {translate key="plugins.generic.googleAnalytics.manager.settings.ga"}</td>
+	</tr>
+	<tr valign="top">
+		<td width="20%" class="label">&nbsp;</td>
+		<td width="80%" class="value"><input type="radio" name="trackingCode" id="trackingCode-analytics" value="analytics" {if $trackingCode eq "analytics"}checked="checked" {/if}/> {translate key="plugins.generic.googleAnalytics.manager.settings.analytics"}</td>
 	</tr>
 </table>
 

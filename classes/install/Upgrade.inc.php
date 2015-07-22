@@ -3,8 +3,8 @@
 /**
  * @file classes/install/Upgrade.inc.php
  *
- * Copyright (c) 2013-2014 Simon Fraser University Library
- * Copyright (c) 2003-2014 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class Upgrade
@@ -1121,8 +1121,9 @@ class Upgrade extends Installer {
 				$assocId = $row['article_id'];
 			};
 
-			$day = date('Ymd', strtotime($row['date']));
-			$tempStatsDao->insert($assocType, $assocId, $day, $countryId, $region, $cityName, $fileType, $loadId);
+			$recordTimestamp = strtotime($row['date']);
+			$day = date('Ymd', $recordTimestamp);
+			$tempStatsDao->insert($assocType, $assocId, $day, $recordTimestamp, $countryId, $region, $cityName, $fileType, $loadId);
 		}
 
 		switch (Config::getVar('database', 'driver')) {
@@ -1131,7 +1132,7 @@ class Upgrade extends Installer {
 				$monthSql = 'extract(YEAR_MONTH from tr.day)';
 				break;
 			case 'postgres':
-				$monthSql = 'to_char(to_date(tr.day, "YYYYMMDD"), "YYYYMM")';
+				$monthSql = 'to_char(to_date(to_char(tr.day, \'99999999\'), \'YYYYMMDD\'), \'YYYYMM\')';
 				break;
 		}
 
@@ -1139,25 +1140,25 @@ class Upgrade extends Installer {
 		$params = array(OJS_METRIC_TYPE_TIMED_VIEWS, $loadId, ASSOC_TYPE_ARTICLE);
 		$tempStatsDao->update(
 			'INSERT INTO metrics (load_id, metric_type, assoc_type, assoc_id, day, month, country_id, region, city, submission_id, metric, context_id, issue_id)
-			SELECT tr.load_id, ?, tr.assoc_type, tr.assoc_id, tr.day, ' . $monthSql . ', tr.country_id, tr.region, tr.city, tr.assoc_id, count(tr.metric), a.journal_id, pa.issue_id
+			SELECT tr.load_id, ?, tr.assoc_type, tr.assoc_id, tr.day, ' . $monthSql . ', tr.country_id, tr.region, tr.city, tr.assoc_id, COUNT(tr.metric), a.journal_id, pa.issue_id
 			FROM usage_stats_temporary_records AS tr
-			LEFT JOIN articles AS a ON a.article_id = tr.assoc_id
-			LEFT JOIN published_articles AS pa ON pa.article_id = tr.assoc_id
-			WHERE tr.load_id = ? AND tr.assoc_type = ? AND a.journal_id IS NOT NULL AND pa.issue_id IS NOT NULL
-			GROUP BY tr.assoc_type, tr.assoc_id, tr.day, tr.country_id, tr.region, tr.city, tr.file_type, tr.load_id', $params
+			JOIN articles AS a ON a.article_id = tr.assoc_id
+			JOIN published_articles AS pa ON pa.article_id = tr.assoc_id
+			WHERE tr.load_id = ? AND tr.assoc_type = ?
+			GROUP BY tr.assoc_type, tr.assoc_id, tr.day, tr.country_id, tr.region, tr.city, tr.file_type, tr.load_id, a.journal_id, pa.issue_id', $params
 		);
 
 		// Galleys.
 		$params = array(OJS_METRIC_TYPE_TIMED_VIEWS, $loadId, ASSOC_TYPE_GALLEY);
 		$tempStatsDao->update(
 			'INSERT INTO metrics (load_id, metric_type, assoc_type, assoc_id, day, month, country_id, region, city, submission_id, metric, context_id, issue_id, file_type)
-			SELECT tr.load_id, ?, tr.assoc_type, tr.assoc_id, tr.day, ' . $monthSql . ', tr.country_id, tr.region, tr.city, ag.article_id, count(tr.metric), a.journal_id, pa.issue_id, tr.file_type
+			SELECT tr.load_id, ?, tr.assoc_type, tr.assoc_id, tr.day, ' . $monthSql . ', tr.country_id, tr.region, tr.city, ag.article_id, COUNT(tr.metric), a.journal_id, pa.issue_id, tr.file_type
 			FROM usage_stats_temporary_records AS tr
-			LEFT JOIN article_galleys AS ag ON ag.galley_id = tr.assoc_id
-			LEFT JOIN articles AS a ON a.article_id = ag.article_id
-			LEFT JOIN published_articles AS pa ON pa.article_id = ag.article_id
-			WHERE tr.load_id = ? AND tr.assoc_type = ? AND a.journal_id IS NOT NULL AND pa.issue_id IS NOT NULL
-			GROUP BY tr.assoc_type, tr.assoc_id, tr.day, tr.country_id, tr.region, tr.city, tr.file_type, tr.load_id', $params
+			JOIN article_galleys AS ag ON ag.galley_id = tr.assoc_id
+			JOIN articles AS a ON a.article_id = ag.article_id
+			JOIN published_articles AS pa ON pa.article_id = ag.article_id
+			WHERE tr.load_id = ? AND tr.assoc_type = ?
+			GROUP BY tr.assoc_type, tr.assoc_id, tr.day, tr.country_id, tr.region, tr.city, tr.file_type, tr.load_id, ag.article_id, a.journal_id, pa.issue_id', $params
 		);
 
 		$tempStatsDao->deleteByLoadId($loadId);
@@ -1234,6 +1235,84 @@ class Upgrade extends Installer {
 
 		return true;
 	}
+
+	/**
+	 * For 2.4.6 upgrade: to enable localization of a CustomBlock,
+	 * the blockContent values are converted from string to array (key: primary_language)
+	 */
+	function localizeCustomBlockSettings() {
+		$pluginSettingsDao = DAORegistry::getDAO('PluginSettingsDAO');
+		$journalDao = DAORegistry::getDAO('JournalDAO');
+		$journals = $journalDao->getJournals();
+
+		while ($journal = $journals->next()) {
+			$journalId = $journal->getId();
+			$primaryLocale = $journal->getPrimaryLocale();
+
+			$blocks = $pluginSettingsDao->getSetting($journalId, 'customblockmanagerplugin', 'blocks');
+			if ($blocks) foreach ($blocks as $block) {
+				$blockContent = $pluginSettingsDao->getSetting($journalId, $block, 'blockContent');
+
+				if (!is_array($blockContent)) {
+					$pluginSettingsDao->updateSetting($journalId, $block, 'blockContent', array($primaryLocale => $blockContent));
+				}
+			}
+			unset($journal);
+		}
+
+		return true;
+	}
+
+	/**
+	 * For 2.4.6 upgrade: Remove the "Custom Identifier" suffix option in the DOI and URN plugin and
+	 * use the ctustom suffix pattern %x instead.
+	 * @return boolean
+	 */
+	function removeCustomIdentifierSuffixOption() {
+		$pluginSettingsDao = DAORegistry::getDAO('PluginSettingsDAO');
+		$journalDao = DAORegistry::getDAO('JournalDAO');
+		$journals = $journalDao->getJournals();
+		while ($journal = $journals->next()) {
+			$journalId = $journal->getId();
+			// DOI plugin
+			$doiSuffixSetting = $pluginSettingsDao->getSetting($journalId, 'doipubidplugin', 'doiSuffix');
+			if ($doiSuffixSetting == 'publisherId') {
+				if ($pluginSettingsDao->getSetting($journalId, 'doipubidplugin', 'enableArticleDoi')) {
+					$pluginSettingsDao->updateSetting($journalId, 'doipubidplugin', 'doiArticleSuffixPattern', '%x', 'string');
+				}
+				if ($pluginSettingsDao->getSetting($journalId, 'doipubidplugin', 'enableGalleyDoi')) {
+					$pluginSettingsDao->updateSetting($journalId, 'doipubidplugin', 'doiGalleySuffixPattern', '%x', 'string');
+				}
+				if ($pluginSettingsDao->getSetting($journalId, 'doipubidplugin', 'enableIssueDoi')) {
+					$pluginSettingsDao->updateSetting($journalId, 'doipubidplugin', 'doiIssueSuffixPattern', '%x', 'string');
+				}
+				if ($pluginSettingsDao->getSetting($journalId, 'doipubidplugin', 'enableSuppFileDoi')) {
+					$pluginSettingsDao->updateSetting($journalId, 'doipubidplugin', 'doiSuppFileSuffixPattern', '%x', 'string');
+				}
+				$pluginSettingsDao->updateSetting($journalId, 'doipubidplugin', 'doiSuffix', 'pattern', 'string');
+			}
+			// URN plugin
+			$urnSuffixSetting = $pluginSettingsDao->getSetting($journalId, 'urnpubidplugin', 'urnSuffix');
+			if ($doiSuffixSetting == 'publisherId') {
+				if ($pluginSettingsDao->getSetting($journalId, 'urnpubidplugin', 'enableArticleURN')) {
+					$pluginSettingsDao->updateSetting($journalId, 'urnpubidplugin', 'urnArticleSuffixPattern', '%x', 'string');
+				}
+				if ($pluginSettingsDao->getSetting($journalId, 'urnpubidplugin', 'enableGalleyURN')) {
+					$pluginSettingsDao->updateSetting($journalId, 'urnpubidplugin', 'urnGalleySuffixPattern', '%x', 'string');
+				}
+				if ($pluginSettingsDao->getSetting($journalId, 'urnpubidplugin', 'enableIssueURN')) {
+					$pluginSettingsDao->updateSetting($journalId, 'urnpubidplugin', 'urnIssueSuffixPattern', '%x', 'string');
+				}
+				if ($pluginSettingsDao->getSetting($journalId, 'urnpubidplugin', 'enableSuppFileURN')) {
+					$pluginSettingsDao->updateSetting($journalId, 'urnpubidplugin', 'urnSuppFileSuffixPattern', '%x', 'string');
+				}
+				$pluginSettingsDao->updateSetting($journalId, 'urnpubidplugin', 'urnSuffix', 'pattern', 'string');
+			}
+			unset($journal);
+		}
+		return true;
+	}
+
 }
 
 ?>

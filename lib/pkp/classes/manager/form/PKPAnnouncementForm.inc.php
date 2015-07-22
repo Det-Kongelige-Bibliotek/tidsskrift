@@ -3,8 +3,8 @@
 /**
  * @file classes/manager/form/AnnouncementForm.inc.php
  *
- * Copyright (c) 2013-2014 Simon Fraser University Library
- * Copyright (c) 2000-2014 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2000-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class AnnouncementForm
@@ -81,7 +81,7 @@ class PKPAnnouncementForm extends Form {
 	 */
 	function getLocaleFieldNames() {
 		$announcementDao =& DAORegistry::getDAO('AnnouncementDAO');
-		return $announcementDao->getLocaleFieldNames();
+		return parent::getLocaleFieldNames() + $announcementDao->getLocaleFieldNames();
 	}
 
 	/**
@@ -97,6 +97,7 @@ class PKPAnnouncementForm extends Form {
 		list($assocType, $assocId) = $this->_getAnnouncementTypesAssocId();
 		$announcementTypes =& $announcementTypeDao->getByAssoc($assocType, $assocId);
 		$templateMgr->assign('announcementTypes', $announcementTypes);
+		$templateMgr->assign('notificationToggle', $this->getData('notificationToggle'));
 
 		parent::display();
 	}
@@ -118,14 +119,18 @@ class PKPAnnouncementForm extends Form {
 					'descriptionShort' => $announcement->getDescriptionShort(null), // Localized
 					'description' => $announcement->getDescription(null), // Localized
 					'datePosted' => $announcement->getDatePosted(),
-					'dateExpire' => $announcement->getDateExpire()
+					'dateExpire' => $announcement->getDateExpire(),
+					'notificationToggle' => false,
 				);
 			} else {
 				$this->announcementId = null;
 				$this->_data = array(
 					'datePosted' => Core::getCurrentDate(),
+					'notificationToggle' => true,
 				);
 			}
+		} else {
+			$this->_data['notificationToggle'] = true;
 		}
 	}
 
@@ -133,7 +138,7 @@ class PKPAnnouncementForm extends Form {
 	 * Assign form data to user-submitted data.
 	 */
 	function readInputData() {
-		$this->readUserVars(array('typeId', 'title', 'descriptionShort', 'description'));
+		$this->readUserVars(array('typeId', 'title', 'descriptionShort', 'description', 'notificationToggle'));
 		$this->readUserDateVars(array('dateExpire', 'datePosted'));
 	}
 

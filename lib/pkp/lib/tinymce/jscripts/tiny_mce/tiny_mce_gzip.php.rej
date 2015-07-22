@@ -1,0 +1,11 @@
+--- lib/pkp/lib/tinymce/jscripts/tiny_mce/tiny_mce_gzip.php	2014-05-06 17:28:22.000000000 -0700
++++ lib/pkp/lib/tinymce/jscripts/tiny_mce/tiny_mce_gzip.php	2015-03-17 15:32:27.528267554 -0700
+@@ -159,7 +159,7 @@
+ 		}
+ 
+ 		// Generate hash for all files
+-		$hash = md5(implode('', $allFiles));
++		$hash = md5(implode('', $allFiles).dirname($_SERVER["SCRIPT_NAME"]));
+ 
+ 		// Check if it supports gzip
+ 		$zlibOn = ini_get('zlib.output_compression') || (ini_set('zlib.output_compression', 0) === false);

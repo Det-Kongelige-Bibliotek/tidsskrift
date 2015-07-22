@@ -4,8 +4,8 @@
 <!--
   * locale/pt_PT/common.xml
   *
-  * Copyright (c) 2013-2014 Simon Fraser University Library
-  * Copyright (c) 2000-2014 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2000-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings for the pt_PT (Português) locale.
@@ -387,4 +387,5 @@
 	<message key="search.cli.rebuildIndex.unknownJournal">O caminho fornecido para a revista "{$journalPath}" não pode ser atribuído a uma revista.</message>
 	<message key="search.deleteFilter">Eliminar</message>
 	<message key="search.indexTermsLong">Todos os campos de indexação de palavras</message>
+	<message key="common.notice">Aviso</message>
 </locale>

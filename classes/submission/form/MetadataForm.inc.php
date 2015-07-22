@@ -3,8 +3,8 @@
 /**
  * @file classes/submission/form/MetadataForm.inc.php
  *
- * Copyright (c) 2013-2014 Simon Fraser University Library
- * Copyright (c) 2003-2014 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class MetadataForm
@@ -448,9 +448,9 @@ class MetadataForm extends Form {
 		}
 
 		if ($this->isEditor) {
-			$article->setStoredCopyrightHolder($this->getData('copyrightHolder'), null);
-			$article->setStoredCopyrightYear($this->getData('copyrightYear'));
-			$article->setStoredLicenseURL($this->getData('licenseURL'));
+			$article->setCopyrightHolder($this->getData('copyrightHolder'), null);
+			$article->setCopyrightYear($this->getData('copyrightYear'));
+			$article->setLicenseURL($this->getData('licenseURL'));
 		}
 
 		parent::execute();

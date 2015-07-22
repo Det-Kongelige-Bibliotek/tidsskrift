@@ -3,8 +3,8 @@
 /**
  * @file pages/sectionEditor/SubmissionEditHandler.inc.php
  *
- * Copyright (c) 2013-2014 Simon Fraser University Library
- * Copyright (c) 2003-2014 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class SubmissionEditHandler
@@ -946,7 +946,7 @@ class SubmissionEditHandler extends SectionEditorHandler {
 		$userId = isset($args[0]) ? $args[0] : 0;
 		if (is_numeric($userId)) {
 			$userId = (int) $userId;
-			$user = $userDao->getUser($userId);
+			$user = $userDao->getById($userId);
 		} else {
 			$user = $userDao->getByUsername($userId);
 		}
@@ -2607,6 +2607,13 @@ class SubmissionEditHandler extends SectionEditorHandler {
 		}
 
 		$sectionEditorSubmissionDao->updateSectionEditorSubmission($submission);
+
+		// Call initialize permissions again to check if copyright year needs to be initialized.
+		$articleDao =& DAORegistry::getDAO('ArticleDAO');
+		$article = $articleDao->getArticle($articleId);
+		$article->initializePermissions();
+		$articleDao->updateLocaleFields($article);
+
 		$articleSearchIndex->articleChangesFinished();
 
 		$request->redirect(null, null, 'submissionEditing', array($articleId), null, 'scheduling');

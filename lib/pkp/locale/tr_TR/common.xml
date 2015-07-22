@@ -4,8 +4,8 @@
 <!--
   * locale/tr_TR/common.xml
   *
-  * Copyright (c) 2013-2014 Simon Fraser University Library
-  * Copyright (c) 2000-2014 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2000-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings for the tr_TR (Türkiye Türkçesi) locale.
@@ -391,4 +391,5 @@
 	<message key="search.cli.rebuildIndex.result">{$numIndexed} makale indekslendi</message>
 	<message key="search.cli.rebuildIndex.unknownJournal">Verilen "{$journalPath}" dergi yolu herhangi bir dergi için çözümlenemedi.</message>
 	<message key="search.cli.rebuildIndex.indexingByJournalNotSupported">Bu arama uygulaması her bir derginin yeniden indekslenmesini kabul etmiyor.</message>
+	<message key="common.notice">Uyarı</message>
 </locale>
