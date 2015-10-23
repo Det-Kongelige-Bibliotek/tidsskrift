@@ -29,15 +29,15 @@
 		<subfield code="a">dc</subfield>
 	</datafield>
 
-	{assign var=title_245 value=$article->getTitle($journal->getPrimaryLocale())}
+        {assign var=title_245 value=$article->getTitle($journal->getPrimaryLocale())}
         {if $title_245}
-               <datafield tag="245" ind1="0" ind2="0">
-                       <subfield code="a">{$title_245|escape}</subfield>
-               </datafield>
+		<datafield tag="245" ind1="0" ind2="0">
+			<subfield code="a">{$title_245|escape}</subfield>
+		</datafield>
         {else}
-               <datafield tag="245" ind1="0" ind2="0">
-                       <subfield code="a">{$article->getArticleTitle()|escape}</subfield>
-               </datafield>
+		<datafield tag="245" ind1="0" ind2="0">
+			<subfield code="a">{$article->getArticleTitle()|escape}</subfield>
+		</datafield>
         {/if}
 
 	{assign var=authors value=$article->getAuthors()}
