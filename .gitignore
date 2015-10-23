@@ -4,3 +4,5 @@ ojs.sql
 ojs_installed
 .vagrant/
 backup/
+plugins/oaiMetadataFormats/marcxml/record.tpl.peho
+public/
