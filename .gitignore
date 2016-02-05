@@ -1,8 +1,8 @@
 config.inc.php
-config.inc.php.bk
-ojs.sql
-ojs_installed
-.vagrant/
-backup/
-plugins/oaiMetadataFormats/marcxml/record.tpl.peho
-public/
+./build
+temp
+files
+.htaccess
+.project
+.buildpath
+.settings

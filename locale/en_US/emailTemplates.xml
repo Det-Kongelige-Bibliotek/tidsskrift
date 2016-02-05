@@ -24,8 +24,8 @@ Link: {$url}
 		<description>The email is sent to registered users that have selected to have this type of notification emailed to them.</description>
 	</email_text>
 	<email_text key="NOTIFICATION_MAILLIST">
-		<subject>New notification from {$siteTitle}</subject>
-		<body>You have a new notification from {$siteTitle}:
+		<subject>New notification from {$journalName}</subject>
+		<body>You have a new notification from {$journalName}:
 --
 {$notificationContents}
 
@@ -38,8 +38,8 @@ If you wish to stop receiving notification emails, please go to {$unsubscribeLin
 		<description>This email is sent to unregistered users on the notification mailing list.</description>
 	</email_text>
 	<email_text key="NOTIFICATION_MAILLIST_WELCOME">
-		<subject>Welcome to the the {$siteTitle} mailing list!</subject>
-		<body>You have signed up to receive notifications from {$siteTitle}.
+		<subject>Welcome to the the {$journalName} mailing list!</subject>
+		<body>You have signed up to receive notifications from {$journalName}.
 
 Please click on this link to confirm your request and add your email address to the mailing list: {$confirmLink}
 
@@ -230,6 +230,106 @@ Thank you for considering this request.
 	</email_text>
 	<email_text key="REVIEW_REQUEST_ONECLICK">
 		<subject>Article Review Request</subject>
+		<body>{$reviewerName}:
+
+I believe that you would serve as an excellent reviewer of the manuscript, "{$articleTitle}," which has been submitted to {$journalName}. The submission's abstract is inserted below, and I hope that you will consider undertaking this important task for us.
+
+Please log into the journal web site by {$weekLaterDate} to indicate whether you will undertake the review or not, as well as to access the submission and to record your review and recommendation.
+
+The review itself is due {$reviewDueDate}.
+
+Submission URL: {$submissionReviewUrl}
+
+Thank you for considering this request.
+
+{$editorialContactSignature}
+
+
+
+"{$articleTitle}"
+
+{$abstractTermIfEnabled}
+{$articleAbstract}</body>
+		<description>This email from the Section Editor to a Reviewer requests that the reviewer accept or decline the task of reviewing a submission. It provides information about the submission such as the title and abstract, a review due date, and how to access the submission itself. This message is used when the Standard Review Process is selected in Journal Setup, Step 2, and one-click reviewer access is enabled.</description>
+	</email_text>
+	<email_text key="REVIEW_REQUEST_REMIND_AUTO">
+		<subject>Article Review Request</subject>
+		<body>{$reviewerName}:
+
+I believe that you would serve as an excellent reviewer of the manuscript, "{$articleTitle}," which has been submitted to {$journalName}. The submission's abstract is inserted below, and I hope that you will consider undertaking this important task for us.
+
+Please log into the journal web site by {$weekLaterDate} to indicate whether you will undertake the review or not, as well as to access the submission and to record your review and recommendation. The web site is {$journalUrl}
+
+The review itself is due {$reviewDueDate}.
+
+If you do not have your username and password for the journal's web site, you can use this link to reset your password (which will then be emailed to you along with your username). {$passwordResetUrl}
+
+Submission URL: {$submissionReviewUrl}
+
+Thank you for considering this request.
+
+{$editorialContactSignature}
+
+
+
+"{$articleTitle}"
+
+{$abstractTermIfEnabled}
+{$articleAbstract}</body>
+		<description>This email from the Section Editor to a Reviewer requests that the reviewer accept or decline the task of reviewing a submission. It provides information about the submission such as the title and abstract, a review due date, and how to access the submission itself. This message is used when the Standard Review Process is selected in Journal Setup, Step 2. (Otherwise see REVIEW_REQUEST_REMIND_AUTO_ATTACHED.)</description>
+	</email_text>
+	<email_text key="REVIEW_REQUEST_REMIND_AUTO_ONECLICK">
+		<subject>Article Review Request</subject>
+		<body>{$reviewerName}:
+
+I believe that you would serve as an excellent reviewer of the manuscript, "{$articleTitle}," which has been submitted to {$journalName}. The submission's abstract is inserted below, and I hope that you will consider undertaking this important task for us.
+
+Please log into the journal web site by {$weekLaterDate} to indicate whether you will undertake the review or not, as well as to access the submission and to record your review and recommendation.
+
+The review itself is due {$reviewDueDate}.
+
+Submission URL: {$submissionReviewUrl}
+
+Thank you for considering this request.
+
+{$editorialContactSignature}
+
+
+
+"{$articleTitle}"
+
+{$abstractTermIfEnabled}
+{$articleAbstract}</body>
+		<description>This email from the Section Editor to a Reviewer requests that the reviewer accept or decline the task of reviewing a submission. It provides information about the submission such as the title and abstract, a review due date, and how to access the submission itself. This message is used when the Standard Review Process is selected in Journal Setup, Step 2, and one-click reviewer access is enabled.</description>
+	</email_text>
+        <email_text key="REVIEW_REQUEST_REMIND_AUTO">
+		<subject>Automated Article Review Request Reminder</subject>
+		<body>{$reviewerName}:
+
+I believe that you would serve as an excellent reviewer of the manuscript, "{$articleTitle}," which has been submitted to {$journalName}. The submission's abstract is inserted below, and I hope that you will consider undertaking this important task for us.
+
+Please log into the journal web site by {$weekLaterDate} to indicate whether you will undertake the review or not, as well as to access the submission and to record your review and recommendation. The web site is {$journalUrl}
+
+The review itself is due {$reviewDueDate}.
+
+If you do not have your username and password for the journal's web site, you can use this link to reset your password (which will then be emailed to you along with your username). {$passwordResetUrl}
+
+Submission URL: {$submissionReviewUrl}
+
+Thank you for considering this request.
+
+{$editorialContactSignature}
+
+
+
+"{$articleTitle}"
+
+{$abstractTermIfEnabled}
+{$articleAbstract}</body>
+		<description>This email from the Section Editor to a Reviewer requests that the reviewer accept or decline the task of reviewing a submission. It provides information about the submission such as the title and abstract, a review due date, and how to access the submission itself. This message is used when the Standard Review Process is selected in Journal Setup, Step 2. (Otherwise see REVIEW_REQUEST_ATTACHED.)</description>
+	</email_text>
+	<email_text key="REVIEW_REQUEST_REMIND_AUTO_ONECLICK">
+		<subject>Automated Article Review Request Reminder</subject>
 		<body>{$reviewerName}:
 
 I believe that you would serve as an excellent reviewer of the manuscript, "{$articleTitle}," which has been submitted to {$journalName}. The submission's abstract is inserted below, and I hope that you will consider undertaking this important task for us.
@@ -457,11 +557,11 @@ Please confirm your ability to complete this vital contribution to the work of t
 
 We have reached a decision regarding your submission to {$journalTitle}, "{$articleTitle}".
 
-Our decision is to:
+Our decision is to: Accept Submission
 
 {$editorialContactSignature}
 </body>
-		<description>This email from the Editor or Section Editor to an Author notifies them of a final decision regarding their submission.</description>
+		<description>This email from the Editor or Section Editor to an Author notifies them of a final "accept submission" decision regarding their submission.</description>
 	</email_text>
 	<email_text key="EDITOR_DECISION_REVISIONS">
 		<subject>Editor Decision</subject>
@@ -469,11 +569,11 @@ Our decision is to:
 
 We have reached a decision regarding your submission to {$journalTitle}, "{$articleTitle}".
 
-Our decision is to:
+Our decision is: Revisions Required
 
 {$editorialContactSignature}
 </body>
-		<description>This email from the Editor or Section Editor to an Author notifies them of a final decision regarding their submission.</description>
+		<description>This email from the Editor or Section Editor to an Author notifies them of a final "revisions required" decision regarding their submission.</description>
 	</email_text>
 	<email_text key="EDITOR_DECISION_RESUBMIT">
 		<subject>Editor Decision</subject>
@@ -481,11 +581,11 @@ Our decision is to:
 
 We have reached a decision regarding your submission to {$journalTitle}, "{$articleTitle}".
 
-Our decision is to:
+Our decision is: Resubmit
 
 {$editorialContactSignature}
 </body>
-		<description>This email from the Editor or Section Editor to an Author notifies them of a final decision regarding their submission.</description>
+		<description>This email from the Editor or Section Editor to an Author notifies them of a final "resubmit" decision regarding their submission.</description>
 	</email_text>
 	<email_text key="EDITOR_DECISION_DECLINE">
 		<subject>Editor Decision</subject>
@@ -493,11 +593,11 @@ Our decision is to:
 
 We have reached a decision regarding your submission to {$journalTitle}, "{$articleTitle}".
 
-Our decision is to:
+Our decision is to: Decline
 
 {$editorialContactSignature}
 </body>
-		<description>This email from the Editor or Section Editor to an Author notifies them of a final decision regarding their submission.</description>
+		<description>This email from the Editor or Section Editor to an Author notifies them of a final "decline" decision regarding their submission.</description>
 	</email_text>
 	<email_text key="COPYEDIT_REQUEST">
 		<subject>Copyediting Request</subject>

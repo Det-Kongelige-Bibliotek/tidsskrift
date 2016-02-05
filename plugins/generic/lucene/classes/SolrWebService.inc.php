@@ -1143,8 +1143,7 @@ class SolrWebService extends XmlWebService {
 				'plugins.generic.lucene.message.indexingIncomplete',
 				array('numProcessed' => $numProcessed, 'numDeleted' => $numDeleted, 'batchCount' => $batchCount)
 			);
-			//KB - we don't want to crash out every time a document fails to import
-			echo $this->_serviceMessage;
+			return null;
 		}
 
 		// Now that we are as sure as we can that the counterparty received
@@ -1184,30 +1183,16 @@ class SolrWebService extends XmlWebService {
 			// Make a POST request with all articles in this batch.
 			$url = $this->_getDihUrl() . '?command=full-import&clean=false';
 			$result = $this->_makeRequest($url, $articleXml, 'POST');
-			if (is_null($result)) {
-				$this->debugIndexingError($url, $articleXml);
-				return null;
-			}
+			if (is_null($result)) return null;
 
 			// Retrieve the number of successfully indexed articles.
 			$numProcessed = $this->_getDocumentsProcessed($result);
-			if ($numProcessed != $batchCount) $this->debugIndexingError($url, $articleXml);
 			return $numProcessed;
 		} else {
 			// Nothing to update.
 			return 0;
 		}
 	}
-	
-	/**
-	* KB - debug function
-	*/
-	function debugIndexingError($url, $articleXml) {
-		echo "\nDANGER! ERROR PROCESSING XML\n";
-		echo "request sent to $url\n";
-		echo $articleXml;
-	}
-
 
 	/**
 	 * Retrieve the XML for a batch of articles to be updated.
@@ -1248,7 +1233,7 @@ class SolrWebService extends XmlWebService {
 			$journal =& $this->_getJournal($article->getJournalId());
 
 			// Check the publication state and subscription state of the article.
-			if ($this->_articleCanBeIndexed($article)) {
+			if ($this->_isArticleAccessAuthorized($article)) {
 				// Mark the article for update.
 				$this->_addArticleXml($articleDoc, $article, $journal);
 			} else {
@@ -1267,27 +1252,6 @@ class SolrWebService extends XmlWebService {
 
 		// Return XML.
 		return XMLCustomWriter::getXml($articleDoc);
-	}
-
-	/**
-	* KB Hack - allow articles to be indexed for search
-	* Even if they're not open access yet
-	**/
-	function _articleCanBeIndexed($article) {
-		if (!is_a($article, 'PublishedArticle')) return false;
-
-		// Get the article's journal.
-		$journal =& $this->_getJournal($article->getJournalId());
-		if (!is_a($journal, 'Journal')) return false;
-
-		// Get the article's issue.
-		$issue =& $this->_getIssue($article->getIssueId(), $journal->getId());
-		if (!is_a($issue, 'Issue')) return false;
-
-		// Only index published articles.
-		if (!$issue->getPublished() || $article->getStatus() != STATUS_PUBLISHED) return false;
-
-		return true;
 	}
 
 	/**
@@ -1312,12 +1276,7 @@ class SolrWebService extends XmlWebService {
 
 		// Add ID information.
 		XMLCustomWriter::setAttribute($articleNode, 'id', $article->getId());
-		
-		// KB - we use this hack to prevent Solr errors for articles with blank section Ids
-		$sectionId = $article->getSectionId();
-		if (!is_numeric($sectionId)) $sectionId = 0;
-		XMLCustomWriter::setAttribute($articleNode, 'sectionId', $sectionId);
-
+		XMLCustomWriter::setAttribute($articleNode, 'sectionId', $article->getSectionId());
 		XMLCustomWriter::setAttribute($articleNode, 'journalId', $article->getJournalId());
 		XMLCustomWriter::setAttribute($articleNode, 'instId', $this->_instId);
 

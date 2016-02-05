@@ -451,14 +451,30 @@ class CrossRefExportDom extends DOIExportDom {
 	 * @param $galleys array
 	 */
 	function &_generateDOIdataDom(&$doc, $DOI, $url, $galleys = null) {
+		$journal =& $this->getJournal();
 		$request = Application::getRequest();
-		$journal = $request->getJournal();
 		$DOIdataNode =& XMLCustomWriter::createElement($doc, 'doi_data');
 		XMLCustomWriter::createChildWithText($doc, $DOIdataNode, 'doi', $DOI);
 		XMLCustomWriter::createChildWithText($doc, $DOIdataNode, 'resource', $url);
 
 		/* article galleys */
 		if ($galleys) {
+			// iParadigms collection element
+			foreach ($galleys as $galley) {
+				$collectionNode = XMLCustomWriter::createElement($doc, 'collection');
+				XMLCustomWriter::setAttribute($collectionNode, 'property', 'crawler-based');
+				XMLCustomWriter::appendChild($DOIdataNode, $collectionNode);
+				$itemNode = XMLCustomWriter::createElement($doc, 'item');
+				XMLCustomWriter::setAttribute($itemNode, 'crawler', 'iParadigms');
+				XMLCustomWriter::appendChild($collectionNode, $itemNode);
+				$resourceNode = XMLCustomWriter::createElement($doc, 'resource');
+				XMLCustomWriter::appendChild($itemNode, $resourceNode);
+				$urlNode = XMLCustomWriter::createTextNode($doc, $request->url($journal->getPath(), 'article', 'viewFile', array($galley->getArticleId(), $galley->getBestGalleyId($journal))));
+				XMLCustomWriter::appendChild($resourceNode, $urlNode);
+			}
+			// end iParadigms
+
+			// text-mining collection element
 			$collectionNode = XMLCustomWriter::createElement($doc, 'collection');
 			XMLCustomWriter::setAttribute($collectionNode, 'property', 'text-mining');
 			XMLCustomWriter::appendChild($DOIdataNode, $collectionNode);
@@ -468,9 +484,10 @@ class CrossRefExportDom extends DOIExportDom {
 				$resourceNode = XMLCustomWriter::createElement($doc, 'resource');
 				XMLCustomWriter::appendChild($itemNode, $resourceNode);
 				XMLCustomWriter::setAttribute($resourceNode, 'mime_type', $galley->getFileType());
-				$urlNode = XMLCustomWriter::createTextNode($doc, $request->url(null, 'article', 'viewFile', array($galley->getArticleId(), $galley->getBestGalleyId($journal))));
+				$urlNode = XMLCustomWriter::createTextNode($doc, $request->url($journal->getPath(), 'article', 'viewFile', array($galley->getArticleId(), $galley->getBestGalleyId($journal))));
 				XMLCustomWriter::appendChild($resourceNode, $urlNode);
 			}
+			// end text-mining
 		}
 
 		return $DOIdataNode;

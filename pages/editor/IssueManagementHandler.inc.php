@@ -1079,12 +1079,17 @@ class IssueManagementHandler extends EditorHandler {
 			}
 
 			import('lib.pkp.classes.validation.ValidatorEmail');
+			$emails = array();
 			while ($recipients && !$recipients->eof()) {
 				$recipient =& $recipients->next();
-				if (preg_match(ValidatorEmail::getRegexp(), $recipient->getEmail())) {
-					$email->addRecipient($recipient->getEmail(), $recipient->getFullName());
-				} else {
-					error_log("Invalid email address: " . $recipient->getEmail());
+				if ($recipient instanceof User && $recipient->getDisabled()) continue;
+				if (!isset($emails[$recipient->getEmail()])) {
+					if (preg_match(ValidatorEmail::getRegexp(), $recipient->getEmail())) {
+						$email->addRecipient($recipient->getEmail(), $recipient->getFullName());
+					} else {
+						error_log("Invalid email address: " . $recipient->getEmail());
+					}
+					$emails[$recipient->getEmail()] = 1;
 				}
 				unset($recipient);
 			}
@@ -1092,6 +1097,7 @@ class IssueManagementHandler extends EditorHandler {
 			if($request->getUserVar('sendToMailList')) {
 				$mailList = $notificationMailListDao->getMailList($journal->getId());
 				foreach ($mailList as $mailListRecipient) {
+					if ($recipient instanceof User && $recipient->getDisabled()) continue;
 					$email->addRecipient($mailListRecipient);
 				}
 			}

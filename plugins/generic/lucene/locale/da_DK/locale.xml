@@ -11,52 +11,52 @@
   * OJS solr/lucene search plugin localization strings
   -->
  
-<locale name="da_DK" full_name="Danish">
+<locale name="da_DK" full_name="Dansk">
 	<message key="plugins.generic.lucene.displayName">Lucene Search Plugin</message>
 	<message key="plugins.generic.lucene.description">The Lucene plugin provides multi-language support, improved search result relevance, faster indexing, better scalability and more.</message>
 
 	<message key="plugins.generic.lucene.faceting.displayName">Lucene Faceting</message>
 	<message key="plugins.generic.lucene.faceting.description">Faceting Block Plugin for Lucene</message>
-	<message key="plugins.generic.lucene.faceting.title">Vis Kun</message>
-	<message key="plugins.generic.lucene.faceting.discipline">Disciplin</message>
-	<message key="plugins.generic.lucene.faceting.subject">Nøgleord</message>
-	<message key="plugins.generic.lucene.faceting.type">Metode/Tilgang</message>
-	<message key="plugins.generic.lucene.faceting.coverage">Dækning</message>
-	<message key="plugins.generic.lucene.faceting.journalTitle">Tidsskrift</message>
-	<message key="plugins.generic.lucene.faceting.authors">Forfatter</message>
-	<message key="plugins.generic.lucene.faceting.publicationDate">Udgivelsesdato</message>
+	<message key="plugins.generic.lucene.faceting.title">refine your search</message>
+	<message key="plugins.generic.lucene.faceting.discipline">Discipline</message>
+	<message key="plugins.generic.lucene.faceting.subject">Keyword</message>
+	<message key="plugins.generic.lucene.faceting.type">Method/Approach</message>
+	<message key="plugins.generic.lucene.faceting.coverage">Coverage</message>
+	<message key="plugins.generic.lucene.faceting.journalTitle">Journal</message>
+	<message key="plugins.generic.lucene.faceting.authors">Author</message>
+	<message key="plugins.generic.lucene.faceting.publicationDate">Publication Date</message>
 	
 	<message key="plugins.generic.lucene.message.coreNotFound">The requested core '{$core}' was not found on the Solr server. Is it online?</message>
 	<message key="plugins.generic.lucene.message.indexingIncomplete">An error occurred while indexing: Processed {$numProcessed} out of a batch of {$batchCount} ({$numDeleted} deleted documents in this batch).</message>
 	<message key="plugins.generic.lucene.message.indexOnline">Index with {$numDocs} documents online.</message>
 	<message key="plugins.generic.lucene.message.pullIndexingDisabled">Pull indexing is not enabled. Please enable it in the Lucene plug-in settings.</message>
-	<message key="plugins.generic.lucene.message.searchServiceOffline">Søgesystemet er midlertidlig ude af drift</message>
-	<message key="plugins.generic.lucene.message.techAdminInformed">Administratoren er blevet informeret om problemet.</message>
+	<message key="plugins.generic.lucene.message.searchServiceOffline">Unfortunately the OJS search service is currently offline.</message>
+	<message key="plugins.generic.lucene.message.techAdminInformed">The technical administrator of this journal has been informed about the problem.</message>
 	<message key="plugins.generic.lucene.message.webServiceError">The Lucene web service returned an error.</message>
 
 	<message key="plugins.generic.lucene.rebuildIndex.pullResult">{$numMarked} articles marked for update</message>
 	
-	<message key="plugins.generic.lucene.results.didYouMean">Mente du</message>
-	<message key="plugins.generic.lucene.results.orderBy">Sorter efter</message>
-	<message key="plugins.generic.lucene.results.orderBy.relevance">Relevans</message>
-	<message key="plugins.generic.lucene.results.orderBy.author">Forfatter</message>
-	<message key="plugins.generic.lucene.results.orderBy.issue">Nummer</message>
-	<message key="plugins.generic.lucene.results.orderBy.date">Udgivelsesdato</message>
-	<message key="plugins.generic.lucene.results.orderBy.journal">Tidsskrift titel</message>
-	<message key="plugins.generic.lucene.results.orderBy.article">Artikel titel</message>
-	<message key="plugins.generic.lucene.results.orderDir.asc">Stigende</message>
-	<message key="plugins.generic.lucene.results.orderDir.desc">Faldende</message>
-	<message key="plugins.generic.lucene.results.similarDocuments">lignende dokumenter</message>
+	<message key="plugins.generic.lucene.results.didYouMean">Did you mean</message>
+	<message key="plugins.generic.lucene.results.orderBy">Order results by</message>
+	<message key="plugins.generic.lucene.results.orderBy.relevance">Relevance</message>
+	<message key="plugins.generic.lucene.results.orderBy.author">Author</message>
+	<message key="plugins.generic.lucene.results.orderBy.issue">Issue</message>
+	<message key="plugins.generic.lucene.results.orderBy.date">Publication Date</message>
+	<message key="plugins.generic.lucene.results.orderBy.journal">Journal Title</message>
+	<message key="plugins.generic.lucene.results.orderBy.article">Article Title</message>
+	<message key="plugins.generic.lucene.results.orderDir.asc">Ascending</message>
+	<message key="plugins.generic.lucene.results.orderDir.desc">Descending</message>
+	<message key="plugins.generic.lucene.results.similarDocuments">similar documents</message>
 	<message key="plugins.generic.lucene.results.syntaxInstructions"><![CDATA[
-		Hjælp til søgning: <ul>
-			<li>Søgningen behandler store og små bogstaver ens</li>
-			<li>De mest almindelige ord bliver ignoreret i søgning</li>
-			<li>Artikler der indeholder nogle af søgeordene bliver returneret. (dvs., <em>ELLER</em> er indforstået)</li>
-			<li>Hvis en søgeord <em>skal</em> være tilstede, tilføj <strong>+</strong> til starten; e.g., <em>+journal +access scholarly academic</em></li>
-			<li>Sammensæt flere ord med <em>AND</em> hvis du skal finde artikler med alle søgetermer; f.eks., <em>education AND research</em></li>
-			<li>Du kan udelukke materialer,  der indeholder bestemte enkeltord eller sammensatte begreber ved at tilføje <strong>-</strong> eller <em>NOT</em>; f.eks., <em>online -politics</em> or <em>online NOT politics</em></li>
-			<li>Søger du efter et sammensatte begreb, skal du sætte det i citationstegn, dvs. du søger efter den eksakte søgestreng, f.eks  <em>"open access publishing"</em>. </li> 
-			<li>Brug parentes for at lave mere kompleks søgninger; f.eks., <em>archive ((journal AND conference) NOT theses)</em></li>
+		<h4>Search tips:</h4><ul>
+			<li>Search terms are case-insensitive</li>
+			<li>Common words are ignored</li>
+			<li>By default articles containing <em>any</em> term in the query are returned (i.e., <em>OR</em> is implied)</li>
+			<li>Make sure that a word exists in an article by prefixing it with <strong>+</strong>; e.g., <em>+journal +access scholarly academic</em></li>
+			<li>Combine multiple words with <em>AND</em> to find articles containing all terms; e.g., <em>education AND research</em></li>
+			<li>Exclude a word by prefixing it with <strong>-</strong> or <em>NOT</em>; e.g., <em>online -politics</em> or <em>online NOT politics</em></li>
+			<li>Search for an exact phrase by putting it in quotes; e.g., <em>"open access publishing"</em>. Hint: Quoting Chinese or Japanese words will help you to find exact word matches in mixed-language fields, e.g. "中国".</li> 
+			<li>Use parentheses to create more complex queries; e.g., <em>archive ((journal AND conference) NOT theses)</em></li>
 		 </ul>
 	]]></message>
 

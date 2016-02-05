@@ -21,8 +21,8 @@ Link: {$url}
 		<description>Wiadomość jest przesyłana do zarejestrowanych użytkowników, którzy zadeklarowali chęć otrzymywania określonego typu powiadomień.</description>
 	</email_text>
 	<email_text key="NOTIFICATION_MAILLIST">
-		<subject>Nowe powiadomienie ze strony czasopisma {$siteTitle}</subject>
-		<body>Na stronie czasopisma {$siteTitle} oczekuje nowe powiadomienie:
+		<subject>Nowe powiadomienie ze strony czasopisma {$journalName}</subject>
+		<body>Na stronie czasopisma {$journalName} oczekuje nowe powiadomienie:
 
 {$notificationContents}
 
@@ -36,8 +36,8 @@ W celu wyłączenia subskrypcji powiadomień na skrzynkę e-mail, należy przej�
 		<description>Wiadomość jest przesyłana do niezarejestrowanych użytkowników z listy mailingowej powiadomień.</description>
 	</email_text>
 	<email_text key="NOTIFICATION_MAILLIST_WELCOME">
-		<subject>Witamy na liście mailingowej czasopisma {$siteTitle}!</subject>
-		<body>Zarejestrował/a się Pan/Pani na stronie czasopisma {$siteTitle}, aby subskrybować powiadomienia.
+		<subject>Witamy na liście mailingowej czasopisma {$journalName}!</subject>
+		<body>Zarejestrował/a się Pan/Pani na stronie czasopisma {$journalName}, aby subskrybować powiadomienia.
 
 Aby potwierdzić należy subskrypcję powiadomień należy kliknąć w poniższy link:
 {$confirmLink}
@@ -48,15 +48,6 @@ Hasło do rezygnacji z subskrypcji powiadomień: {$password}
 
 {$principalContactSignature}</body>
 		<description>Wiadomość jest przesyłana do niezarejestrowanych użytkowników, którzy właśnie dodali swoje adresy e-mail do listy mailingowej powiadomień.</description>
-	</email_text>
-	<email_text key="NOTIFICATION_MAILLIST_PASSWORD">
-		<subject>Nowe powiadomienie dla członka listy mailingowej czasopisma {$siteTitle}</subject>
-		<body>Nowe hasło dla rezygnacji z subskrypcji powiadomień: {$password}
-
-W celu rezygnacji z powiadomień, należy przejść na stronę {$unsubscribeLink}, wprowadź e-mail i hasło.
-
-{$principalContactSignature}</body>
-		<description>Wiadomość jest przesyłana do niezarejestrowanych użytkowników z listy mailingowej powiadomień, którzy mają problem z zalogowaniem. Do wiadomości załączony jest link służący do zresetowania hasła.</description>
 	</email_text>
 	<email_text key="PASSWORD_RESET_CONFIRM">
 		<subject>Potwierdzenie resetowania hasła</subject>
@@ -243,6 +234,55 @@ Dziękujemy za rozważenie naszej propozycji,
 		<description>Wiadomość od redaktora działu przesyłana do recenzenta. Zawiera prośbę o przygotowanie recenzji artykułu, jego tytuł i abstrakt, a także zalecenie dot. zresetowania hasła w sytuacji, gdy recenzent nie pamięta danych do logowania. Wysyłana, jeśli recenzent pracować będzie w systemie.</description>
 	</email_text>
 	<email_text key="REVIEW_REQUEST_ONECLICK">
+		<subject>Prośba o sporządzenie recenzji artykułu</subject>
+		<body>Szanowny/a Panie/Pani {$reviewerName}:
+
+w naszej opinii jest Pan/Pani właściwą osobą do sporządzenia recenzji artykułu "{$articleTitle}", zgłoszonego do czasopisma {$journalName}. Poniżej zamieszczamy abstrakt artykułu. Mamy nadzieję, że weźmie Pan/Pani pod uwagę realizację tak ważnego dla nas zadania.
+
+Prosimy o zalogowanie się na stronie czasopisma nie później niż {$weekLaterDate} w celu przyjęcia lub odrzucenia naszej prośby. Po akceptacji otrzyma Pan/Pani dostęp do zgłoszonego tekstu oraz możliwość przesłania swojej recenzji i rekomendacji. 
+
+Termin przygotowania recenzji: {$reviewDueDate}
+
+WWW tekstu: {$submissionReviewUrl}
+
+
+Dziękujemy za rozważenie naszej propozycji,
+{$editorialContactSignature}
+
+
+"{$articleTitle}"
+
+{$abstractTermIfEnabled}
+{$articleAbstract}</body>
+		<description>Wiadomość od redaktora działu przesyłana do recenzenta. Zawiera prośbę o przygotowanie recenzji artykułu, jego tytuł i abstrakt. Przesyłane, jeśli opcja one-click reviewer jest dostępna i jeśli recenzent nie jest mistrzem IT :)))</description>
+	</email_text>
+	<email_text key="REVIEW_REQUEST_REMIND_AUTO">
+		<subject>Prośba o sporządzenie recenzji artykułu</subject>
+		<body>Szanowny/a Panie/Pani {$reviewerName}:
+
+w naszej opinii jest Pan/Pani właściwą osobą do sporządzenia recenzji artykułu "{$articleTitle}", zgłoszonego do czasopisma {$journalName}. Poniżej zamieszczamy abstrakt artykułu. Mamy nadzieję, że weźmie Pan/Pani pod uwagę realizację tak ważnego dla nas zadania.
+
+Prosimy o zalogowanie się na stronie czasopisma nie później niż {$weekLaterDate} w celu przyjęcia lub odrzucenia naszej prośby. Po akceptacji otrzyma Pan/Pani dostęp do zgłoszonego tekstu oraz możliwość przesłania swojej recenzji i rekomendacji. 
+
+Strona czasopisma: {$journalUrl}
+
+Termin przygotowania recenzji: {$reviewDueDate}
+
+Jeśli nie posiada Pan/Pani danych niezbędnych do zalogowania się na stronie czasopisma, proszę o przejście na stronę:{$passwordResetUrl}
+
+WWW zgłoszonego tekstu: {$submissionReviewUrl}
+
+Dziękujemy za rozważenie naszej propozycji,
+{$editorialContactSignature}
+
+
+"{$articleTitle}"
+
+{$abstractTermIfEnabled}
+{$articleAbstract}</body>
+		<description>Wiadomość od redaktora działu przesyłana do recenzenta. Zawiera prośbę o przygotowanie recenzji artykułu, jego tytuł i abstrakt, a także zalecenie dot. zresetowania hasła w sytuacji, gdy recenzent nie pamięta danych do logowania. Wysyłana, jeśli recenzent pracować będzie w systemie.</description>
+	</email_text>
+	<email_text key="REVIEW_REQUEST_REMIND_AUTO_ONECLICK">
 		<subject>Prośba o sporządzenie recenzji artykułu</subject>
 		<body>Szanowny/a Panie/Pani {$reviewerName}:
 

@@ -217,6 +217,56 @@ Eskerrik asko gure eskaera kontuan hartzeagatik.
 {$articleAbstract}</body>
 		<description>Mezu hau Ataleko editoreak bidaltzen dio Ebaluatzaile bati, artikulu bat ebaluatzea onartuko duen ala ez galdetzeko. Artikuluari buruzko informazioa ematen du, hala nola titulua eta laburpena, ebaluazioa egiteko epea eta artikulua bera hartzeko zer egin behar den. Mezu hau erabiltzen da aldizkariaren Konfigurazioko 2. urratsean Ebaluazio-prozesu estandarra hautatzen denean, eta klik bakarreko ebaluatzaile-sarbidea gaitzen denean.</description>
 	</email_text>
+	<email_text key="REVIEW_REQUEST_REMIND_AUTO">
+		<subject>Artikulua ebaluatzeko eskaera</subject>
+		<body>{$reviewerName}:
+
+Uste dut ebaluatzaile bikaina izango zinatekeela {$journalName} aldizkarira bidali diguten {$articleTitle} eskuizkribuari buruzko iritzia emateko. Artikuluaren laburpena behean duzu, eta espero dut aintzakotzat hartu eta pentsatuko duzula guretzat lan garrantzitsu hau egiteko eskaera.
+
+Mesedez, sar zaitez aldizkariaren webgunean {$weekLaterDate} aurretik, eta esaguzu ebaluazioa egiteko prest zauden ala ez, eta prest egonez gero, artikulua hartzeko eta zure ebaluazio-txostena eta gomendioa emateko. Webgunea {$journalUrl} da
+
+Ebaluazioa egiteko epea {$reviewDueDate} izango litzateke.
+
+Ez badaukazu aldizkariaren webgunean sartzeko erabiltzaile-izenik eta pasahitzik, behean ematen den esteka erabil dezakezu pasahitza berrezartzeko (erabiltzaile-izenarekin batera bidaliko dizugu). {$passwordResetUrl}
+
+Artikuluaren URLa: {$submissionReviewUrl}
+
+Eskerrik asko gure eskaera kontuan hartzeagatik.
+
+{$editorialContactSignature}
+
+
+
+"{$articleTitle}"
+
+{$abstractTermIfEnabled}
+{$articleAbstract}</body>
+		<description>Mezu hau Ataleko editoreak bidaltzen dio Ebaluatzaile bati, artikulu bat ebaluatzea onartuko duen ala ez galdetzeko. Artikuluari buruzko informazioa ematen du, hala nola titulua eta laburpena, ebaluazioa egiteko epea eta artikulua bera hartzeko zer egin behar den. Mezu hau erabiltzen da aldizkariaren Konfigurazioko 2. urratsean Ebaluazio-prozesu estandarra hautatzen denean. (Bestela, ikus REVIEW_REQUEST_REMIND_AUTO_ATTACHED).</description>
+	</email_text>
+	<email_text key="REVIEW_REQUEST_REMIND_AUTO_ONECLICK">
+		<subject>Artikulua ebaluatzeko eskaera</subject>
+		<body>{$reviewerName}:
+
+Uste dut ebaluatzaile bikaina izango zinatekeela {$journalName} aldizkarira bidali diguten {$articleTitle} eskuizkribuari buruzko iritzia emateko. Artikuluaren laburpena behean duzu, eta espero dut aintzakotzat hartu eta pentsatuko duzula guretzat lan garrantzitsu hau egiteko eskaera.
+
+Mesedez, sar zaitez aldizkariaren webgunean {$weekLaterDate} aurretik, eta esaguzu ebaluazioa egiteko prest zauden ala ez, eta prest egonez gero, artikulua hartzeko eta zure ebaluazio-txostena eta gomendioa emateko.
+
+Ebaluazioa egiteko epea {$reviewDueDate} izango litzateke.
+
+Artikuluaren URLa: {$submissionReviewUrl}
+
+Eskerrik asko gure eskaera kontuan hartzeagatik.
+
+{$editorialContactSignature}
+
+
+
+"{$articleTitle}"
+
+{$abstractTermIfEnabled}
+{$articleAbstract}</body>
+		<description>Mezu hau Ataleko editoreak bidaltzen dio Ebaluatzaile bati, artikulu bat ebaluatzea onartuko duen ala ez galdetzeko. Artikuluari buruzko informazioa ematen du, hala nola titulua eta laburpena, ebaluazioa egiteko epea eta artikulua bera hartzeko zer egin behar den. Mezu hau erabiltzen da aldizkariaren Konfigurazioko 2. urratsean Ebaluazio-prozesu estandarra hautatzen denean, eta klik bakarreko ebaluatzaile-sarbidea gaitzen denean.</description>
+	</email_text>
 	<email_text key="REVIEW_REQUEST_ATTACHED">
 		<subject>Artikulua ebaluatzeko eskaera</subject>
 		<body>{$reviewerName}:
@@ -720,8 +770,8 @@ Esteka: {$url}
 		<description>Mezu hau mota honetako jakinarazpena jasotzea hautatu duten erabiltzaile erregistratuei bidaltzen zaie.</description>
 	</email_text>
 	<email_text key="NOTIFICATION_MAILLIST">
-		<subject>{$siteTitle} gunearen jakinarazpen berria</subject>
-		<body>{$siteTitle} gunearen jakinarazpen berri bat daukazu:
+		<subject>{$journalName} gunearen jakinarazpen berria</subject>
+		<body>{$journalName} gunearen jakinarazpen berri bat daukazu:
 --
 {$notificationContents}
 
@@ -734,8 +784,8 @@ Jakinarazpen-mezu gehiago jaso nahi ez baduzu, joan {$unsubscribeLink} orrira et
 		<description>Mezu hau jakinarazpenen posta-zerrendako erabiltzaile erregistratu gabeei bidaltzen zaie.</description>
 	</email_text>
 	<email_text key="NOTIFICATION_MAILLIST_WELCOME">
-		<subject>Ongi etorri {$siteTitle} posta-zerrendara!</subject>
-		<body>{$siteTitle} gunearen jakinarazpenak jasotzeko izena eman duzu.
+		<subject>Ongi etorri {$journalName} posta-zerrendara!</subject>
+		<body>{$journalName} gunearen jakinarazpenak jasotzeko izena eman duzu.
 
 Egin klik esteka honetan zure eskaera berresteko eta zure helbide elektronikoa posta-zerrendan gehitzeko: {$confirmLink}
 

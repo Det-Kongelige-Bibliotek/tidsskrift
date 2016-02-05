@@ -28,17 +28,9 @@
 	<datafield tag="042" ind1=" " ind2=" ">
 		<subfield code="a">dc</subfield>
 	</datafield>
-
-        {assign var=title_245 value=$article->getTitle($journal->getPrimaryLocale())}
-        {if $title_245}
-		<datafield tag="245" ind1="0" ind2="0">
-			<subfield code="a">{$title_245|escape}</subfield>
-		</datafield>
-        {else}
-		<datafield tag="245" ind1="0" ind2="0">
-			<subfield code="a">{$article->getArticleTitle()|escape}</subfield>
-		</datafield>
-        {/if}
+	<datafield tag="245" ind1="0" ind2="0">
+		<subfield code="a">{$article->getTitle($journal->getPrimaryLocale())|escape}</subfield>
+	</datafield>
 
 	{assign var=authors value=$article->getAuthors()}
 	{foreach from=$authors item=author}

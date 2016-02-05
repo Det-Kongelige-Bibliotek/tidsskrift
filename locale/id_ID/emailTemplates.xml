@@ -24,8 +24,8 @@ tautan: {$url}
 		<description>Email ini dikirim untuk pengguna yang telah terdaftar yang memilih untuk menerima tipe notifikasi ini dikirim melalui email kepada mereka. </description>
 	</email_text>
 	<email_text key="NOTIFICATION_MAILLIST">
-		<subject>Notifikasi baru dari {$siteTitle}</subject>
-		<body>Anda punya notifikasi baru dari {$siteTitle}:
+		<subject>Notifikasi baru dari {$journalName}</subject>
+		<body>Anda punya notifikasi baru dari {$journalName}:
 --
 {$notificationContents}
 
@@ -38,8 +38,8 @@ Jika Anda ingin berhenti menerima email notifikasi, pergilah ke {$unsubscribeLin
 		<description>Email ini dikirim untuk pengguna yang telah terdaftar di mailing list notifikasi.</description>
 	</email_text>
 	<email_text key="NOTIFICATION_MAILLIST_WELCOME">
-		<subject>Selamat datang ke  mailing list{$siteTitle}!</subject>
-		<body>Anda telah sign up untuk menerima notifikasi dari {$siteTitle}.
+		<subject>Selamat datang ke  mailing list{$journalName}!</subject>
+		<body>Anda telah sign up untuk menerima notifikasi dari {$journalName}.
 			
 Klik di tautan ini untuk mengkonfirmasi permintaan Anda dan tambahkan alamat email Anda ke mailing list: {$confirmLink}
 
@@ -49,15 +49,6 @@ Kata sandi Anda untuk menon-aktifkan email adalah: {$password}
 
 {$principalContactSignature}</body>
 		<description>Email ini dikirim ke pengguna yang tidak terdaftar yang baru saja terdaftar dengan mailing list notifikasi.</description>
-	</email_text>
-	<email_text key="NOTIFICATION_MAILLIST_PASSWORD">
-		<subject>informasi mailing list notifikasi Anda untuk {$siteTitle}</subject>
-		<body>Kata sandi baru Anda untuk menon-aktifkan email notifikasi adalah: {$password}
-
-Jika Anda ingin berhenti menerima email notifikasi, pergilah ke {$unsubscribeLink} dan masukkan alamat email dan kata sandi Anda.
-
-{$principalContactSignature}</body>
-		<description>Email ini dikirim ke pengguna yang tidak terdaftar di mailing list notifikasi saat mereka menunjukkan bahwa mereka lupa kata sandi mereka atau tidak bisa login. Email ini menyediakan URL yang bisa mereka ikuti untuk mengatur ulang kata sandi mereka. </description>
 	</email_text>
 	<email_text key="PASSWORD_RESET_CONFIRM">
 		<subject>Konfirmasi Atur Ulang Kata Sandi</subject>
@@ -242,6 +233,59 @@ Terima kasih untuk mempertimbangkan permintaan ini.
 		<description>Email ini dari Editor Bagian untuk Reviewer yang meminta Reviewer untuk menerima atau menolak tugas mereview naskah. Email ini memberikan informasi tentang naskah seperti judul dan abstrak, tanggal jatuh tempo review, dan bagaimana mengakses naskah itu sendiri. Pesan ini digunakan saat proses review standar dipilih di Setup Jurnal, Langkah 2. (Jika tidak, lihat  REVIEW_REQUEST_ATTACHED.)</description>
 	</email_text>
 	<email_text key="REVIEW_REQUEST_ONECLICK">
+		<subject>Permintaan Review Artikel</subject>
+		<body>{$reviewerName}:
+
+Saya yakin Anda akan berperan sebagai Reviewer handal manuskrip, "{$articleTitle}," yang telah diserahkan ke {$journalName}. Abstrak naskah disertakan di bawah ini, dan saya harap Anda akan mempertimbangkan untuk mengambil tugas penting ini untuk kami.
+
+Login ke web site jurnal sebelum tanggal {$weekLaterDate} untuk menunjukkan apakah Anda akan mengambil review atau tidak, serta untuk mengakses naskah dan mencatat review dan rekomendasi Anda.
+
+Review jatuh tempo sebelum tanggal {$reviewDueDate}.
+
+URL Penyerahan: {$submissionReviewUrl}
+
+Terima kasih untuk mempertimbangkan permintaan ini.
+
+{$editorialContactSignature}
+
+
+
+"{$articleTitle}"
+
+{$abstractTermIfEnabled}
+{$articleAbstract}</body>
+		<description>Email ini dari Editor Bagian untuk Reviewer yang meminta Reviewer untuk menerima atau menolak tugas mereview naskah. Email ini memberikan informasi tentang naskah seperti judul dan abstrak, tanggal jatuh tempo tijauan, dan bagaimana mengakses naskah itu sendiri. Pesan ini digunakan saat proses review standar dipilih di Setup Jurnal, Langkah 2 dan akses Reviewer satu kali klik dapat digunakan. </description>
+	</email_text>
+	<email_text key="REVIEW_REQUEST_REMIND_AUTO">
+		<subject>Permintaan Review Artikel</subject>
+		<body>{$reviewerName}:
+
+Saya yakin Anda dapat menjadi reviewer handal manuskrip, "{$articleTitle}," yang telah diserahkan ke {$journalName}. Abstrak naskah disertakan di bawah ini, dan saya harap Anda mempertimbangkan untuk mengambil tugas penting ini untuk kami. 
+
+
+Mohon login ke web site jurnal sebelum tanggal {$weekLaterDate} untuk menunjukkan apakah Anda akan mengambil Review ini atau tidak, serta untuk mengakses naskah dan mencatat Review dan rekomendasi Anda. Web sitenya adalah {$journalUrl}
+
+Review jatuh tempo tanggal {$reviewDueDate}.
+
+Jika Anda tidak punya nama pengguna dan kata sandi untuk web site jurnal, Anda dapat menggunakan tautan ini untuk mengatur ulang kata sandi Anda (yang kemudian akan diemail kepada Anda beserta nama pengguna Anda). 
+
+{$passwordResetUrl}
+
+URL Penyerahan: {$submissionReviewUrl}
+
+Terima kasih untuk mempertimbangkan permintaan ini.
+
+{$editorialContactSignature}
+
+
+
+"{$articleTitle}"
+
+{$abstractTermIfEnabled}
+{$articleAbstract}</body>
+		<description>Email ini dari Editor Bagian untuk Reviewer yang meminta Reviewer untuk menerima atau menolak tugas mereview naskah. Email ini memberikan informasi tentang naskah seperti judul dan abstrak, tanggal jatuh tempo review, dan bagaimana mengakses naskah itu sendiri. Pesan ini digunakan saat proses review standar dipilih di Setup Jurnal, Langkah 2. (Jika tidak, lihat  REVIEW_REQUEST_REMIND_AUTO_ATTACHED.)</description>
+	</email_text>
+	<email_text key="REVIEW_REQUEST_REMIND_AUTO_ONECLICK">
 		<subject>Permintaan Review Artikel</subject>
 		<body>{$reviewerName}:
 

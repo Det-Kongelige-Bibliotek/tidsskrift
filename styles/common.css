@@ -16,12 +16,6 @@
 @import url("../lib/pkp/styles/themes/default/pnotify.css");
 @import url("../lib/pkp/styles/themes/default/notificationIcons.css");
 
-body {
-	font-size:130%;
-	font-family: Georgia,'Times New Roman',Times,serif;
-	background-color: #FFF;
-}
-
 .ui-pnotify-title {
 	font-size: 0.8em;
 }
@@ -39,7 +33,7 @@ body {
  */
 
 a:link {
-	color: #000;
+	color: #375;
 }
 
 a:active {
@@ -47,27 +41,12 @@ a:active {
 }
 
 a:visited {
-	color: #999;
+	color: #375;
 }
 
 a:hover {
-	color: #716b7a;
-}
-
-a.textLink{
-	text-transform: none;
-	text-decoration: none;
-}
-
-a.titleLink {
-  text-transform: none;
-  text-decoration: none;
-}
-
-.cookie {
-  padding-right: 5px !important;
-  padding-bottom:5px;
-  background: url("https://tidsskrift.dk/styles/iconsmall.png") no-repeat scroll 100% 50% transparent;
+	color: #253;
+	background: #CDC;
 }
 
 
@@ -76,15 +55,11 @@ a.titleLink {
  */
 
 #header {
-	background-color: #000;
-}
-
-#header h1{
-	color: #FFF;
+	background-color: #ABA;
 }
 
 #footer {
-	background-color: #000;
+	background-color: #ABA;
 }
 
 #main {

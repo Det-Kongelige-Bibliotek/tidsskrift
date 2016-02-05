@@ -94,13 +94,10 @@ class ArticleGalley extends ArticleFile {
 	 */
 	function getGalleyLabel() {
 		$label = $this->getLabel();
-		/* KB - comment out to prevent incorrect locale data from being shown */
-		/*
 		if ($this->getLocale() != AppLocale::getLocale()) {
 			$locales = AppLocale::getAllLocales();
 			$label .= ' (' . $locales[$this->getLocale()] . ')';
 		}
-		*/
 		return $label;
 	}
 

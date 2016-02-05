@@ -2,7 +2,7 @@
 <!DOCTYPE email_texts SYSTEM "../../lib/pkp/dtd/emailTemplateData.dtd">
 
 <!--
-  * locale/cz_CZ/emailTemplateData.xml
+  * locale/cs_CZ/emailTemplateData.xml
   *
   * Copyright (c) 2013-2015 Simon Fraser University Library
   * Copyright (c) 2003-2015 John Willinsky
@@ -193,6 +193,56 @@ Děkujeme za zvážení této žádosti.
 		<description>Tento email od editora sekce pro recenzenta žádá, aby recenzent přijal nebo odmítl úkol zpracovat recenzi příspěvku. Obsahuje informace o příspěvku, jako je název a abstrakt, termín pro zpracování recenze a jak se dostat k samotnému příspěvku. Tato zpráva je používána, pokud je zvoleno Standardní recenzí řízení ve druhém kroku  Nastavení časopisu. (V jiném případě viz REVIEW_REQUEST_ATTACHED.)</description>
 	</email_text>
 	<email_text key="REVIEW_REQUEST_ONECLICK">
+		<subject>Žádost o zpracování recenze článku</subject>
+		<body>{$reviewerName}:
+
+Domnívám se, že byste mohl být výborným recenzentem příspěvku "{$articleTitle}," který byl zaslán do {$journalName}. Abstrakt příspěvku je vložen níže. Věřím, že zvážíte možnost přijetí tohoto pro nás důležitého úkolu.
+
+Prosím, přihlaste se do {$weekLaterDate} na stránkách časopisu, abyste uvedl, zda recenzi zpracujete nebo ne a také pro přístup k příspěvku a zaznamenání Vaší recenze a doporučení.
+
+Termín pro zpracování recenze je {$reviewDueDate}.
+
+URL příspěvku: {$submissionReviewUrl}
+
+Děkujeme za zvážení této žádosti.
+
+{$editorialContactSignature}
+
+
+
+"{$articleTitle}"
+
+{$abstractTermIfEnabled}
+{$articleAbstract}</body>
+		<description>Tento email od editora sekce pro recenzenta žádá, aby recenzent přijal nebo odmítl úkol zpracovat recenzi příspěvku. Obsahuje informace o příspěvku, jako je název a abstrakt, termín pro zpracování recenze a jak se dostat k samotnému příspěvku. Tato zpráva je používána, pokud je zvoleno Standardní recenzí řízení ve druhém kroku  Nastavení časopisu a je povolen přístup recenzenta na jedno kliknutí.</description>
+	</email_text>
+	<email_text key="REVIEW_REQUEST_REMIND_AUTO">
+		<subject>Žádost o zpracování recenze článku</subject>
+		<body>{$reviewerName}:
+
+Domnívám se, že byste mohl být výborným recenzentem příspěvku "{$articleTitle}," který byl zaslán do {$journalName}. Abstrakt příspěvku je vložen níže. Věřím, že zvážíte možnost přijetí tohoto pro nás důležitého úkolu.
+
+Prosím, přihlaste se do {$weekLaterDate} na stránkách časopisu, abyste uvedl, zda recenzi zpracujete nebo ne a také pro přístup k příspěvku a zaznamenání Vaší recenze a doporučení. Adresa webové stránky je {$journalUrl}
+
+Termín pro zpracování recenze je {$reviewDueDate}.
+
+Pokud nemáte své uživatelské jméno a heslo pro webovou stránku časopisu, můžete použít tento odkaz pro resetování Vašeho hesla (které Vám bude zasláno emailem spolu s Vaším uživatelským jménem). {$passwordResetUrl}
+
+URL příspěvku: {$submissionReviewUrl}
+
+Děkujeme za zvážení této žádosti.
+
+{$editorialContactSignature}
+
+
+
+"{$articleTitle}"
+
+{$abstractTermIfEnabled}
+{$articleAbstract}</body>
+		<description>Tento email od editora sekce pro recenzenta žádá, aby recenzent přijal nebo odmítl úkol zpracovat recenzi příspěvku. Obsahuje informace o příspěvku, jako je název a abstrakt, termín pro zpracování recenze a jak se dostat k samotnému příspěvku. Tato zpráva je používána, pokud je zvoleno Standardní recenzí řízení ve druhém kroku  Nastavení časopisu. (V jiném případě viz REVIEW_REQUEST_REMIND_AUTO_ATTACHED.)</description>
+	</email_text>
+	<email_text key="REVIEW_REQUEST_REMIND_AUTO_ONECLICK">
 		<subject>Žádost o zpracování recenze článku</subject>
 		<body>{$reviewerName}:
 
@@ -714,8 +764,8 @@ Odkaz: {$url}
 {$principalContactSignature}</body>
 	</email_text>
 	<email_text key="NOTIFICATION_MAILLIST">
-		<subject>Nové oznámení od {$siteTitle}</subject>
-		<body>Máte nové oznámení od {$siteTitle}:
+		<subject>Nové oznámení od {$journalName}</subject>
+		<body>Máte nové oznámení od {$journalName}:
 --
 {$notificationContents}
 
@@ -727,8 +777,8 @@ Pokud chcete ukončit odebírání těchto informačních emalů, přejděte pro
 {$principalContactSignature}</body>
 	</email_text>
 	<email_text key="NOTIFICATION_MAILLIST_WELCOME">
-		<subject>Vítejte na rezesílacím seznamu {$siteTitle}!</subject>
-		<body>Přihlásil jste se k odběru oznámení z {$siteTitle}.
+		<subject>Vítejte na rezesílacím seznamu {$journalName}!</subject>
+		<body>Přihlásil jste se k odběru oznámení z {$journalName}.
 
 Pro potvrzení Vaší žádosti a přidání Vaší emailové adresy do rozesílacího seznamu klikněte prosím na tento odkaz: {$confirmLink}
 
